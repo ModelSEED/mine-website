@@ -1,0 +1,52 @@
+<accordion close-others="false">
+    <accordion-group heading="General" is-open="true">
+    	<div ng-include="'partials/general.html'">
+    	</div>
+    </accordion-group>
+    <accordion-group heading="Enzymes ({{data.Enzymes.length}}) "  is-open="false">
+		<table class="table table-striped table-hover">    
+			<tbody>
+				<tr ng-repeat="attribute in data.Enzymes" >
+					<td>{{attribute}}</td>
+				</tr>
+			</tbody>  
+		</table>
+    </accordion-group>
+    <accordion-group heading="Names ({{data.Names.length}}) "  is-open="false">
+		<table class="table table-striped table-hover">    
+			<tbody>
+				<tr ng-repeat="attribute in data.Names" >
+					<td>{{attribute}}</td>
+				</tr>
+			</tbody>  
+		</table>
+    </accordion-group>
+    <accordion-group heading=" Databases"  is-open="false">
+		<table class="table table-striped table-hover">    
+			<tbody>
+				<tr ng-repeat="(key,val) in data.DB_links" >
+					<td>
+					<accordion-group heading="{{key}}"  is-open="false">
+					<table class="table table-striped table-hover">    
+						<tbody>
+							<tr  ng-repeat="inval in val" >
+								<td>{{inval}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</accordion-group>
+					</td>
+				</tr>
+			</tbody>  
+		</table>
+    </accordion-group>
+    <accordion-group heading=" Pathways ({{data.Pathways.length+0}}) "  is-open="false">
+		<table class="table table-striped table-hover">    
+			<tbody>
+				<tr ng-repeat="attribute in data.Pathways" >
+					<td>{{attribute}}</td>
+				</tr>
+			</tbody>  
+		</table>
+    </accordion-group>
+</accordion>

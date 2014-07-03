@@ -1,0 +1,122 @@
+<div ng-model="molstrng">
+<div class="container">
+ <div class="col-sm-7 ">
+   <div class="well">.
+    	<iframe src="editorws.html" frameborder="0" id="sketch" class="sketcher-frame" width = "600" height = "600"></iframe>
+  </div>
+    </div>
+    <div class="col-sm-3 ">
+    
+   
+   <fieldset>
+    
+   <legend>Search Type</legend>
+   <div class="radio">
+   		<label class="radio" for="type_similarity">
+   			<input checked="checked" data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
+   			Similarity 
+   		</label>
+   	</div>
+   	<div class="radio">
+   		<label class="radio" for="type_substructure">
+   			<input id="type_substructure" name="search_type" type="radio" value="substructure"  ng-model="stype" />Substructure 
+   		</label>
+   	</div>
+   	<div class="radio">
+   		<label class="radio" for="type_exact"><input id="type_exact" name="search_type" type="radio" value="exact" ng-model="stype"/>
+   		Exact 
+   		</label>
+   	</div>
+   	<legend>Options</legend>
+   	<div class="form-group"><label for="similarity">Similarity threshold</label><input class="form-control input-sm" ng-model="sthresh" id="similarity" name="similarity" type="text" value="0.7" /></div>
+   	
+   	<div class="form-group row">
+   	</div><div class="form-group"><label for="max_results">Maximum Results</label><select class="input-sm form-control" id="max_results" name="max_results" ng-model="maxres">
+   	<option value="100">100</option>
+	<option value="200">200</option>
+	<option value="500">500</option>
+	<option value="1000">1000</option></select></div>
+<div id="finsrtuct" ng-click="find()"></div>
+<button id = "btn-molExport" class="btn  btn-primary "><span class="glyphicon glyphicon-search"></span> Search</button>
+</fieldset>
+<a href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
+ </div>
+ </div>
+
+
+
+<script src="js/lib/rainbow/rainbow-custom.min.js"></script>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="js/promise-0.1.1.min.js"></script>
+	<script src="js/marvinjslauncher.js"></script>
+	<script>
+	var molstrintext = "";
+		var marvinController,
+			inputController;
+
+		$(document).ready(function handleDocumentReady (e) {
+			MarvinJSUtil.getEditor("#sketch").then(function (sketcherInstance) {
+				marvinController = new MarvinControllerClass(
+					sketcherInstance
+				);
+
+				inputController = new InputControllerClass(
+
+					$("#btn-molExport")
+				);
+
+			}, function () {
+				alert("Cannot retrieve sketcher instance from iframe");
+			});
+			//alert(caffeineSource)
+			//$("#molsource-box").val(caffeineSource);
+		});
+
+		var InputControllerClass = (function () {
+
+			var delay = 5;
+
+			function InputControllerClass (	molExportButton ) {
+				this.molExportButton	= molExportButton;
+				this.molExportButton.on("click", $.proxy(this.handleMolExportBtnClick, this));
+			}
+
+	
+			InputControllerClass.prototype.handleMolExportBtnClick = function handleMolExportBtnClick (e) {
+				this.delayCall(exportMolAction, ["mol"]);
+			};
+
+
+
+			InputControllerClass.prototype.delayCall = function delayCall (method, args) {
+				setTimeout(function () {
+					method.apply(null, args);
+				}, delay);
+			};
+
+			
+
+			return InputControllerClass;
+
+		}());
+
+		var MarvinControllerClass = (function () {
+
+			function MarvinControllerClass ( sketcherInstance) {
+				this.sketcherInstance 	= sketcherInstance;
+			}
+			return MarvinControllerClass;
+		}());
+
+		function exportMolAction (format) {	
+			var exportPromise = marvinController.sketcherInstance.exportStructure(format, null);
+			exportPromise.then(function(source) {
+				molstrintext = source;
+				document.getElementById("finsrtuct").click();
+			}, function(error) {
+				alert(error);
+			});
+		}
+
+	</script>
+	 </div>

@@ -82,20 +82,22 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
     $scope.colour = function(native,steps){
         // If native_hit is true, make it green if 
         //min_steps is 0 make it lighter green
-        function isZero(element, index, array) {
-            return (element.steps_from_source == 0);
-        }
         if(native == true){
             return "#008000";
         }
-        console.log(typeof steps);
         if (typeof steps == "number"){
             if (steps ==0){
                 return "#84C884";
             }
         }
-         
-        return "#000000";   
+        else{
+            for (i = 0; i < steps.length; i++){
+                if (steps[i].steps_from_source == 0){
+                    return "#84C884";
+                }
+            }
+        }
+        return "#000000";
     };
     $scope.$watch('currentPage + peaks + items', function() {
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){

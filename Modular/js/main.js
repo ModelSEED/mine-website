@@ -11,10 +11,10 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/home',
         templateUrl: 'partials/home.html'
     });
-    //ABOUT
-    $stateProvider.state('about', {
-        url: '/about',
-        templateUrl: 'partials/about.html'
+    //FAQ
+    $stateProvider.state('faq', {
+        url: '/faq',
+        templateUrl: 'partials/FAQ.html'
     });
     
     // COMPOUNDS QUICK SEARCH see compounds.js

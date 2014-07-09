@@ -10,14 +10,14 @@
 				</a>
 			</td>
 			<td>
-				&#8594;
+				<span style="font-size:40px"> &#8594</span>
 			</td>
 			<td ng-repeat="img in attribute.Products">
 			    <div ng-if= "grtZero(img[0])">{{img[1]}}</div>
 				<a  ui-sref="compounds({search:img[1]})">
 					<img  ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{img[1]}}.svg" width="75" ></td>
 				</a>
-			<td ng-repeat="op in attribute.Operators">
+			<td ng-repeat="op in attribute.Operators" style="vertical-align:middle">
 				<a style="font-size:16px">{{op}}</a>
 			</td>
 		</tr>

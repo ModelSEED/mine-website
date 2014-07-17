@@ -35,8 +35,8 @@
 			var delay = 5;
 
 			function InputControllerClass (	molExportButton ) {
-				this.molExportButton	= molExportButton;
-				this.molExportButton.on("click", $.proxy(this.handleMolExportBtnClick, this));
+				this.setReactButton	= molExportButton;
+				this.setReactButton.on("click", $.proxy(this.handleMolExportBtnClick, this));
 			}
 
 	

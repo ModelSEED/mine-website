@@ -35,7 +35,7 @@
           <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
           </br>
           <h2>Quick search</h2> 
-          <input type="text" ng-model ="name"/>       
+          <input type="text" ng-model ="name" ng-keypress="doQuickSearch($event)"/>
           </br>
           </br>
           <!-- this sloves the change DB problem. The webpage will not call ui-sref if it has not changed  so have to add the datbase to the search term then the http generated will be different -->

@@ -30,13 +30,15 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.numPages =0;
-
+    $scope.searchOn = "";
+    
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
     promise = services.get_rxns(test_db,CompoundDataFactory.compound.Product_of);
     promise.then(function(result){
             $scope.products = result;
+            console.log(result);
             $scope.items = result.length
             $scope.totalItems = $scope.products.length;
             $scope.numPages = Math.ceil($scope.products.length / $scope.numPerPage)
@@ -50,13 +52,19 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
     );
 
 
-    $scope.$watch('currentPage + products + items', function() {
+    $scope.$watch('currentPage + products + items + searchOn', function() {
         if((typeof($scope.products) != 'undefined') &&($scope.products.length > 0)){
-            $scope.numPages = Math.ceil($scope.products.length / $scope.numPerPage)
+var subList = [];
+            for (var i = $scope.products.length - 1; i >= 0; i--) {
+                console.log($scope.products[i].Operators[0]);
+                if ($scope.products[i].Operators[0].indexOf($scope.searchOn) > -1){
+                    subList.push($scope.products[i]); 
+                }
+            };
+            $scope.numPages = Math.ceil(subList.length / $scope.numPerPage)
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
-            $scope.filteredData = $scope.products.slice(begin, end);
-        }
+            $scope.filteredData = subList.slice(begin, end);        }
     });
 });
 
@@ -67,6 +75,7 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.numPages =0;
+    $scope.searchOn = "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
     promise = services.get_rxns(test_db,CompoundDataFactory.compound.Reactant_in);
@@ -83,12 +92,19 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
         }
     );
 
-    $scope.$watch('currentPage + reactants + items', function() {
+    $scope.$watch('currentPage + reactants + items+searchOn', function() {
         if((typeof($scope.reactants) != 'undefined') &&($scope.reactants.length > 0)){
-            $scope.numPages = Math.ceil($scope.reactants.length / $scope.numPerPage)
+            var subList = [];
+            for (var i = $scope.reactants.length - 1; i >= 0; i--) {
+                console.log($scope.reactants[i].Operators[0]);
+                if ($scope.reactants[i].Operators[0].indexOf($scope.searchOn) > -1){
+                    subList.push($scope.reactants[i]); 
+                }
+            };
+            $scope.numPages = Math.ceil(subList.length / $scope.numPerPage)
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
-            $scope.filteredData = $scope.reactants.slice(begin, end);
+            $scope.filteredData = subList.slice(begin, end);
         }
     });
 });

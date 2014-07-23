@@ -1,8 +1,12 @@
+<br>
+<div class="form-group">Search on Operators <input type="text" ng-model="searchOn"> <br></div>
 <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
-
 <table class="table table-striped table-hover">    
 	<tbody>
 		<tr ng-repeat="attribute in filteredData" >
+			<td ng-repeat="op in attribute.Operators" style="vertical-align:middle">
+				<div style="font-size:16px">{{op}}</div>
+			</td>
 			<td ng-repeat="img in attribute.Reactants">
 				<div ng-if= "grtZero(img[0])">{{img[1]}} <span ng-show=" ! $last ">+</span></div>
 				 <a  ui-sref="compounds({search:img[1]})">
@@ -17,9 +21,7 @@
 				<a  ui-sref="compounds({search:img[1]})">
 					<img  ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{img[1]}}.svg" width="75" ></td>
 				</a>
-			<td ng-repeat="op in attribute.Operators" style="vertical-align:middle">
-				<a style="font-size:16px">{{op}}</a>
-			</td>
+
 		</tr>
 	</tbody>  
 </table>

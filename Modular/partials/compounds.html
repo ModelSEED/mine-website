@@ -10,7 +10,7 @@
     <thead>  
         <tr>  
             <th>Img</th> 
-            <th>SEED Id</th> 
+            <th>MINE Id</th>
             <th>Name</th> 
             <th>Formula</th>  
         </tr>  
@@ -21,7 +21,7 @@
                 <a  ui-sref="acompound.overview({id:attribute._id})">
                     <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" ></td>
                 </a>
-            <td>{{attribute.Model_SEED}}</td>
+            <td>{{attribute.MINE_id}}</td>
             <td>{{attribute.Names[0]}}</td>
             <td>{{attribute.Formula}}</td>
         </tr>

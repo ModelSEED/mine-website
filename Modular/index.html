@@ -1,90 +1,87 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-   <link href="../ui-common/functional-site/assets/css/kb-visualizations.css" rel="stylesheet" type="text/css"/>
-  </head>
+    <link href="../ui-common/functional-site/assets/css/kb-visualizations.css" rel="stylesheet" type="text/css"/>
+</head>
 
-  <body>
+<body>
 
 <!-- NAVIGATION -->
 <div ng-app="app">
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <img class="logo" src="img/Gold-Miner-Icon.png" width="46" style="float:left">
-        <a class="navbar-brand" ui-sref="home">MINE</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a ui-sref="home">Home</a></li>
-        <li><a ui-sref="kegg">Kegg-map</a></li>
-        <li><a ui-sref="metablomics">Metabolomics</a></li>
-        <li><a ui-sref="structure">Structure-Search</a></li>
-        <li><a ui-sref="faq">FAQs</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-2 ">
-      <div class=" affix">
-        <h2>Database</h2>
-        <h1>{{database.name}}</h1>
-        <div ng-controller="mineCtl">
-          <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
-          </br>
-          <h2>Quick search</h2> 
-          <input type="text" ng-model ="name" ng-keypress="doQuickSearch($event)"/>
-          </br>
-          </br>
-          <!-- this sloves the change DB problem. The webpage will not call ui-sref if it has not changed  so have to add the datbase to the search term then the http generated will be different -->
-          <a class="btn  btn-primary "  ui-sref="compounds({search:name+','+database.db})"><span class="glyphicon glyphicon-search"></span>
-          Search</a>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <img class="logo" src="img/Gold-Miner-Icon.png" width="46" style="float:left">
+                <a class="navbar-brand" ui-sref="home">MINE</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="kegg">Kegg-map</a></li>
+                <li><a ui-sref="metablomics">Metabolomics</a></li>
+                <li><a ui-sref="structure">Structure-Search</a></li>
+                <li><a ui-sref="faq">FAQs</a></li>
+            </ul>
         </div>
-      </div>    
-    </div><!-- col 2 -->
-    <div class="col-sm-9 ">
-      <div ui-view></div>
-    </div><!-- col 2 -->
-  </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 ">
+                <div class=" affix">
+                    <h2>Database</h2>
+                    <h1>{{database.name}}</h1>
+                    <div ng-controller="mineCtl">
+                        <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
+                        </br>
+                        <h2>Quick search</h2>
+                        <input type="text" ng-model ="name" ng-keypress="doQuickSearch($event)"/>
+                        </br>
+                        </br>
+                        <!-- this sloves the change DB problem. The webpage will not call ui-sref if it has not changed  so have to add the datbase to the search term then the http generated will be different -->
+                        <a class="btn  btn-primary "  ui-sref="compounds({search:name+','+database.db})"><span class="glyphicon glyphicon-search"></span>
+                            Search</a>
+                    </div>
+                </div>
+            </div><!-- col 2 -->
+            <div class="col-sm-9 ">
+                <div ui-view></div>
+            </div><!-- col 2 -->
+        </div>
+    </div>
 </div>
 
+<!-- General-->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
+<!-- deps for kegg pathway widget -->
+<script src="../ui-common/functional-site/assets/js/kbclient/workspaceDeluxe1.1.js"></script>
+<script src="../ui-common/src/kbwidget.js"></script>
+<script src="../ui-common/src/widgets/maps/kbasePathway.js"></script>
 
+<!-- Marvin-->
+<script src="js/lib/rainbow/rainbow-custom.min.js"></script>
+<script src="js/promise-0.1.1.min.js"></script>
+<script src="js/marvinjslauncher.js"></script>
+<script src="js/webservices.js"></script>
+<script src="gui/gui.nocache.js"></script>
 
+<!-- MINE-->
+<script src="js/mainDataBase.js"></script>
+<script src="js/main.js"></script>
+<script src="js/quicksearch.js"></script>
+<script src="js/compounds.js"></script>
+<script src="js/acompound.js"></script>
+<script src="js/metablomics.js"></script>
+<script src="js/structures.js"></script>
+<script src="js/kegg.js"></script>
+<script src="js/creator.js"></script>
+<script src="js/operatorCreatorClient.js"></script>
 
-
-    </div>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-
- 
-  <!-- deps for kegg pathway widget -->
-  <script src="../ui-common/functional-site/assets/js/kbclient/workspaceDeluxe1.1.js"></script>
-  <script src="../ui-common/src/kbwidget.js"></script>
-  <script src="../ui-common/src/widgets/maps/kbasePathway.js"></script>
-
-  <!-- Marvin-->
-  <script src="js/lib/rainbow/rainbow-custom.min.js"></script>
-  <script src="js/promise-0.1.1.min.js"></script>
-  <script src="js/marvinjslauncher.js"></script>
-  <script src="js/webservices.js"></script>
-  <script src="gui/gui.nocache.js"></script>
-
-  <script src="js/mainDataBase.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/quicksearch.js"></script>
-  <script src="js/compounds.js"></script>
-  <script src="js/acompound.js"></script>
-  <script src="js/metablomics.js"></script>
-  <script src="js/structures.js"></script>
-  <script src="js/kegg.js"></script>
-  
-
-  </body>
+</body>
 </html>

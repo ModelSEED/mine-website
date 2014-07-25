@@ -82,8 +82,14 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('kegg', {
         url: '/kegg',
         templateUrl: 'partials/kegg.html'
-    }); 
+    });
 
+    //Operator Creator see creator.js
+    $stateProvider.state('creator', {
+        url: '/creator',
+        templateUrl: 'partials/creator.html',
+        controller: "creatorCtl"
+    });
     
 });
 

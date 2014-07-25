@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="col-sm-7 ">
+        <div class="well">
+            <iframe src="editorws.html" frameborder="0" id="sketch" class="sketcher-frame" width = "600" height = "600"></iframe>
+        </div>
+    </div>
+    <div class="col-sm-5 ">
+        <h4>Operator Name</h4>
+        <input type='text' ng-model='operatorName'>
+        <br><br>
+        <div class="form-group">
+            <h4>Reactants</h4>
+            <table class="table">
+                <thead><tr><td>Compound & Atom Indices</td></tr></thead>
+                <tbody>
+                <tr ng-repeat="r in reactants track by $index">
+                    <td>{{r}}</td>
+                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(reactants, $index)">
+                        <span class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+                </tbody>
+            </table>
+            <select class="form form-inline" ng-model="reactantChoice" ng-options="c.name for c in cofactors"></select>
+            <input type='text' class="form form-inline" ng-model='indices'>
+            <button type="button" class="btn btn-primary"
+                    ng-click="addItem(reactants, reactantChoice.name)">Add Reactant</button>
+        </div>
+
+        <div class="form-group">
+            <h4>Products</h4>
+            <table class="table">
+                <thead><tr><td>Compound</td></tr></thead>
+                <tbody>
+                <tr ng-repeat="p in products track by $index">
+                    <td>{{p}}</td>
+                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(products, $index)">
+                        <span class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+                </tbody>
+            </table>
+            <select class="form" ng-model="productChoice" ng-options="c.name for c in cofactors"></select>
+            <button type="button" class="btn btn-primary" ng-click="addItem(products, productChoice.name)">Add Product</button>
+        </div>
+        <h4>Comments</h4>
+        <input class="text-area" height="4" width="10" ng-model="comments">
+        <br>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" id="btn-setReact" ng-click="setReact()">Set Reactants</button>
+            <button type="button" class="btn btn-primary" id="btn-setProd" ng-click="setProd()">Set Products</button>
+            <button type="button" class="btn btn-primary" id="btn-genOp" ng-click="buildOp()">Generate Operator</button>
+        </div>
+        <a href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
+    </div>
+</div>

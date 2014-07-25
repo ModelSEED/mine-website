@@ -17,6 +17,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     $scope.reactants= [];
     $scope.products= [];
     $scope.comments= '';
+    $scope.opURL = "";
     $scope.cofactors=[{'id': 0, 'name': '2-oxoglutarate'}, {'id': 1, 'name': '3-5-ADP'},
                      {'id': 2, 'name': '5-Formyl-H4MPT'}, {'id': 3, 'name': 'Acetaldehyde'},
                      {'id': 4, 'name': 'Acetate'}, {'id': 5, 'name': 'AcetylCoa'}, {'id': 6, 'name': 'ADP'},
@@ -93,9 +94,15 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
         var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, spec);
         promise.then(
             function(result){
-                var choice = confirm(result);
-                if (choice) {
-                    window.location = 'data:Application/octet-stream,' + encodeURIComponent(result);
+                var ok = confirm(result);
+                if (ok){
+                    document.getElementById("btn-genOp").className = "btn btn-success";
+                    var pom = document.createElement('a');
+                    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result));
+                    pom.setAttribute('download', $scope.operatorName+'.dat');
+                    document.body.appendChild(pom);
+                    pom.click();
+                    document.body.removeChild(pom);
                 }
             },
             function(err){
@@ -104,4 +111,9 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
             }
         );
     };
+});
+
+angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory) {
+    $scope.operatorName= operatorFactory.operatorName;
+    //$scope.op = operatorFactory.op;
 });

@@ -31,7 +31,7 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
     $scope.items=0;
     $scope.numPages =0;
     $scope.searchOn = "";
-    
+
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
@@ -58,7 +58,7 @@ var subList = [];
             for (var i = $scope.products.length - 1; i >= 0; i--) {
                 console.log($scope.products[i].Operators[0]);
                 if ($scope.products[i].Operators[0].indexOf($scope.searchOn) > -1){
-                    subList.push($scope.products[i]); 
+                    subList.push($scope.products[i]);
                 }
             };
             $scope.numPages = Math.ceil(subList.length / $scope.numPerPage)
@@ -91,6 +91,27 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
             $scope.$apply();
         }
     );
+    $scope.getCompoundName= function(id){
+      gPromise = services.get_comps(test_db, [id]);
+      gPromise.then(
+          function(result){
+              //console.log(result[0]);
+              if((id.substring(0, 1) == "X")||(result[0].Names==null)){
+                console.log("none"+id);
+                $scope.cName = "";
+              }else{
+                console.log(result[0].Names[0]);
+                $scope.cName = result[0].Names[0];
+              }
+              $scope.$apply();
+          },
+          function(err){
+              console.log("acompoundCtl fail");
+              $scope.data =[];
+              $scope.$apply();
+          }
+      );
+    }
 
     $scope.$watch('currentPage + reactants + items+searchOn', function() {
         if((typeof($scope.reactants) != 'undefined') &&($scope.reactants.length > 0)){
@@ -98,7 +119,7 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
             for (var i = $scope.reactants.length - 1; i >= 0; i--) {
                 console.log($scope.reactants[i].Operators[0]);
                 if ($scope.reactants[i].Operators[0].indexOf($scope.searchOn) > -1){
-                    subList.push($scope.reactants[i]); 
+                    subList.push($scope.reactants[i]);
                 }
             };
             $scope.numPages = Math.ceil(subList.length / $scope.numPerPage)

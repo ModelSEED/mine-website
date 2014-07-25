@@ -10,16 +10,29 @@ angular.module('app').factory('structuresresFactory', function(){
 
 
 angular.module('app').controller('structureCtl',  function($scope,$state,DbChoice,structuresresFactory) {
-     $scope.stype="exact";
-     $scope.maxres=100;
-     $scope.sthresh=0.7;
-  $scope.find = function(){
-    $state.go('structuresres', {search:molstrintext});
-    structuresresFactory.mol = molstrintext;
-    structuresresFactory.stype = $scope.stype;
-    structuresresFactory.maxres = $scope.maxres;
-    structuresresFactory.sthresh = $scope.sthresh;
-  }
+    $scope.stype="exact";
+    $scope.maxres=100;
+    $scope.sthresh=0.7;
+
+    var marvinSketcherInstance;
+    MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+        marvinSketcherInstance = sketcherInstance;
+    }, function(error) {
+        alert("Loading of the sketcher failed"+error);
+    });
+
+    $scope.find = function(){
+        var exportPromise = marvinSketcherInstance.exportStructure('mol', null);
+        exportPromise.then(function (source) {
+            $state.go('structuresres', {search:source});
+            structuresresFactory.mol = source;
+            structuresresFactory.stype = $scope.stype;
+            structuresresFactory.maxres = $scope.maxres;
+            structuresresFactory.sthresh = $scope.sthresh;
+        }, function (error) {
+            alert(error);
+        });
+    }
 });
 
 angular.module('app').controller('structuresresCtl', function($scope,$stateParams,DbChoice,structuresresFactory){

@@ -97,7 +97,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 
     $scope.setProd = function(){
         if (operatorFactory.mrvProducts) {
-            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvReactants).catch(function(error) {
+            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvProducts).catch(function(error) {
                 alert(error);
             });
             operatorFactory.mrvProducts = '';

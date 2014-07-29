@@ -21,6 +21,16 @@ function operatorCreator(url, auth, auth_cb) {
     var _auth_cb = auth_cb;
 
 
+    this.get_cofactors = function (_callback, _errorCallback) {
+    return json_call_ajax("operatorCreator.get_cofactors",
+        [], 1, _callback, _errorCallback);
+};
+
+    this.get_cofactors_async = function (_callback, _error_callback) {
+        deprecationWarning();
+        return json_call_ajax("operatorCreator.get_cofactors", [], 1, _callback, _error_callback);
+    };
+
     this.make_operator = function (reactants, products, spec, _callback, _errorCallback) {
     return json_call_ajax("operatorCreator.make_operator",
         [reactants, products, spec], 1, _callback, _errorCallback);
@@ -29,6 +39,26 @@ function operatorCreator(url, auth, auth_cb) {
     this.make_operator_async = function (reactants, products, spec, _callback, _error_callback) {
         deprecationWarning();
         return json_call_ajax("operatorCreator.make_operator", [reactants, products, spec], 1, _callback, _error_callback);
+    };
+
+    this.test_operator = function (operator, kegg_id, _callback, _errorCallback) {
+    return json_call_ajax("operatorCreator.test_operator",
+        [operator, kegg_id], 1, _callback, _errorCallback);
+};
+
+    this.test_operator_async = function (operator, kegg_id, _callback, _error_callback) {
+        deprecationWarning();
+        return json_call_ajax("operatorCreator.test_operator", [operator, kegg_id], 1, _callback, _error_callback);
+    };
+
+    this.map_operator = function (operator, database, email, _callback, _errorCallback) {
+    return json_call_ajax("operatorCreator.map_operator",
+        [operator, database, email], 1, _callback, _errorCallback);
+};
+
+    this.map_operator_async = function (operator, database, email, _callback, _error_callback) {
+        deprecationWarning();
+        return json_call_ajax("operatorCreator.map_operator", [operator, database, email], 1, _callback, _error_callback);
     };
  
 

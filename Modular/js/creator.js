@@ -18,10 +18,10 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     $scope.products= [];
     $scope.comments= '';
     $scope.opURL = "";
-    $scope.cofactors=[{'id': 0, 'name': '2-oxoglutarate'}, {'id': 1, 'name': '3-5-ADP'},
-                     {'id': 2, 'name': '5-Formyl-H4MPT'}, {'id': 3, 'name': 'Acetaldehyde'},
-                     {'id': 4, 'name': 'Acetate'}, {'id': 5, 'name': 'AcetylCoa'}, {'id': 6, 'name': 'ADP'},
-                     {'id': 7, 'name': 'AMP'}, {'id': 8, 'name': 'Any'}, {'id': 9, 'name': 'ATP'},
+    $scope.cofactors=[{'id': 0, 'name': 'Any'}, {'id': 1, 'name': '2-oxoglutarate'}, {'id': 2, 'name': '3-5-ADP'},
+                     {'id': 3, 'name': '5-Formyl-H4MPT'}, {'id': 4, 'name': 'Acetaldehyde'},
+                     {'id': 5, 'name': 'Acetate'}, {'id': 6, 'name': 'AcetylCoa'}, {'id': 7, 'name': 'ADP'},
+                     {'id': 8, 'name': 'AMP'}, {'id': 9, 'name': 'ATP'},
                      {'id': 10, 'name': 'Bicarbonate'}, {'id': 11, 'name': 'CO2'}, {'id': 12, 'name': 'CoA'},
                      {'id': 13, 'name': 'DMAPP'}, {'id': 14, 'name': 'E'}, {'id': 15, 'name': 'Formaldehyde'},
                      {'id': 16, 'name': 'glutamate'}, {'id': 17, 'name': 'H+'}, {'id': 18, 'name': 'H2O2'},
@@ -33,11 +33,24 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                      {'id': 34, 'name': 'PPi'}, {'id': 35, 'name': 'S-Adenosylhomocysteine'},
                      {'id': 36, 'name': 'S-Adenosylmethionine'}, {'id': 37, 'name': 'Sulfite'},
                      {'id': 37, 'name': 'Water'}];
-    $scope.reactantChoice = $scope.cofactors[0];
-    $scope.productChoice = $scope.cofactors[0];
+    $scope.compoundChoice = $scope.cofactors[0];
     $scope.indices = '';
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
+    /*var promise = services.get_cofactors();
+    promise.then(
+            function(result){
+                alert(result);
+                $scope.cofactors = result;
+                $scope.reactantChoice = $scope.cofactors[0];
+                $scope.productChoice = $scope.cofactors[0];
+            },
+            function(err){
+                alert("ERROR!");
+                console.log(err);
+    });
+    console.log($scope.cofactors);*/
+
     var marvinSketcherInstance;
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
         marvinSketcherInstance = sketcherInstance;
@@ -64,23 +77,41 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     };
 
     $scope.setReact = function(){
-        var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
-        exportPromise.then(function (source) {
-            operatorFactory.mrvReactants = source;
-            document.getElementById("btn-setReact").className = "btn btn-success";
-        }, function (error) {
-            alert(error);
-        });
+        if (operatorFactory.mrvReactants) {
+            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvReactants).catch(function(error) {
+                alert(error);
+            });
+            operatorFactory.mrvReactants = '';
+            document.getElementById("btn-setReact").className = "btn btn-primary";
+        }
+        else {
+            var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
+            exportPromise.then(function (source) {
+                operatorFactory.mrvReactants = source;
+                document.getElementById("btn-setReact").className = "btn btn-success";
+            }, function (error) {
+                alert(error);
+            });
+        }
     };
 
     $scope.setProd = function(){
-        var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
-        exportPromise.then(function (source) {
-            operatorFactory.mrvProducts = source;
-            document.getElementById("btn-setProd").className = "btn btn-success";
-        }, function (error) {
-            alert(error);
-        });
+        if (operatorFactory.mrvProducts) {
+            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvReactants).catch(function(error) {
+                alert(error);
+            });
+            operatorFactory.mrvProducts = '';
+            document.getElementById("btn-setProd").className = "btn btn-primary";
+        }
+        else {
+            var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
+            exportPromise.then(function (source) {
+                operatorFactory.mrvProducts = source;
+                document.getElementById("btn-setProd").className = "btn btn-success";
+            }, function (error) {
+                alert(error);
+            });
+        }
     };
 
     $scope.buildOp = function(){

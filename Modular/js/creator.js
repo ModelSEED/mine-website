@@ -7,7 +7,7 @@ angular.module('app').factory('operatorFactory', function(){
             operatorName:'test',
             reactants:["Any:1-6"],
             products:["Any"],
-            comments:'default op',
+            comments:'',
             "generate_reverse": false
         },
         operator:""
@@ -107,15 +107,6 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
         }
     };
 
-    var download_file = function(contents,filename) {
-        var link = document.createElement('a');
-        link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
     $scope.buildOp = function(){
         operatorFactory.spec = {
             "operatorName": $scope.operatorName,
@@ -141,5 +132,25 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory) {
     $scope.op_name = operatorFactory.spec.operatorName;
     $scope.operator = operatorFactory.operator;
-    console.log(operatorFactory);
+    $scope.startingCompound = "";
+    $scope.mapDatabase = "";
+
+    var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
+
+    $scope.testOperator = function() {
+        alert("This function is not yet implemented");
+    };
+
+    $scope.mapOperator = function() {
+        alert("This function is not yet implemented");
+    };
+
+    $scope.downloadFile = function(contents,filename) {
+        var link = document.createElement('a');
+        link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 });

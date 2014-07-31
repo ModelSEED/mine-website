@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>{{op_name}}</title>
 </head>
 <body>
-<div class="col-sm-8 ">
-    <textarea readonly style="{resize: none}" rows="40" cols="90">{{operator}}</textarea>
+<div class="col-sm-7">
+    <h3>Operator Preview</h3>
+    <textarea class="form-control" style="{resize: none}" rows="35">{{operator}}</textarea>
 </div>
-<div class="col-sm-4 ">
-    options
+<div class="col-sm-5">
+    <h3>Testing Functions</h3>
+    <div class="input-group">
+        <input type='text' class="form-control" ng-model='startingCompound' placeholder="Enter a KEGG ID">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="testOperator()">Test Operator</button>
+        </span>
+    </div><br>
+    <div class="input-group">
+        <input type='text' class="form-control" ng-model='mapDatabase' placeholder="Mapping Database">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="mapOperator()">Map Operator</button>
+        </span>
+    </div><br>
+    <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+        <button type="button" class="btn btn-danger" onClick="history.go(-1);return true;">Back to Editor</button>
+        </div>
+        <div class="btn-group">
+        <button type="button" class="btn btn-primary" ng-click="downloadFile(operator, op_name+'.dat')">
+            Download Operator</button></div>
+    </div>
 </div>
 </body>
 </html>

@@ -112,7 +112,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
             "operatorName": $scope.operatorName,
             "reactants": $scope.reactants,
             "products": $scope.products,
-            "comments": $scope.comments,
+            "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
             "generate_reverse": false
         };
         var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
@@ -132,13 +132,24 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory) {
     $scope.op_name = operatorFactory.spec.operatorName;
     $scope.operator = operatorFactory.operator;
-    $scope.startingCompound = "";
+    $scope.keggID = "";
     $scope.mapDatabase = "";
+    $scope.testedCompounds = [];
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
 
-    $scope.testOperator = function() {
-        alert("This function is not yet implemented");
+    $scope.testOperator = function(testCompound) {
+        var promise = services.test_operator($scope.operator, testCompound);
+        promise.then(
+            function(result){
+                $scope.testedCompounds.push([testCompound,result]);
+                $scope.$apply();
+            },
+            function(err){
+                alert("ERROR!");
+                console.log(err);
+            }
+        );
     };
 
     $scope.mapOperator = function() {

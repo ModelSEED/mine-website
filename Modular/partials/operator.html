@@ -6,15 +6,34 @@
 <body>
 <div class="col-sm-7">
     <h3>Operator Preview</h3>
-    <textarea class="form-control" style="{resize: none}" rows="35">{{operator}}</textarea>
+    <textarea ng-model="operator" class="form-control" style="{resize: none}" rows="35"></textarea>
 </div>
 <div class="col-sm-5">
     <h3>Testing Functions</h3>
-    <div class="input-group">
-        <input type='text' class="form-control" ng-model='startingCompound' placeholder="Enter a KEGG ID">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-primary" ng-click="testOperator()">Test Operator</button>
-        </span>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tested Compounds</h3>
+        </div>
+        <table class="table">
+            <thead ng-show="testedCompounds">
+                <tr>
+                    <td>KeggID</td>
+                    <td>Reactions Catalyzed</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="t in testedCompounds">
+                <td>{{t[0]}}</td>
+                <td>{{t[1]}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="input-group">
+            <input type='text' class="form-control" ng-model='keggID' placeholder="Enter a KEGG ID">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" ng-click="testOperator(keggID)">Test Operator</button>
+            </span>
+        </div>
     </div><br>
     <div class="input-group">
         <input type='text' class="form-control" ng-model='mapDatabase' placeholder="Mapping Database">
@@ -24,11 +43,11 @@
     </div><br>
     <div class="btn-group btn-group-justified">
         <div class="btn-group">
-        <button type="button" class="btn btn-danger" onClick="history.go(-1);return true;">Back to Editor</button>
+            <button type="button" class="btn btn-danger" onClick="history.go(-1);return true;">Back to Editor</button>
         </div>
         <div class="btn-group">
-        <button type="button" class="btn btn-primary" ng-click="downloadFile(operator, op_name+'.dat')">
-            Download Operator</button></div>
+            <button type="button" class="btn btn-primary" ng-click="downloadFile(operator, op_name+'.dat')">
+                Download Operator</button></div>
     </div>
 </div>
 </body>

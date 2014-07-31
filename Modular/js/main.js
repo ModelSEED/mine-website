@@ -90,7 +90,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'partials/creator.html',
         controller: "creatorCtl"
     });
-    
+
+    $stateProvider.state('operator', {
+        url: '/operator',
+        templateUrl: 'partials/operator.html',
+        controller: "operatorCtl"
+    });
 });
 
 

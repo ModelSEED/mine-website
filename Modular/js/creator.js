@@ -4,9 +4,9 @@ angular.module('app').factory('operatorFactory', function(){
         mrvReactants:'',
         mrvProducts:'',
         spec: {
-            operatorName:'test',
-            reactants:["Any:1-6"],
-            products:["Any"],
+            operatorName:'',
+            reactants:[],
+            products:[],
             comments:'',
             "generate_reverse": false
         },
@@ -138,18 +138,30 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
 
+    var validate_operator = function(op){
+        if (!op) {
+            alert("ERROR: Operator is blank.");
+            return false
+        }
+        return true
+    };
+
     $scope.testOperator = function(testCompound) {
-        var promise = services.test_operator($scope.operator, testCompound);
-        promise.then(
-            function(result){
-                $scope.testedCompounds.push([testCompound,result]);
-                $scope.$apply();
-            },
-            function(err){
-                alert("ERROR!");
-                console.log(err);
-            }
-        );
+        if (validate_operator($scope.operator)) {
+            var promise = services.test_operator($scope.operator, testCompound);
+            $scope.testedCompounds.push([testCompound,"Calculating..."]);
+            var i = $scope.testedCompounds.length -1;
+            promise.then(
+                function(result){
+                    $scope.testedCompounds[i][1] = result;
+                    $scope.$apply();
+                },
+                function(err){
+                    alert("ERROR!");
+                    console.log(err);
+                }
+            );
+        }
     };
 
     $scope.mapOperator = function() {

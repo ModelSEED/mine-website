@@ -50,7 +50,31 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
             $scope.$apply();
         }
     );
-
+$scope.getCompoundName= function(id){
+  gPromise = services.get_comps(test_db, [id]);
+  gPromise.then(
+      function(result){
+          //console.log(result[0]);
+          if((id.substring(0, 1) == "X")||(result[0].Names==null)){
+            console.log("none"+id);
+            if(result[0].MINE_id==null){
+              $scope.cName = "";
+            }else{
+              $scope.cName = "Id:"+result[0].MINE_id;
+            }
+          }else{
+            console.log(result[0]);
+            $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
+          }
+          $scope.$apply();
+      },
+      function(err){
+          console.log("acompoundCtl fail");
+          $scope.data =[];
+          $scope.$apply();
+      }
+  );
+}
 
     $scope.$watch('currentPage + products + items + searchOn', function() {
         if((typeof($scope.products) != 'undefined') &&($scope.products.length > 0)){
@@ -98,10 +122,14 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
               //console.log(result[0]);
               if((id.substring(0, 1) == "X")||(result[0].Names==null)){
                 console.log("none"+id);
-                $scope.cName = "";
+                if(result[0].MINE_id==null){
+                  $scope.cName = "";
+                }else{
+                  $scope.cName = "Id:"+result[0].MINE_id;
+                }
               }else{
-                console.log(result[0].Names[0]);
-                $scope.cName = result[0].Names[0];
+                console.log(result[0]);
+                $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
               }
               $scope.$apply();
           },

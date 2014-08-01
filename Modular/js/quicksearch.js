@@ -11,8 +11,6 @@ angular.module('app').controller('mineCtl',  function ($scope,$state,DbChoice) {
     $scope.database = $scope.databases[0];
     $scope.$watch('database', function() {
         DbChoice.dbid = $scope.database.db;
-
-
     });
     $scope.doQuickSearch = function(ev) {
         if (ev.which==13){

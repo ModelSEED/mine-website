@@ -5,16 +5,16 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
     $scope.items=0;
     $scope.data=[];
     $scope.numPages =0;
-   
 
-    
+
+
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var test_db = DbChoice.dbid;
-    var srch = $stateParams.search.split(","); 
+    $scope.test_db = DbChoice.dbid;
+    var srch = $stateParams.search.split(",");
     $scope.search = srch[0];
-    
 
-    promise = services.quick_search(test_db, $scope.search);
+
+    promise = services.quick_search($scope.test_db, $scope.search);
     promise.then(
             function(result){
                 if(result.length >1){
@@ -33,9 +33,10 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
                 $scope.$apply();
             }
     );
-    
 
-    $scope.$watch('currentPage + items', function() {
+
+    $scope.$watch('$scope.test_db + currentPage + items', function() {
+        console.log($scope.test_db);
         if($scope.data.length > 0){
             $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage)
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
@@ -43,5 +44,5 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
             $scope.filteredData = $scope.data.slice(begin, end);
         }
     });
-    
+
 });

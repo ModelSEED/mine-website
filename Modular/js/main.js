@@ -4,7 +4,7 @@ angular.module('app',['ui.router','ui.bootstrap']);
 // default contoler on the mine quick search is in quicksearch.js
 
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
-    
+
     $urlRouterProvider.otherwise('/home');
     //HOME
     $stateProvider.state('home', {
@@ -16,24 +16,24 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/faq',
         templateUrl: 'partials/FAQ.html'
     });
-    
+
     // COMPOUNDS QUICK SEARCH see compounds.js
     $stateProvider.state('compounds', {
         url: '/compounds:search',
         templateUrl: 'partials/compounds.html',
-        controller: "compoundsCtl" 
-    }); 
+        controller: "compoundsCtl"
+    });
 
 
     // AN INDIVIDUAL COMPOUND see acompound.js
     $stateProvider.state('acompound', {
         url: '/acompound:id',
         templateUrl: 'partials/acompound.html',
-        controller: "acompoundCtl" 
+        controller: "acompoundCtl"
     });
     $stateProvider.state('acompound.overview', {
         url: '/overview',
-        templateUrl: 'partials/overview.html'    
+        templateUrl: 'partials/overview.html'
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactants',
@@ -44,39 +44,39 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/products',
         templateUrl: 'partials/reactions.html',
         controller: "productsCtl"
-    });  
+    });
 
 
     //METABLOMICS see metablomics.js
     $stateProvider.state('metablomics', {
         url: '/metablomics',
         templateUrl: 'partials/metablomics.html',
-        controller: "metablomicsCtl" 
+        controller: "metablomicsCtl"
     });
     $stateProvider.state('metablomicsCompounds', {
         url: '/metablomicsCompounds',
         templateUrl: 'partials/list.html',
-        controller: "metablomicsCompoundsCtl" 
+        controller: "metablomicsCompoundsCtl"
     });
 
-    
+
     // STRUCTURES see structures.js
     $stateProvider.state('structuresres', {
         url: '/structuresres:search',
         templateUrl: 'partials/structuresres.html',
-        controller: "structuresresCtl" 
+        controller: "structuresresCtl"
     });
     $stateProvider.state('struccompounds', {
         url: '/struccompounds:search',
         templateUrl: 'partials/compounds.html',
-        controller: "struccompoundsCtl" 
-    }); 
+        controller: "struccompoundsCtl"
+    });
     $stateProvider.state('structure', {
         url: '/structure',
         templateUrl: 'partials/structure.html',
         controller: "structureCtl"
     });
-    
+
 
     //KEGG see kegg.js
     $stateProvider.state('kegg', {
@@ -97,5 +97,3 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
-
-

@@ -3,20 +3,23 @@ angular.module('app').factory('operatorFactory', function(){
     return{
         mrvReactants:'',
         mrvProducts:'',
-        operatorName:'',
-        reactants:[],
-        products:[],
-        comments:'',
-        "generate_reverse": false
+        spec: {
+            operatorName:'',
+            reactants:[],
+            products:[],
+            comments:'',
+            "generate_reverse": false
+        },
+        operator:""
     };
 });
 
 
 angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory) {
-    $scope.operatorName= '';
-    $scope.reactants= [];
-    $scope.products= [];
-    $scope.comments= '';
+    $scope.operatorName= operatorFactory.spec.operatorName;
+    $scope.reactants= operatorFactory.spec.reactants;
+    $scope.products= operatorFactory.spec.products;
+    $scope.comments= operatorFactory.spec.comments;
     $scope.opURL = "";
     $scope.cofactors=[{'id': 0, 'name': 'Any'}, {'id': 1, 'name': '2-oxoglutarate'}, {'id': 2, 'name': '3-5-ADP'},
                      {'id': 3, 'name': '5-Formyl-H4MPT'}, {'id': 4, 'name': 'Acetaldehyde'},
@@ -76,65 +79,47 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
         array.splice(index, 1);
     };
 
-    $scope.setReact = function(){
-        if (operatorFactory.mrvReactants) {
-            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvReactants).catch(function(error) {
+    $scope.mrvIO = function(key){
+        //this function interchanges data between the the editor and a target variable in mrv form
+        if (operatorFactory[key]) {
+            marvinSketcherInstance.importStructure("mrv", operatorFactory[key]).catch(function(error) {
                 alert(error);
             });
-            operatorFactory.mrvReactants = '';
-            document.getElementById("btn-setReact").className = "btn btn-primary";
+            operatorFactory[key] = '';
         }
         else {
             var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
             exportPromise.then(function (source) {
-                operatorFactory.mrvReactants = source;
-                document.getElementById("btn-setReact").className = "btn btn-success";
+                operatorFactory[key] = source;
+                $scope.$apply();
             }, function (error) {
                 alert(error);
             });
         }
     };
 
-    $scope.setProd = function(){
-        if (operatorFactory.mrvProducts) {
-            marvinSketcherInstance.importStructure("mrv", operatorFactory.mrvProducts).catch(function(error) {
-                alert(error);
-            });
-            operatorFactory.mrvProducts = '';
-            document.getElementById("btn-setProd").className = "btn btn-primary";
+    $scope.buttonColor = function(key){
+        if (operatorFactory[key]){
+            return "btn btn-success"
         }
         else {
-            var exportPromise = marvinSketcherInstance.exportStructure('mrv', null);
-            exportPromise.then(function (source) {
-                operatorFactory.mrvProducts = source;
-                document.getElementById("btn-setProd").className = "btn btn-success";
-            }, function (error) {
-                alert(error);
-            });
+            return "btn btn-primary"
         }
     };
 
     $scope.buildOp = function(){
-        var spec = {
+        operatorFactory.spec = {
             "operatorName": $scope.operatorName,
             "reactants": $scope.reactants,
             "products": $scope.products,
-            "comments": $scope.comments,
+            "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
             "generate_reverse": false
         };
-        var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, spec);
+        var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
         promise.then(
             function(result){
-                var ok = confirm(result);
-                if (ok){
-                    document.getElementById("btn-genOp").className = "btn btn-success";
-                    var pom = document.createElement('a');
-                    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result));
-                    pom.setAttribute('download', $scope.operatorName+'.dat');
-                    document.body.appendChild(pom);
-                    pom.click();
-                    document.body.removeChild(pom);
-                }
+                operatorFactory.operator = result;
+                $state.go('operator');
             },
             function(err){
                 alert("ERROR!");
@@ -145,6 +130,50 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 });
 
 angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory) {
-    $scope.operatorName= operatorFactory.operatorName;
-    //$scope.op = operatorFactory.op;
+    $scope.op_name = operatorFactory.spec.operatorName;
+    $scope.operator = operatorFactory.operator;
+    $scope.keggID = "";
+    $scope.mapDatabase = "";
+    $scope.testedCompounds = [];
+
+    var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
+
+    var validate_operator = function(op){
+        if (!op) {
+            alert("ERROR: Operator is blank.");
+            return false
+        }
+        return true
+    };
+
+    $scope.testOperator = function(testCompound) {
+        if (validate_operator($scope.operator)) {
+            var promise = services.test_operator($scope.operator, testCompound);
+            $scope.testedCompounds.push([testCompound,"Calculating..."]);
+            var i = $scope.testedCompounds.length -1;
+            promise.then(
+                function(result){
+                    $scope.testedCompounds[i][1] = result;
+                    $scope.$apply();
+                },
+                function(err){
+                    alert("ERROR!");
+                    console.log(err);
+                }
+            );
+        }
+    };
+
+    $scope.mapOperator = function() {
+        alert("This function is not yet implemented");
+    };
+
+    $scope.downloadFile = function(contents,filename) {
+        var link = document.createElement('a');
+        link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 });

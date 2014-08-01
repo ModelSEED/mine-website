@@ -29,8 +29,8 @@
 					<accordion-group heading="{{key}}"  is-open="false">
 					<table class="table table-striped table-hover">    
 						<tbody>
-							<tr  ng-repeat="inval in val" >
-								<td>{{inval}}</td>
+							<tr ng-repeat="id in val" >
+								<td><a ng-click="dbLink(key, id)">{{id}}</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -43,8 +43,8 @@
     <accordion-group heading=" Pathways ({{data.Pathways.length+0}}) "  is-open="false">
 		<table class="table table-striped table-hover">    
 			<tbody>
-				<tr ng-repeat="attribute in data.Pathways" >
-					<td>{{attribute}}</td>
+				<tr ng-repeat="keggMap in data.Pathways" >
+					<td><a ng-click="mapLink(keggMap)">{{keggMap}}</a></td>
 				</tr>
 			</tbody>  
 		</table>

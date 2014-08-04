@@ -1,4 +1,7 @@
 angular.module('app',['ui.router','ui.bootstrap']);
+angular.module('app').factory('currentState', function(){
+    return 'home';
+});
 
 
 // default contoler on the mine quick search is in quicksearch.js
@@ -54,7 +57,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "metablomicsCtl"
     });
     $stateProvider.state('metablomicsCompounds', {
-        url: '/metablomicsCompounds',
+        url: '/metablomicsCompounds:search',
         templateUrl: 'partials/list.html',
         controller: "metablomicsCompoundsCtl"
     });

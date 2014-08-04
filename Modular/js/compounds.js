@@ -13,8 +13,16 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
     var srch = $stateParams.search.split(",");
     $scope.search = srch[0];
 
+    $scope.formatNames = function(nameArray) {
+        if (nameArray.length < 6) {
+            return nameArray.join('\n')
+        }
+        else {
+            return nameArray.slice(0,5).join('\n') + "\n..."
+        }
+    };
 
-    promise = services.quick_search($scope.test_db, $scope.search);
+    var promise = services.quick_search($scope.test_db, $scope.search);
     promise.then(
             function(result){
                 if(result.length >1){

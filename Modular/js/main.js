@@ -12,12 +12,14 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     //HOME
     $stateProvider.state('home', {
         url: '/home',
-        templateUrl: 'partials/home.html'
+        templateUrl: 'partials/home.html',
+        contoler: "resetCtl"
     });
     //FAQ
     $stateProvider.state('faq', {
         url: '/faq',
-        templateUrl: 'partials/FAQ.html'
+        templateUrl: 'partials/FAQ.html',
+        contoler: "resetCtl"
     });
 
     // COMPOUNDS QUICK SEARCH see compounds.js
@@ -36,7 +38,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('acompound.overview', {
         url: '/overview',
-        templateUrl: 'partials/overview.html'
+        templateUrl: 'partials/overview.html',
+        contoler: "resetCtl"
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactants',
@@ -81,12 +84,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    //KEGG see kegg.js
-    $stateProvider.state('kegg', {
-        url: '/kegg',
-        templateUrl: 'partials/kegg.html'
-    });
-
+    
     //Operator Creator see creator.js
     $stateProvider.state('creator', {
         url: '/creator',

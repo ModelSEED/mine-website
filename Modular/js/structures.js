@@ -13,8 +13,9 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     $scope.stype="exact";
     $scope.maxres=100;
     $scope.sthresh=0.7;
-
+    DbChoice.where = 'structure';
     var marvinSketcherInstance;
+    console.log("at structureCtl"+DbChoice.dbid);
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
         marvinSketcherInstance = sketcherInstance;
     }, function(error) {
@@ -42,17 +43,17 @@ angular.module('app').controller('structuresresCtl', function($scope,$stateParam
     $scope.items=0;
     $scope.data=[];
     $scope.numPages =0;
-   
+    console.log($stateParams+"at structure"+DbChoice.dbid);
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
     if (structuresresFactory.stype == "exact"){
         promise = services.structure_search(test_db,"mol",structuresresFactory.mol);
     }
     if (structuresresFactory.stype == "substructure"){
-        promise = services.substructure_search(test_db,structuresresFactory.mol,structuresresFactory.maxres);  
-    }  
+        promise = services.substructure_search(test_db,structuresresFactory.mol,structuresresFactory.maxres);
+    }
     if (structuresresFactory.stype == "similarity"){
-        promise = services.similarity_search(test_db,structuresresFactory.mol,structuresresFactory.sthresh,'FP4',structuresresFactory.maxres);        
+        promise = services.similarity_search(test_db,structuresresFactory.mol,structuresresFactory.sthresh,'FP4',structuresresFactory.maxres);
     }
     promise.then(
             function(result){
@@ -73,7 +74,7 @@ angular.module('app').controller('structuresresCtl', function($scope,$stateParam
                 $scope.$apply();
             }
     );
-    
+
 
     $scope.$watch('currentPage + items', function() {
         if($scope.data.length > 0){
@@ -83,6 +84,5 @@ angular.module('app').controller('structuresresCtl', function($scope,$stateParam
             $scope.filteredData = $scope.data.slice(begin, end);
         }
     });
-    
-});
 
+});

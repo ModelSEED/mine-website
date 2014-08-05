@@ -23,6 +23,12 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
         }
     );
 
+    $scope.launch_lightbox = function () {
+        $("#cpd-img").lightbox_me({
+            overlayCSS: {background: 'black', opacity:.6}
+        })
+    };
+
     $scope.mapLink = function(keggMap){
         window.location.assign('http://www.genome.jp/kegg-bin/show_pathway?map' + keggMap.slice(0,5) + '+' +
             $scope.data.DB_links.KEGG.join('+'));
@@ -70,7 +76,7 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
-    promise = services.get_rxns(test_db,CompoundDataFactory.compound.Product_of);
+    var promise = services.get_rxns(test_db,CompoundDataFactory.compound.Product_of);
     promise.then(function(result){
             $scope.products = result;
             console.log(result);
@@ -85,31 +91,31 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
             $scope.$apply();
         }
     );
-$scope.getCompoundName= function(id){
-  gPromise = services.get_comps(test_db, [id]);
-  gPromise.then(
-      function(result){
-          //console.log(result[0]);
-          if((id.substring(0, 1) == "X")||(result[0].Names==null)){
-            console.log("none"+id);
-            if(result[0].MINE_id==null){
-              $scope.cName = "";
-            }else{
-              $scope.cName = "Id:"+result[0].MINE_id;
+    $scope.getCompoundName= function(id){
+        var gPromise = services.get_comps(test_db, [id]);
+        gPromise.then(
+            function(result){
+                //console.log(result[0]);
+                if((id.substring(0, 1) == "X")||(result[0].Names==null)){
+                    console.log("none"+id);
+                    if(result[0].MINE_id==null){
+                        $scope.cName = "";
+                    }else{
+                        $scope.cName = "Id:"+result[0].MINE_id;
+                    }
+                }else{
+                    console.log(result[0]);
+                    $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
+                }
+                $scope.$apply();
+            },
+            function(err){
+                console.log("acompoundCtl fail");
+                $scope.data =[];
+                $scope.$apply();
             }
-          }else{
-            console.log(result[0]);
-            $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
-          }
-          $scope.$apply();
-      },
-      function(err){
-          console.log("acompoundCtl fail");
-          $scope.data =[];
-          $scope.$apply();
-      }
-  );
-}
+        );
+    };
 
     $scope.$watch('currentPage + products + items + searchOn', function() {
         if((typeof($scope.products) != 'undefined') &&($scope.products.length > 0)){
@@ -119,7 +125,7 @@ var subList = [];
                 if ($scope.products[i].Operators[0].indexOf($scope.searchOn) > -1){
                     subList.push($scope.products[i]);
                 }
-            };
+            }
             $scope.numPages = Math.ceil(subList.length / $scope.numPerPage)
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;

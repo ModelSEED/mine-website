@@ -1,8 +1,11 @@
 <table class="table table-striped table-hover">  
 	<tbody>
 		<tr>
-            <td></td>
-			<td><img ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{data._id}}.svg" width="250" ></td>
+			<td></td>
+            <td>
+            <img ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{data._id}}.svg"
+                     height="325" ng-click="launch_lightbox()">
+            </td>
 		</tr>
 		<tr>
 			<td>Formula</td>
@@ -30,3 +33,7 @@
 		</tr>
 	</tbody>  
 </table>
+<div hidden class="panel panel-default col-md-6" id="cpd-img">
+    <img ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{data._id}}.svg"
+                     width="100%" ng-click="launch_lightbox()">
+</div>

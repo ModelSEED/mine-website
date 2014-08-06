@@ -20,16 +20,16 @@
                 <li><a ui-sref="metablomics">Metabolomics</a></li>
                 <li><a ui-sref="structure">Structure-Search</a></li>
                 <li><a ui-sref="faq">FAQs</a></li>
-
-                <form class="navbar-form navbar-right" role="form">
-                <div ng-controller="mineCtl">
-            <div class="form-group">
-              <input type="text" placeholder="Quick Serach" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
-            </div>
-            <button class="btn btn-primary "  ng-click="doQuickSearch(13)" ><span class="glyphicon glyphicon-search"></span>Search</button>
-            </div>
-          </form>
             </ul>
+                <form class="navbar-form navbar-right" role="form">
+                    <div ng-controller="mineCtl">
+                        <div class="form-group" >
+                            <input type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
+                            <button class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </div>
+                </form>
+
         </div>
     </nav>
 

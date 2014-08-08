@@ -33,24 +33,6 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
         $scope.$apply();
     });
 
-    /*
-    $scope.search = $stateParams.id;
-    $scope.data = CompoundDataFactory.compound;
-    promise = services.get_comps(test_db, [$scope.search]);
-    promise.then(
-        function(result){
-            //console.log(result[0]);
-            $scope.data = result[0];
-            CompoundDataFactory.compound = $scope.data;  // sets commmon data
-            $scope.$apply();
-        },
-        function(err){
-            console.log("acompoundCtl fail");
-            $scope.data =[];
-            $scope.$apply();
-        }
-    );*/
-
     $scope.launch_lightbox = function () {
         $("#cpd-img").lightbox_me({
             overlayCSS: {background: 'black', opacity:.6}

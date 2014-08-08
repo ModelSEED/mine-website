@@ -9,7 +9,7 @@ angular.module('app').factory('metablomicsDataFactory',function(){
         {name:'Negative',id:1},
         {name:'None',id:0}],
         charge : 'Positive',
-        halogenated : true,  
+        halogenated : true,
         statuses: []
     }
 });
@@ -23,7 +23,7 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
     $scope.unit = metablomicsDataFactory.unit
     $scope.enable = true;
     $scope.statuses =[];
-    
+
     console.log("metablomicsCtl");
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     promise = services.get_adducts();
@@ -31,7 +31,7 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
             $scope.adduct = result;
             $scope.statuses = [];
             $scope.$apply();
-            
+
         },
         function(err){
             console.log("metablomicsCtl fail");
@@ -46,10 +46,10 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
         metablomicsDataFactory.halogenated = $scope.halogenated;
         metablomicsDataFactory.unit = $scope.unit;
         metablomicsDataFactory.statuses = $scope.statuses;
-        if ($scope.statuses.length > 0) { 
+        if ($scope.statuses.length > 0) {
            $scope.enable = false;
           }
-      
+
      });
 
 })
@@ -83,7 +83,7 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
         }
     );
     $scope.colour = function(native,steps){
-        // If native_hit is true, make it green if 
+        // If native_hit is true, make it green if
         //min_steps is 0 make it lighter green
         if(native == true){
             return "#008000";
@@ -102,6 +102,7 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
         }
         return "#000000";
     };
+    
     $scope.$watch('currentPage + peaks + items', function() {
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
             $scope.numPages = Math.ceil($scope.peaks.length / $scope.numPerPage)
@@ -111,6 +112,3 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
         }
     });
 })
-
-
-

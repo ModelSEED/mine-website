@@ -65,6 +65,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "metablomicsCompoundsCtl"
     });
 
+    $stateProvider.state('AlterateMetablomicsCompounds', {
+      url: '/AlterateMetablomicsCompounds:search',
+      templateUrl: 'partials/metaboliteslist.html',
+      controller: "metablomicsCompoundsCtl"
+    });
+
 
     // STRUCTURES see structures.js
     $stateProvider.state('structuresres', {
@@ -84,7 +90,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    
+
     //Operator Creator see creator.js
     $stateProvider.state('creator', {
         url: '/creator',

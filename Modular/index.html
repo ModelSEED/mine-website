@@ -21,32 +21,27 @@
                 <li><a ui-sref="structure">Structure-Search</a></li>
                 <li><a ui-sref="faq">FAQs</a></li>
             </ul>
-                <form class="navbar-form navbar-right" role="form">
-                    <div ng-controller="mineCtl">
-                        <div class="form-group" >
-                            <input type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
-                            <button class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
-                        </div>
-                    </div>
-                </form>
-
+            <form class=" navbar-form navbar-right" role="form">
+                <div ng-controller="mineCtl">
+                        <input type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
+                        <button class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </form>
         </div>
     </nav>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-                <div class=" affix">
-                    <h2>Database</h2>
-                    <div ng-controller="datbaseCtl">
-                        <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
-                        </br>
-                    </div>
+                <h2>Database</h2>
+                <div ng-controller="datbaseCtl">
+                    <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
                 </div>
-            </div><!-- col 2 -->
+            </div>
+            <!-- col 2 -->
             <div class="col-sm-10">
                 <div ui-view></div>
-            </div><!-- col 2 -->
+            </div>
         </div>
     </div>
 </div>

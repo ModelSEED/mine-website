@@ -135,6 +135,7 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
     $scope.keggID = "";
     $scope.mapDatabase = "";
     $scope.testedCompounds = [];
+    $scope.map_message = "";
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
 
@@ -164,8 +165,29 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
         }
     };
 
-    $scope.mapOperator = function() {
-        alert("This function is not yet implemented");
+    $scope.mapOperator = function(db) {
+        if (validate_operator($scope.operator)) {
+            var ok = confirm("Mapping an operator takes 5-10 minutes. Proceed?");
+            if (ok) {
+                var promise = services.map_operator($scope.operator, db, "");
+                $('#map-btn').prop('disabled', true).text("Calculating...");
+                promise.then(
+                    function(result){
+                        alert(result);
+                        $('#map-btn').prop('disabled', false).text("Map Operator");
+                    },
+                    function(err){
+                        alert("ERROR!");
+                        console.log(err);
+                        $('#map-btn').prop('disabled', false).text("Map Operator");
+                    }
+                );
+            }
+        }
+    };
+
+    $scope.goEditor = function() {
+        $state.go('creator');
     };
 
     $scope.downloadFile = function(contents,filename) {

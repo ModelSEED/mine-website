@@ -139,6 +139,16 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
 
+    $scope.uploadOperator = function(){
+        var selectedFile = document.getElementById('operatorFile').files[0];
+        var reader = new FileReader();
+        reader.readAsText(selectedFile);
+        reader.onload=function(){
+            $scope.operator = reader.result;
+            $scope.$apply();
+        }
+    };
+
     var validate_operator = function(op){
         if (!op) {
             alert("ERROR: Operator is blank.");

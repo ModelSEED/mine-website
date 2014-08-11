@@ -173,8 +173,10 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
                 $('#map-btn').prop('disabled', true).text("Calculating...");
                 promise.then(
                     function(result){
-                        alert(result);
+                        $scope.map_message = result;
                         $('#map-btn').prop('disabled', false).text("Map Operator");
+                        $scope.$apply();
+                        alert("Mapping complete!");
                     },
                     function(err){
                         alert("ERROR!");

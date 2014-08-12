@@ -53,12 +53,12 @@ function operatorCreator(url, auth, auth_cb) {
 
     this.map_operator = function (operator, database, email, _callback, _errorCallback) {
     return json_call_ajax("operatorCreator.map_operator",
-        [operator, database, email], 1, _callback, _errorCallback);
+        [operator, database, email], 2, _callback, _errorCallback);
 };
 
     this.map_operator_async = function (operator, database, email, _callback, _error_callback) {
         deprecationWarning();
-        return json_call_ajax("operatorCreator.map_operator", [operator, database, email], 1, _callback, _error_callback);
+        return json_call_ajax("operatorCreator.map_operator", [operator, database, email], 2, _callback, _error_callback);
     };
  
 

@@ -6,7 +6,13 @@
 <body>
 <div class="col-sm-7">
     <h3>Operator Preview</h3>
-    <textarea ng-model="operator" class="form-control" style="{resize: none}" rows="35"></textarea>
+    <textarea ng-model="operator" class="form-control" style="{resize: none}" rows="30"></textarea>
+    <div class="input-group">
+        <input type='file' class="form-control" multiple='false' id='operatorFile'>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="uploadOperator()">Upload Operator</button>
+        </span>
+    </div>
 </div>
 <div class="col-sm-5">
     <h3>Testing Functions</h3>
@@ -35,13 +41,25 @@
             </span>
         </div>
     </div><br>
-    {{map_message}}
-    <div class="input-group">
-        <input type='text' class="form-control" ng-model='mapDatabase' placeholder="Mapping Database">
-        <span class="input-group-btn">
-            <button id="map-btn" type="button" class="btn btn-primary" ng-disabled="!mapDatabase"
-                    ng-click="mapOperator(mapDatabase)">Map Operator</button>
-        </span>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Mapped Reactions</h3>
+        </div>
+        <div class="panel-body" ng-show='mappedReactions.length'>
+            {{mappedReactions[1].length}} of {{mappedReactions[0]}} total reactions mapped
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat='rxn in mappedReactions[1]'>
+                <a target="_blank" ng-href='http://www.genome.jp/dbget-bin/www_bget?rn:{{rxn}}'>{{rxn}}</a>
+            </li>
+        </ul>
+        <div class="input-group">
+            <input type='text' class="form-control" ng-model='mapDatabase' placeholder="Mapping Database">
+            <span class="input-group-btn">
+                <button id="map-btn" type="button" class="btn btn-primary" ng-disabled="!mapDatabase"
+                        ng-click="mapOperator(mapDatabase)">Map Operator</button>
+            </span>
+        </div>
     </div><br>
     <div class="btn-group btn-group-justified">
         <div class="btn-group">

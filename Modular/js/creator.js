@@ -135,9 +135,19 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
     $scope.keggID = "";
     $scope.mapDatabase = "";
     $scope.testedCompounds = [];
-    $scope.map_message = "";
+    $scope.mappedReactions = "";
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
+
+    $scope.uploadOperator = function(){
+        var selectedFile = document.getElementById('operatorFile').files[0];
+        var reader = new FileReader();
+        reader.readAsText(selectedFile);
+        reader.onload=function(){
+            $scope.operator = reader.result;
+            $scope.$apply();
+        }
+    };
 
     var validate_operator = function(op){
         if (!op) {
@@ -173,7 +183,8 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
                 $('#map-btn').prop('disabled', true).text("Calculating...");
                 promise.then(
                     function(result){
-                        $scope.map_message = result;
+                        $scope.mappedReactions = result;
+                        console.log(result);
                         $('#map-btn').prop('disabled', false).text("Map Operator");
                         $scope.$apply();
                         alert("Mapping complete!");

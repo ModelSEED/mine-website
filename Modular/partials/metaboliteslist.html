@@ -1,31 +1,37 @@
-<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}</br><pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
 
-  <div ng-repeat="p in filteredData" >
-      <div  ng-repeat="a in p.adducts" >
 <table class="table table-striped table-hover">
   <thead>
 <tr>
 <th>M/Z</th>
 <th>Adduct</th>
 <th>Formula</th>
-<th></th>
+<th>Compound</th>
 <th>MINE ID</th>
 
 </tr>
+<tr>
+<th><input type="text" placeholder="Search" ng-model="searchMZ"></th>
+<th><input type="text" placeholder="Search" ng-model="searchAdduct"></th>
+<th><input type="text" placeholder="Search with RegEx" ng-model="searchFormula"></th>
+<th><input type="text" placeholder="Search" ng-model="searchCompound"></th>
+<th><input type="text" placeholder="Search" ng-model="searchMINE"></th>
+
+</tr>
 </thead>
-            <tr ng-repeat="i in a.isomers">
-              <td>{{p.name}}</td>
-              <td>{{a.adduct}}</td>
-              <td>{{a.formula}}</td>
+            <tr ng-repeat="f in filteredData">
+              <td>{{f.name}}</td>
+              <td>{{f.adduct}}</td>
+              <td>{{f.formula}}</td>
               <td style="text-align: center">
               <Ui style="list-style: none;">
-                <li><a  ui-sref="acompound.overview({id:i._id})">
-                  <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{i._id}}.svg" width="70" >
+                <li><a  ui-sref="acompound.overview({id:f.id})">
+                  <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
                 </a></li>
-                <li  >{{i.Names[0]}}</li>
+                <li  >{{f.fname}}</li>
             </Ui>
               </td>
-              <td>{{i.MINE_id}}</td>
+              <td>{{f.MINE_id}}</td>
             </tr>
           </table>
     </div>

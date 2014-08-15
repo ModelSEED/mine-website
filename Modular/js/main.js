@@ -68,7 +68,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('AlterateMetablomicsCompounds', {
       url: '/AlterateMetablomicsCompounds:search',
       templateUrl: 'partials/metaboliteslist.html',
-      controller: "metablomicsCompoundsCtl"
+      controller: "altMetablomicsCompoundsCtl"
     });
 
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--PLEASE DO NOT MODIFY THIS FILE AND BE AWARE THAT THE FILE CONTAINS CONFIDENTIAL INFORMATION.-->
+<ChemAxon>
+<License>
+<Field Name="Software" Value="Marvin for JavaScript"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFHlAcEUaIbFGcFC3MZaH0IXKFnxgAhQY7SNcvnoWSW/SYftqz/z8yhG0cA=="/>
+</License>
+</ChemAxon>

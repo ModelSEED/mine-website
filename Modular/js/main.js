@@ -4,12 +4,16 @@ angular.module('app').factory('currentState', function(){
 });
 
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
-    var visited = $cookieStore.get('mine');
-    if( typeof(visited) == 'undefined') {
-        $cookieStore.put('mine', "mine_visitor");
+    $scope.startGeneralTour = function () {
         var tour = new Tour(generalTour());
         tour.init();
         tour.start();
+    };
+
+    var visited = $cookieStore.get('mine');
+    if( typeof(visited) == 'undefined') {
+        $cookieStore.put('mine', "mine_visitor");
+        $scope.startGeneralTour()
     }
 });
 

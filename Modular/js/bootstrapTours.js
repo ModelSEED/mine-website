@@ -1,6 +1,7 @@
 var generalTour = function(){
     var host = window.location.href.split('#')[0];
     return {
+        storage:false,
         steps: [
             {
                 orphan: true,
@@ -25,21 +26,21 @@ var generalTour = function(){
                 content: "You can switch between the MINE source databases here any time."
             },
             {
+                onShow: function(){window.location.assign(host+ '#/compoundsascorbate,undefined')},
                 element: "#comp-row",
                 placement: "left",
                 reflex: true,
                 title: "Go to the compound page",
-                content: "Once you have found an interesting compound, click on the row to see more details",
-                onNext: function(){
-                    window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')
-                }
+                content: "Once you have found an interesting compound, click on the row to see more details"
             },
             {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
                 orphan: true,
                 title: "Compound Data page",
                 content: "This page displays any data available for a MINE compound."
             },
             {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
                 element: "#compound-image",
                 title: "Get a closer look at the compound",
                 content: "Click the compound image to get a closer look at the chemical structure. When you are done " +
@@ -50,22 +51,22 @@ var generalTour = function(){
                 placement: "left",
                 title: "Find more information about a compound",
                 content: "Click the header of any of these sections to see their contents. You can find the compound in other " +
-                    "databases in various chiral and charged forms",
-                onNext: function(){
-                    window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')
-                }
+                    "databases in various chiral and charged forms"
             },
             {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
                 element: "#reactions",
                 title: "Explore reactions that involve this compound",
                 content: "See all the predicted reactions that produce or consume this compound."
             },
             {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
                 element: "#rxn-filter",
                 title: "Filter by reaction type",
                 content: "Enter a partial EC number to show only reactions predicted by an operator"
             },
             {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
                 element: "#rxn-img",
                 placement: "left",
                 title: "Examine computationally predicted derivatives",

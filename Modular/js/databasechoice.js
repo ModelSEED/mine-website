@@ -2,9 +2,14 @@ angular.module('app').factory('DbChoice', function(){
     return {dbid:'KEGGexp',where:"home"};
 });
 
-angular.module('app').controller('resetCtl',  function (DbChoice) {
+angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
   console.log("reset");
   DbChoice.where = "home";
+  $scope.startGeneralTour = function () {
+        var tour = new Tour(generalTour());
+        tour.init();
+        tour.start();
+    };
 });
 
 angular.module('app').controller('datbaseCtl',  function ($scope,$state,DbChoice,quickFactory,currentState) {

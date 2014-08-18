@@ -19,8 +19,15 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     //HOME
     $stateProvider.state('home', {
         url: '/home',
-        templateUrl: 'partials/home.html',
-        contoler: "resetCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/home.html',
+                contoler: "resetCtl"
+            },
+            'sidebar':{
+                templateUrl: 'partials/testh.html'
+            }
+        }
     });
     //FAQ
     $stateProvider.state('faq', {
@@ -62,20 +69,42 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     //METABLOMICS see metablomics.js
     $stateProvider.state('metablomics', {
+        
         url: '/metablomics',
-        templateUrl: 'partials/metablomics.html',
-        controller: "metablomicsCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/metablomics.html',
+                controller: "metablomicsCtl"
+            },            
+            'sidebar':{
+                templateUrl: 'partials/testm.html'
+            }
+        }
     });
     $stateProvider.state('metablomicsCompounds', {
-        url: '/metablomicsCompounds:search',
-        templateUrl: 'partials/list.html',
-        controller: "metablomicsCompoundsCtl"
+        url: '/metablomicsCompounds:search' ,
+        views: {
+            '':{      
+                    templateUrl: 'partials/list.html',
+                    controller: "metablomicsCompoundsCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/testm.html'
+                }
+            }
     });
 
     $stateProvider.state('AlterateMetablomicsCompounds', {
       url: '/AlterateMetablomicsCompounds:search',
-      templateUrl: 'partials/metaboliteslist.html',
-      controller: "altMetablomicsCompoundsCtl"
+      views: {
+            '':{
+                templateUrl: 'partials/metaboliteslist.html',
+                controller: "altMetablomicsCompoundsCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/testm.html'
+            }
+        }
     });
 
 

@@ -1,6 +1,5 @@
 var generalTour = function(){
     var host = window.location.href.split('#')[0];
-    console.log(host);
     return {
         steps: [
             {

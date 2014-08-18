@@ -4,11 +4,13 @@ angular.module('app').factory('currentState', function(){
 });
 
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
-    var visted = $cookieStore.get('mine');
-    if( typeof(visted) == 'undefined') {
-        alert("your new, hello");
-    }   
-    $cookieStore.put('mine', "mine_visitor");
+    var visited = $cookieStore.get('mine');
+    if( typeof(visited) == 'undefined') {
+        $cookieStore.put('mine', "mine_visitor");
+        var tour = new Tour(generalTour());
+        tour.init();
+        tour.start();
+    }
 });
 
 // default contoler on the mine quick search is in quicksearch.js

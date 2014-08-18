@@ -75,8 +75,8 @@ var generalTour = function(){
             {
                 orphan: true,
                 title: "Learning more",
-                content: "If you have additional questions, please check out our Frequently Asked Questions. You might also me " +
-                    "interested in taking our Metabolomics tour here. We hope you find this resource valuable!"
+                content: "If you have additional questions, please check out our Frequently Asked Questions. You might also be " +
+                    "interested in taking our Metabolomics tour. We hope you find this resource valuable!"
             }
         ]
     }

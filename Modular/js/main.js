@@ -1,8 +1,15 @@
-angular.module('app',['ui.router','ui.bootstrap']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies']);
 angular.module('app').factory('currentState', function(){
     return 'home';
 });
 
+angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
+    var visted = $cookieStore.get('mine');
+    if( typeof(visted) == 'undefined') {
+        alert("your new, hello");
+    }   
+    $cookieStore.put('mine', "mine_visitor");
+});
 
 // default contoler on the mine quick search is in quicksearch.js
 
@@ -104,3 +111,4 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
+

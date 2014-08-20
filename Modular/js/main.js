@@ -30,9 +30,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
                 templateUrl: 'partials/home.html',
                 contoler: "resetCtl"
             },
-            'sidebar':{
-                templateUrl: 'partials/testh.html'
-            }
         }
     });
     //FAQ
@@ -83,7 +80,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
                 controller: "metablomicsCtl"
             },            
             'sidebar':{
-                templateUrl: 'partials/testm.html'
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
             }
         }
     });
@@ -95,7 +93,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
                     controller: "metablomicsCompoundsCtl"
                 },
             'sidebar':{
-                templateUrl: 'partials/testm.html'
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
                 }
             }
     });
@@ -108,7 +107,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
                 controller: "altMetablomicsCompoundsCtl"
                 },
             'sidebar':{
-                templateUrl: 'partials/testm.html'
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
             }
         }
     });

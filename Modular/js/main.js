@@ -1,4 +1,4 @@
-angular.module('app',['ui.router','ui.bootstrap','ngCookies']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide']);
 angular.module('app').factory('currentState', function(){
     return 'home';
 });

@@ -13,7 +13,7 @@
                 <legend>Search Type</legend>
                 <div class="radio">
                     <label class="radio" for="type_similarity">
-                        <input checked="checked" data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
+                        <input data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
                         Similarity
                     </label>
                 </div>
@@ -30,6 +30,7 @@
                     </label>
                 </div>
                     </div>
+                <div>
                 <legend>Options</legend>
                 <div id="sim-thresh" class="form-group"><label for="similarity">Similarity threshold</label>
                     <input class="form-control input-sm" ng-model="sthresh" id="similarity" name="similarity" type="text" value="0.7" />
@@ -44,8 +45,9 @@
                     </select>
                 </div>
                 <button id = "btn-molExport" class="btn  btn-primary" ng-click="find()"><span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
             </fieldset>
-            <a href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
+            <a class="pull-right" href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
         </div>
     </div>
 </div>

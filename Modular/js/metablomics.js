@@ -10,7 +10,8 @@ angular.module('app').factory('metablomicsDataFactory',function(){
         {name:'None',id:0}],
         charge : 'Positive',
         halogenated : true,
-        statuses: ['M+H', 'M+Na']
+        statuses: ['M+H', 'M+Na'],
+        metaModels:[]
     }
 });
 
@@ -66,7 +67,8 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
     var test_db = DbChoice.dbid;
     var charge = (metablomicsDataFactory.charge == "Positive");
     var precision =  metablomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision,metablomicsDataFactory.statuses, [], metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
+    console.log("met"+metablomicsDataFactory.metaModels.toString())
+    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision, metablomicsDataFactory.statuses, metablomicsDataFactory.metaModels, metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
     DbChoice.where = "metablomics";
     promise.then(function(result){
             console.log(result);
@@ -134,7 +136,8 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
     var test_db = DbChoice.dbid;
     var charge = (metablomicsDataFactory.charge == "Positive");
     var precision =  metablomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision,metablomicsDataFactory.statuses, [], metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
+    console.log(metablomicsDataFactory.metaModels);
+    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision,metablomicsDataFactory.statuses, metablomicsDataFactory.metaModels, metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
     DbChoice.where = "metablomics";
     promise.then(function(result){
             $scope.peaks = result;
@@ -149,7 +152,21 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
             $scope.$apply();
         }
     );
-    
+    $scope.colour = function(native,steps){
+        // If native_hit is true, make it green if
+        //min_steps is 0 make it lighter green
+        if(native == true){
+            return "#FF0000";
+            //return "#008000";
+        }
+        if (typeof steps == "number"){
+            if (steps ==0){
+                return "#84C884";
+            }
+        }
+        return "#000000";
+    };
+
     var countData = function(id,mz,adduct,compound,formula){
         var c = 0;
         for (var i = 0; i < $scope.peaks.length   ; i++) {
@@ -157,7 +174,7 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
                 for(var k = 0; k<$scope.peaks[i].adducts[j].isomers.length ;k++ ){
                     var fname = "";
                     if(typeof($scope.peaks[i].adducts[j].isomers[k].Names) != 'undefined'){
-                           var fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
+                        fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
                     }
                     if(($scope.peaks[i].name.toString().indexOf($scope.searchMZ) > -1)
                         &&
@@ -196,7 +213,7 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
                     for(var k = 0; k<$scope.peaks[i].adducts[j].isomers.length ;k++ ){
                         var fname = "";
                         if(typeof($scope.peaks[i].adducts[j].isomers[k].Names) != 'undefined'){
-                           var fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
+                           fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
                         }
                         var patt = new RegExp($scope.searchFormula);
                         if(
@@ -212,7 +229,7 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
                             ){
                             if((c>=$scope.begin)&&(c<=$scope.end)){
                                 
-                                $scope.filteredData.push({name:$scope.peaks[i].name,id:$scope.peaks[i].adducts[j].isomers[k]._id,adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, fname:fname})
+                                $scope.filteredData.push({name:$scope.peaks[i].name,id:$scope.peaks[i].adducts[j].isomers[k]._id,adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, fname:fname, native_hit:$scope.peaks[i].adducts[j].isomers[k].native_hit, steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source})
                             }
                             c++;
                         }

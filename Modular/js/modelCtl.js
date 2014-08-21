@@ -1,7 +1,8 @@
 
-angular.module('app').controller('modelsCtl', function($scope,DbChoice){
+angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, metablomicsDataFactory){
     $scope.model = "";
     $scope.modelList = [];
+    $scope.modelChoice= "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $scope.test_db = DbChoice.dbid;
    
@@ -23,5 +24,10 @@ angular.module('app').controller('modelsCtl', function($scope,DbChoice){
             );
         }
     });
-    
+    $scope.$watch('modelChoice', function() {
+        if ($scope.modelChoice) {
+            metablomicsDataFactory.metaModels = $scope.modelChoice;
+            $state.go($state.current, {}, {reload: true});
+        }
+    });
 });

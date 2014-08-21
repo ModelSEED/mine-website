@@ -262,6 +262,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 selector: "#cpd-test",
                 heading: "Test reactivity with kegg compounds",
                 text: "This feature let's you enter a KEGG compound ID to check how many reactions the operator predicts.",
+                placement: "left",
                 scroll: true
             },
             {
@@ -271,6 +272,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 text: "This feature let's you test how many total reactions the operator predicts when run against all KEGG" +
                     "compounds as well as how many of those predicted reactions are present in KEGG. This test takes up to" +
                     "ten minutes to run though so be sure your operator is correct before testing.",
+                placement: "left",
                 scroll: true
             },
             {

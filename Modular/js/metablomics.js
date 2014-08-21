@@ -1,7 +1,7 @@
 // Allows for communication between controlers note set up for test data
 angular.module('app').factory('metablomicsDataFactory',function(){
     return{
-        trace :  "164.0937301\n0.0", //moverz
+        trace :  "164.0937301", //moverz
         tolerance : 3,
         unit : false,
         charges :  [
@@ -10,7 +10,7 @@ angular.module('app').factory('metablomicsDataFactory',function(){
         {name:'None',id:0}],
         charge : 'Positive',
         halogenated : true,
-        statuses: []
+        statuses: ['M+H', 'M+Na']
     }
 });
 
@@ -20,7 +20,7 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
     $scope.charges =  metablomicsDataFactory.charges;
     $scope.charge=$scope.charges[0];
     $scope.halogenated = metablomicsDataFactory.halogenated;
-    $scope.unit = metablomicsDataFactory.unit
+    $scope.unit = metablomicsDataFactory.unit;
     $scope.enable = true;
     $scope.statuses =[];
 

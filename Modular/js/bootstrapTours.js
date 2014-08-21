@@ -14,7 +14,33 @@ var generalTour = function(){
                 placement: "left",
                 title: "Find compounds with Quick Search",
                 content: "You can search the database with chemical identifiers like InChIKeys or KEGG Codes here. You can also " +
-                    "enter text to search aliases, EC Classes and Pathway data.",
+                    "enter text to search aliases, EC Classes and Pathway data."
+            },
+            {
+                onShow: function(){window.location.assign(host+ '#/structure')},
+                element: "#struct-tab",
+                placement: "bottom",
+                title: "Use structure search",
+                content: "There are a number of structural search features available here"
+            },
+            {
+                element: "#canvas",
+                title: "Chemical Canvas",
+                content: "You can draw a chemical structure with Marvin4JS"
+            },
+            {
+                element: "#search-options",
+                placement: "left",
+                title: "Search Options",
+                content: "You can search for compounds with similar functional groups, with common substructure or " +
+                    "exact matches to your compound"
+            },
+            {
+                onShow: function(){window.location.assign(host+ '#/structure')},
+                element: "#sim-thresh",
+                placement: "left",
+                title: "Similarity Threshold",
+                content: "This allows you to set a minimum Tanimoto similarity (using FP4 fingerprints)",
                 onNext: function(){
                     window.location.assign(host+ '#/compoundsascorbate,undefined')
                 }
@@ -71,6 +97,20 @@ var generalTour = function(){
                 placement: "left",
                 title: "Examine computationally predicted derivatives",
                 content: "Mouse over a structure to display it's name and MINE id. Click to go to that compound's info page"
+            },
+            {
+                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
+                element: "#struct-tab",
+                placement: "bottom",
+                title: "Use structure search",
+                content: "There are a number of structural search features available here"
+            },
+            {
+                onShow: function(){window.location.assign(host+ '#/structure')},
+                element: "#struct-tab",
+                placement: "bottom",
+                title: "Use structure search",
+                content: "There are a number of structural search features available here"
             },
             {
                 orphan: true,

@@ -276,10 +276,22 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 scroll: true
             },
             {
-                type: "title",
-                heading: "Next Steps",
-                text: "That's the basics of using this web tool to create operators."
-            }
+                type: "element",
+                selector: "#upload-op",
+                heading: "Upload an existing operator",
+                text: "You can even use these tools on existing operators. Use this box to upload an operator of your " +
+                    "own from your computer.",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#download",
+                heading: "Download the completed operator",
+                text: "If you are happy with the performance of this operator, click hear to download it as a BNICE " +
+                    "compatible .dat file",
+                placement: "left",
+                scroll: true
+            },
         ];
 
         function loadReactants() {

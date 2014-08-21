@@ -1,8 +1,21 @@
-angular.module('app',['ui.router','ui.bootstrap']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide']);
 angular.module('app').factory('currentState', function(){
     return 'home';
 });
 
+angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
+    $scope.startGeneralTour = function () {
+        var tour = new Tour(generalTour());
+        tour.init();
+        tour.start();
+    };
+
+    var visited = $cookieStore.get('mine');
+    if( typeof(visited) == 'undefined') {
+        $cookieStore.put('mine', "mine_visitor");
+        $scope.startGeneralTour()
+    }
+});
 
 // default contoler on the mine quick search is in quicksearch.js
 
@@ -12,8 +25,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     //HOME
     $stateProvider.state('home', {
         url: '/home',
-        templateUrl: 'partials/home.html',
-        contoler: "resetCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/home.html',
+                contoler: "resetCtl"
+            },
+        }
     });
     //FAQ
     $stateProvider.state('faq', {
@@ -55,14 +72,45 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     //METABLOMICS see metablomics.js
     $stateProvider.state('metablomics', {
+        
         url: '/metablomics',
-        templateUrl: 'partials/metablomics.html',
-        controller: "metablomicsCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/metablomics.html',
+                controller: "metablomicsCtl"
+            },            
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
     });
     $stateProvider.state('metablomicsCompounds', {
-        url: '/metablomicsCompounds:search',
-        templateUrl: 'partials/list.html',
-        controller: "metablomicsCompoundsCtl"
+        url: '/metablomicsCompounds:search' ,
+        views: {
+            '':{      
+                    templateUrl: 'partials/list.html',
+                    controller: "metablomicsCompoundsCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+                }
+            }
+    });
+
+    $stateProvider.state('AlterateMetablomicsCompounds', {
+      url: '/AlterateMetablomicsCompounds:search',
+      views: {
+            '':{
+                templateUrl: 'partials/metaboliteslist.html',
+                controller: "altMetablomicsCompoundsCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
     });
 
 
@@ -84,7 +132,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    
+
     //Operator Creator see creator.js
     $stateProvider.state('creator', {
         url: '/creator',
@@ -98,3 +146,4 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
+

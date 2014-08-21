@@ -1,11 +1,7 @@
 
-<h2>{{id}}</h2>
-<h2>{{searchText}}</h2>
-<h3>{{message}}</h3>
-</br>
-<h3>{{items}} </h3>  
-<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
-
+<br>
+<pagination class="pull-right" total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+<h3>{{items}} </h3>
 <table class="table table-striped table-hover">  
     <thead>  
         <tr>  
@@ -16,14 +12,14 @@
         </tr>  
     </thead>  
     <tbody>
-        <tr ng-repeat="attribute in filteredData" ui-sref="acompound.overview({id:attribute._id})">
-            <td>
+        <tr id="comp-row" ng-repeat="attribute in filteredData" ui-sref="acompound.overview({id:attribute._id})">
+            <td >
                 <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" ></td>
-            <td>{{attribute.MINE_id}}</td>
-            <td><div ng-repeat="name in attribute.Names|limitTo:5">{{name}}<br></div></td>
-            <td>{{attribute.Formula}}</td>
+            <td  style="vertical-align:middle">{{attribute.MINE_id}}</td>
+            <td  style="vertical-align:middle"><div ng-repeat="name in attribute.Names|limitTo:5">{{name}}<br></div></td>
+            <td  style="vertical-align:middle">{{attribute.Formula}}</td>
         </tr>
     </tbody>  
     
 </table>
-<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+<pagination class="pull-right" total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>

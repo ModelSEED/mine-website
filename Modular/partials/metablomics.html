@@ -39,20 +39,24 @@
 		  	<select class="form-control" ng-model="charge" ng-options="c.name for c in charges"></select>
         	</br>
         	<label>Adducts </label></br>
-        	
+
     		<select multiple ng:model="statuses" >
                     <option ng-repeat="s in adduct[charge.id]" value="{{s}}">{{s}}</option>
             </select>
-    			
-        	
+
+
         	</br>
-        	
+
         	</br>
-          
+
            <a class="btn  btn-primary " ng-disabled="enable" ui-sref="metablomicsCompounds"><span class="glyphicon glyphicon-search"></span>
-          
-          
-          Search</a>
+             Search</a>
+           </br>
+         </br>
+             <a class="btn  btn-primary " ng-disabled="enable" ui-sref="AlterateMetablomicsCompounds"><span class="glyphicon glyphicon-search"></span>
+
+
+          SearchC</a>
   		</div>
   	</div>
   </div>

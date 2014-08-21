@@ -1,16 +1,21 @@
 <!doctype html>
 <html>
 <head>
+    <title>MINE</title>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/Gold-Miner-Icon.png">
+                               <link rel="shortcut icon" href="img/Gold-Miner-Icon.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="bootstrap/css/bootstrap-tour.min.css" rel="stylesheet" type="text/css"/>
     <link href="../ui-common/functional-site/assets/css/kb-visualizations.css" rel="stylesheet" type="text/css"/>
+    <link href="bower_components/ng-joyride/ng-joyride.css" rel="stylesheet">
 </head>
 
 <body>
 
 <!-- NAVIGATION -->
 <div ng-app="app">
-    <nav class="navbar navbar-default" role="navigation">
+<div ng-controller="cookieCtl"></div>
+    <nav class="navbar navbar-default " role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <img class="logo" src="img/Gold-Miner-Icon.png" width="46" style="float:left">
@@ -24,8 +29,8 @@
             </ul>
             <form class=" navbar-form navbar-right" role="form">
                 <div ng-controller="mineCtl">
-                        <input type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
-                        <button class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
+                        <input id="qs_text" type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
+                        <button id="qs_btn" class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
                 </div>
             </form>
         </div>
@@ -36,8 +41,9 @@
             <div class="col-sm-2">
                 <h2>Database</h2>
                 <div ng-controller="datbaseCtl">
-                    <select class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
+                    <select id="db-select" class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
                 </div>
+                <div ui-view = "sidebar"></div>
             </div>
             <!-- col 2 -->
             <div class="col-sm-10">
@@ -50,6 +56,7 @@
 <!-- General-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -57,10 +64,6 @@
 <script src="js/lib/Lightbox_me/jquery.lightbox_me.js" type="text/javascript"></script>
 <script src="bootstrap/js/bootstrap-tour.min.js" type="text/javascript"></script>
 
-<!-- deps for kegg pathway widget -->
-<script src="../ui-common/functional-site/assets/js/kbclient/workspaceDeluxe1.1.js"></script>
-<script src="../ui-common/src/kbwidget.js"></script>
-<script src="../ui-common/src/widgets/maps/kbasePathway.js"></script>
 
 <!-- Marvin-->
 <script src="js/lib/rainbow/rainbow-custom.min.js"></script>
@@ -81,7 +84,10 @@
 <script src="js/creator.js"></script>
 <script src="js/operatorCreatorClient.js"></script>
 <script src="js/databasechoice.js"></script>
+<script src="js/bootstrapTours.js"></script>
+<script src="js/modelCtl.js"></script>
+<script src="bower_components/ng-joyride/ng-joyride.js"></script>
 
 
-</body>
+</body onload>
 </html>

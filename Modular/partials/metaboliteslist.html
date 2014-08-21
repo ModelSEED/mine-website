@@ -1,0 +1,48 @@
+<div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+            <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+            </div>
+            <div class="col-sm-4" ></br></br>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+<table class="table table-striped table-hover">
+  <thead>
+<tr>
+<th>M/Z</th>
+<th>Adduct</th>
+<th>Formula</th>
+<th>Compound</th>
+<th>MINE ID</th>
+
+</tr>
+<tr>
+<th><input type="text" placeholder="Search" ng-model="searchMZ"></th>
+<th><input type="text" placeholder="Search" ng-model="searchAdduct"></th>
+<th><input type="text" placeholder="Search with RegEx" ng-model="searchFormula"></th>
+<th><input type="text" placeholder="Search" ng-model="searchCompound"></th>
+<th><input type="text" placeholder="Search" ng-model="searchMINE"></th>
+
+</tr>
+</thead>
+            <tr ng-repeat="f in filteredData" style="color:{{colour(f.native_hit,f.steps_from_source)}}">
+              <td style="vertical-align:middle">{{f.name}}</td>
+              <td style="vertical-align:middle">{{f.adduct}}</td>
+              <td style="vertical-align:middle">{{f.formula}}</td>
+              <td style="text-align: center">
+              <Ui style="list-style: none;">
+                <li><a  ui-sref="acompound.overview({id:f.id})">
+                  <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
+                </a></li>
+                <li  >{{f.fname}}</li>
+            </Ui>
+              </td>
+              <td style="vertical-align:middle">{{f.MINE_id}}</td>
+            </tr>
+          </table>
+    </div>
+  </div>
+</table>
+    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>

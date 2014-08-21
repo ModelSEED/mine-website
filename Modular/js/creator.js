@@ -38,6 +38,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                      {'id': 37, 'name': 'Water'}];
     $scope.compoundChoice = $scope.cofactors[0];
     $scope.indices = '';
+    $scope.tour = false;
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
     /*var promise = services.get_cofactors();
@@ -62,6 +63,8 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
             "atomIndicesVisible" : true,
             "backgroundColor": "#f5f5f5"
             });
+        initializeTour();
+        $scope.tour = true
     }, function(error) {
         alert("Loading of the sketcher failed"+error);
     });
@@ -126,6 +129,188 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 console.log(err);
             }
         );
+    };
+    function initializeTour(){
+        $scope.tourConfig = [
+            {
+                type: "title",
+                heading: "Welcome to the Operator Creator Tour",
+                text: "This Demo will walk you through the basics of generating reaction rules with the MINE operator" +
+                    " creator tool. However it won't cover the how to successfully generalize chemistry."
+
+            },
+            {
+                type: "element",
+                selector: "#opName",
+                heading: "Operator Name",
+                placement: "left",
+                text: "You should give your operator a descriptive name. If it's a based on enzyme chemistry this is " +
+                    "usually a variation on the EC class covered",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#canvas",
+                heading: "Marvin Canvas",
+                text: "This is the canvas for sketching the structures of reactants and products. Special atoms and " +
+                    "ring codes can be entered using the psudoatom button. Click the A at the lower right-hand panel " +
+                    "and select the blue question mark. Alternates atoms should be separated with commas and ring-codes " +
+                    "with underscores.",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: loadReactants
+            },
+            {
+                type: "element",
+                selector: "#canvas",
+                heading: "Example Reactants",
+                text: "Here we've loaded an example reactant. Note the representation of all bonds and hydrogen atoms" +
+                    " not explicitly drawn using psudoatoms.",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#btn-setR",
+                heading: "Set the Reactants",
+                text: "When we are happy with the display of the reactants we can set them by clicking this button",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: setReactants
+            },
+            {
+                type: "element",
+                selector: "#btn-setR",
+                heading: "Reactants are set",
+                text: "Note how the button turns green when the reactants are set. If we want to change the reactants" +
+                    " later, all we need to do is click the button to load them back into the editor",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#compoundSelect",
+                heading: "Enter reactant information",
+                text: "Now we may add in compound information. Select a specific cofactor or Any and enter the atoms" +
+                    " spanned by that compound",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#compoundAdd",
+                heading: "Add reactant information",
+                text: "Click to add the data above to the product or reactant arrays.",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: loadProducts
+            },
+            {
+                type: "element",
+                selector: "#canvas",
+                heading: "Model reaction changes",
+                text: "Now we can model the reaction changes by adding or removing bonds. During this process it's " +
+                    "important not to add or delete atoms because this could corrupt the atom indexing and lead to " +
+                    "nonsensical operators.",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: fillForm
+            },
+            {
+                type: "element",
+                selector: "#op-form",
+                heading: "Fill out the rest of the details",
+                text: "Next fill in all the remaining information",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: setProducts
+            },
+            {
+                type: "element",
+                selector: "#bottom-btns",
+                heading: "Fill out the rest of the details",
+                text: "With the for filled out and the reactants and products loaded we are ready to gen",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "function",
+                fn: buildOp
+            },
+            {
+                type: "element",
+                selector: "#op-text",
+                heading: "Operator text",
+                text: "This is the text that was generated that represents the chemical transformation. You can edit the " +
+                    "text here and see it's impact on the operators function if necessary",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#cpd-test",
+                heading: "Test reactivity with kegg compounds",
+                text: "This feature let's you enter a KEGG compound ID to check how many reactions the operator predicts.",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#map-test",
+                heading: "Test reaction mapping",
+                text: "This feature let's you test how many total reactions the operator predicts when run against all KEGG" +
+                    "compounds as well as how many of those predicted reactions are present in KEGG. This test takes up to" +
+                    "ten minutes to run though so be sure your operator is correct before testing.",
+                placement: "left",
+                scroll: true
+            },
+            {
+                type: "title",
+                heading: "Next Steps",
+                text: "That's the basics of using this web tool to create operators."
+            }
+        ];
+
+        function loadReactants() {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="0.1736421646374966" y2="6.043297435888288"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="1"/><bond atomRefs2="a1 a6" order="2"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/><bond atomRefs2="a8 a7" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+              alert(error);
+            });
+        }
+        function loadProducts() {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="-1.9096911686958364" y2="6.001630769221622"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="2"/><bond atomRefs2="a1 a6" order="1"/><bond atomRefs2="a8 a1" order="1"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+            alert(error);
+            });
+        }
+        function fillForm() {
+            $scope.opName='Example_Operator';
+            $scope.reactants = ['Any: 1-8'];
+            $scope.products = ['Any'];
+            $scope.comments = 'This is an example operator'
+
+        }
+        function setReactants(){
+            $scope.mrvIO("mrvReactants")
+        }
+        function setProducts(){
+            $scope.mrvIO("mrvProducts")
+        }
+        function buildOp() {
+            $scope.buildOp()
+        }
+    }
+    $scope.startOpTour = function () {
+        $scope.startJoyRide = true;
     };
 });
 

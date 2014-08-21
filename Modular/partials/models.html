@@ -10,9 +10,9 @@
 </br>
 </br>
 
-<select  style="width: 150px" multiple ng:model="modelChoice">
+<select  style="width: 150px; height: 100px;" multiple ng:model="modelChoice">
      <option ng-repeat="s in modelList" value="{{s}}">{{s}}</option>
 </select>
 
 </br>
-{{modelChoice[0]}}
+{{selectedModels}}

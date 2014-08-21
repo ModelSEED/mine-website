@@ -21,14 +21,10 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
 
-    if (!CompoundDataFactory.compound) {
-        CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
-    }
-    else {
-        $scope.data = CompoundDataFactory.compound;
-    }
+    CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+
     $scope.$on("compoundLoaded", function () {
-        console.log("compLoaded");
+        //console.log("compLoaded");
         $scope.data = CompoundDataFactory.compound;
         $scope.$apply();
     });

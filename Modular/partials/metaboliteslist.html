@@ -18,7 +18,7 @@
 <th>MINE ID</th>
 
 </tr>
-<tr>
+<tr id="filters">
 <th><input type="text" placeholder="Search" ng-model="searchMZ"></th>
 <th><input type="text" placeholder="Search" ng-model="searchAdduct"></th>
 <th><input type="text" placeholder="Search with RegEx" ng-model="searchFormula"></th>
@@ -34,7 +34,7 @@
               <td style="text-align: center">
               <Ui style="list-style: none;">
                 <li><a  ui-sref="acompound.overview({id:f.id})">
-                  <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
+                  <img id="met-img" class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
                 </a></li>
                 <li  >{{f.fname}}</li>
             </Ui>

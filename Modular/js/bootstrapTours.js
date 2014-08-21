@@ -93,10 +93,11 @@ var metabolomicsTour = function(){
                     "databases to annotate high resolution metabolomics data."
             },
             {
-                element: "#qs_text",
-                placement: "left",
+                element: "#met-tab",
+                placement: "bottom",
                 title: "The Metabolomics tab",
                 content: "This link will take you to the metabolomics annotation form.",
+                reflex: true,
                 onNext: function(){
                     window.location.assign(host+ '#/metabolomics')
                 }
@@ -108,51 +109,61 @@ var metabolomicsTour = function(){
                 content: "You can switch between the MINE source databases here any time."
             },
             {
-                onShow: function(){window.location.assign(host+ '#/compoundsascorbate,undefined')},
-                element: "#comp-row",
-                placement: "left",
-                reflex: true,
-                title: "Go to the compound page",
-                content: "Once you have found an interesting compound, click on the row to see more details"
+                element: "#models_text",
+                placement: "right",
+                title: "Selecting a metabolic model",
+                content: "Type in an organism name to search for a metabolic model. Click a model in the box below to" +
+                    "set the model as the standard for native metabolites."
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
+                element: "#trace",
+                title: "Enter M/Z values",
+                content: "Type or paste mass/charge ratios, one per line."
+            },
+            {
+                element: "#tolerance",
+                placement: "left",
+                title: "Set the mass tolerance",
+                content: "You can adjust the mass range for all your results and units of entry."
+            },
+            {
+                element: "#halogen",
+                placement: "left",
+                title: "Toggle the presence of halogenated compounds",
+                content: "KEGG has a number of non-natural halogenated compounds. If checked, these will be included in" +
+                    " searches"
+            },
+            {
+                element: "#charge",
+                placement: "left",
+                title: "Select ion mode",
+                content: "Select an ion charge to change the list of available adduct types"
+            },
+            {
+                element: "#adducts",
+                placement: "left",
+                title: "Select adducts to search on",
+                content: "You can select potential adduct types here. use CTRL+click to select individual adducts or " +
+                    "SHIFT+click to select a range of compounds",
+                onNext: function(){
+                    window.location.assign(host+ '#/AlternateMetabolomicsCompounds')
+                }
+            },
+            {
                 orphan: true,
-                title: "Compound Data page",
-                content: "This page displays any data available for a MINE compound."
+                title: "Tabular Metabolomics Results",
+                content: "This page displays information for all compounds which match your search criteria. Compounds " +
+                    "in the source database are shown in green while those in a selected metabolic model are shown in red."
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
-                element: "#compound-image",
-                title: "Get a closer look at the compound",
-                content: "Click the compound image to get a closer look at the chemical structure. When you are done " +
-                    "click the background."
+                element: "#filters",
+                title: "Filtering results",
+                content: "You can enter text here to filter the results shown."
             },
             {
-                element: "#db-links",
-                placement: "left",
-                title: "Find more information about a compound",
-                content: "Click the header of any of these sections to see their contents. You can find the compound in other " +
-                    "databases in various chiral and charged forms"
-            },
-            {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
-                element: "#reactions",
-                title: "Explore reactions that involve this compound",
-                content: "See all the predicted reactions that produce or consume this compound."
-            },
-            {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
-                element: "#rxn-filter",
-                title: "Filter by reaction type",
-                content: "Enter a partial EC number to show only reactions predicted by an operator"
-            },
-            {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
-                element: "#rxn-img",
-                placement: "left",
-                title: "Examine computationally predicted derivatives",
-                content: "Mouse over a structure to display it's name and MINE id. Click to go to that compound's info page"
+                element: "#met-img",
+                title: "Getting more information",
+                content: "Click the compound image to see the compound's full entry."
             },
             {
                 orphan: true,

@@ -11,16 +11,14 @@
   		<div class="panel-body">
 			<div class="col-sm-6 ">
   				<div class="form-group">
-    				<label for="exampleInputEmail1">Peak M/Z</label>
-    				<textarea ng-model="trace" class="form-control" rows="10"></textarea>
+    				<label>Peak M/Z</label>
+    				<textarea id="trace" ng-model="trace" class="form-control" rows="10"></textarea>
   				</div>
   			</div>
    			<div class="col-sm-5 ">
-		  	<div class="form-group">
+		  	<div id="tolerance" class="form-group">
 		    	<label>Tolerance </label></br>
 		    	<input type="number" name="input" ng-model="tolerance" min="0" max="99" required>
-		  	</div>
-		  	<div class="form-group">
         		<div class="radio">
                 <input type="radio" value=true ng-model="unit">
                 ppm
@@ -30,17 +28,18 @@
                 mDa
             </div>
     		</div>
-		  	<div class="checkbox">
+		  	<div id="halogen" class="checkbox">
 		  		<label>Halogenated compounds <input type="checkbox" ng-model="halogenated" ng-checked="0">
 		  		</label>
         	</div>
 
 		  	<label>Charge </label>
-		  	<select class="form-control" ng-model="charge" ng-options="c.name for c in charges"></select>
+		  	<select id="charge" class="form-control" ng-model="charge" ng-options="c.name for c in charges"></select>
         	</br>
+
         	<label>Adducts </label></br>
 
-    		<select multiple ng:model="statuses" >
+    		<select id="adducts" multiple ng:model="statuses" >
                     <option ng-repeat="s in adduct[charge.id]" value="{{s}}">{{s}}</option>
             </select>
 
@@ -49,11 +48,11 @@
 
         	</br>
 
-           <a class="btn  btn-primary " ng-disabled="enable" ui-sref="metablomicsCompounds"><span class="glyphicon glyphicon-search"></span>
+           <a class="btn  btn-primary " ng-disabled="enable" ui-sref="metabolomicsCompounds"><span class="glyphicon glyphicon-search"></span>
              Search</a>
            </br>
          </br>
-             <a class="btn  btn-primary " ng-disabled="enable" ui-sref="AlterateMetablomicsCompounds"><span class="glyphicon glyphicon-search"></span>
+             <a class="btn  btn-primary " ng-disabled="enable" ui-sref="AlternateMetabolomicsCompounds"><span class="glyphicon glyphicon-search"></span>
 
 
           SearchC</a>

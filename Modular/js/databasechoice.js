@@ -18,7 +18,6 @@ angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
 });
 
 angular.module('app').controller('datbaseCtl',  function ($scope,$state,DbChoice,quickFactory) {
-    $scope.name;
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},

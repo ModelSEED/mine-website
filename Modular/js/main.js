@@ -70,14 +70,14 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    //METABLOMICS see metablomics.js
-    $stateProvider.state('metablomics', {
+    //METABLOMICS see metabolomics.js
+    $stateProvider.state('metabolomics', {
         
-        url: '/metablomics',
+        url: '/metabolomics',
         views: {
             '':{
-                templateUrl: 'partials/metablomics.html',
-                controller: "metablomicsCtl"
+                templateUrl: 'partials/metabolomics.html',
+                controller: "metabolomicsCtl"
             },            
             'sidebar':{
                 templateUrl: 'partials/models.html',
@@ -85,12 +85,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
         }
     });
-    $stateProvider.state('metablomicsCompounds', {
-        url: '/metablomicsCompounds:search' ,
+    $stateProvider.state('metabolomicsCompounds', {
+        url: '/metabolomicsCompounds:search' ,
         views: {
             '':{      
                     templateUrl: 'partials/list.html',
-                    controller: "metablomicsCompoundsCtl"
+                    controller: "metabolomicsCompoundsCtl"
                 },
             'sidebar':{
                 templateUrl: 'partials/models.html',
@@ -99,12 +99,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
     });
 
-    $stateProvider.state('AlterateMetablomicsCompounds', {
-      url: '/AlterateMetablomicsCompounds:search',
+    $stateProvider.state('AlternateMetabolomicsCompounds', {
+      url: '/AlternateMetabolomicsCompounds:search',
       views: {
             '':{
                 templateUrl: 'partials/metaboliteslist.html',
-                controller: "altMetablomicsCompoundsCtl"
+                controller: "altMetabolomicsCompoundsCtl"
                 },
             'sidebar':{
                 templateUrl: 'partials/models.html',

@@ -1,5 +1,5 @@
 
-angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, metablomicsDataFactory){
+angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, metabolomicsDataFactory){
     $scope.model = "";
     $scope.modelList = [];
     $scope.modelChoice= "";
@@ -26,7 +26,7 @@ angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, 
     });
     $scope.$watch('modelChoice', function() {
         if ($scope.modelChoice) {
-            metablomicsDataFactory.metaModels = $scope.modelChoice;
+            metabolomicsDataFactory.metaModels = $scope.modelChoice;
             $state.go($state.current, {}, {reload: true});
         }
     });

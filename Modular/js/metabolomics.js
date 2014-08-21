@@ -67,7 +67,6 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
     var test_db = DbChoice.dbid;
     var charge = (metabolomicsDataFactory.charge == "Positive");
     var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    console.log("met"+metabolomicsDataFactory.metaModels.toString())
     promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.statuses, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
@@ -131,6 +130,7 @@ angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,
     $scope.searchCompound = "";
     $scope.begin=0;
     $scope.end=0;
+    $scope.selectedModels = metabolomicsDataFactory.metaModels;
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;

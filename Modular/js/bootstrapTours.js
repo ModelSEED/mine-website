@@ -81,3 +81,96 @@ var generalTour = function(){
         ]
     }
 };
+var metabolomicsTour = function(){
+    var host = window.location.href.split('#')[0];
+    return {
+        storage:false,
+        steps: [
+            {
+                orphan: true,
+                title: "Annotating MS/MS data with MINEs",
+                content: "Welcome the home of the MINE databases. This tour will give you an overview of using the MINE" +
+                    "databases to annotate high resolution metabolomics data."
+            },
+            {
+                element: "#met-tab",
+                placement: "bottom",
+                title: "The Metabolomics tab",
+                content: "This link will take you to the metabolomics annotation form.",
+                reflex: true,
+                onNext: function(){
+                    window.location.assign(host+ '#/metabolomics')
+                }
+            },
+            {
+                element: "#db-select",
+                placement: "bottom",
+                title: "Change the source database",
+                content: "You can switch between the MINE source databases here any time."
+            },
+            {
+                element: "#models_text",
+                placement: "right",
+                title: "Selecting a metabolic model",
+                content: "Type in an organism name to search for a metabolic model. Click a model in the box below to" +
+                    "set the model as the standard for native metabolites."
+            },
+            {
+                element: "#trace",
+                title: "Enter M/Z values",
+                content: "Type or paste mass/charge ratios, one per line."
+            },
+            {
+                element: "#tolerance",
+                placement: "left",
+                title: "Set the mass tolerance",
+                content: "You can adjust the mass range for all your results and units of entry."
+            },
+            {
+                element: "#halogen",
+                placement: "left",
+                title: "Toggle the presence of halogenated compounds",
+                content: "KEGG has a number of non-natural halogenated compounds. If checked, these will be included in" +
+                    " searches"
+            },
+            {
+                element: "#charge",
+                placement: "left",
+                title: "Select ion mode",
+                content: "Select an ion charge to change the list of available adduct types"
+            },
+            {
+                element: "#adducts",
+                placement: "left",
+                title: "Select adducts to search on",
+                content: "You can select potential adduct types here. use CTRL+click to select individual adducts or " +
+                    "SHIFT+click to select a range of compounds",
+                onNext: function(){
+                    window.location.assign(host+ '#/AlternateMetabolomicsCompounds')
+                }
+            },
+            {
+                orphan: true,
+                title: "Tabular Metabolomics Results",
+                content: "This page displays information for all compounds which match your search criteria. Compounds " +
+                    "in the source database are shown in green while those in a selected metabolic model are shown in red."
+            },
+            {
+                element: "#filters",
+                title: "Filtering results",
+                content: "You can enter text here to filter the results shown."
+            },
+            {
+                element: "#met-img",
+                title: "Getting more information",
+                content: "Click the compound image to see the compound's full entry."
+            },
+            {
+                orphan: true,
+                title: "Learning more",
+                content: "If you have additional questions, please check out our Frequently Asked Questions. You might also be " +
+                    "interested in taking our Metabolomics tour. We hope you find this resource valuable!"
+            }
+        ]
+    }
+};

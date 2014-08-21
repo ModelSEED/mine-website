@@ -1,5 +1,5 @@
-// Allows for communication between controlers note set up for test data
-angular.module('app').factory('metablomicsDataFactory',function(){
+// Allows for communication between controllers note set up for test data
+angular.module('app').factory('metabolomicsDataFactory',function(){
     return{
         trace :  "164.0937301", //moverz
         tolerance : 3,
@@ -15,17 +15,17 @@ angular.module('app').factory('metablomicsDataFactory',function(){
     }
 });
 
-angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDataFactory,DbChoice){
-    $scope.trace = metablomicsDataFactory.trace;
-    $scope.tolerance =metablomicsDataFactory.tolerance;
-    $scope.charges =  metablomicsDataFactory.charges;
+angular.module('app').controller('metabolomicsCtl', function($scope,metabolomicsDataFactory,DbChoice){
+    $scope.trace = metabolomicsDataFactory.trace;
+    $scope.tolerance =metabolomicsDataFactory.tolerance;
+    $scope.charges =  metabolomicsDataFactory.charges;
     $scope.charge=$scope.charges[0];
-    $scope.halogenated = metablomicsDataFactory.halogenated;
-    $scope.unit = metablomicsDataFactory.unit;
+    $scope.halogenated = metabolomicsDataFactory.halogenated;
+    $scope.unit = metabolomicsDataFactory.unit;
     $scope.enable = true;
     $scope.statuses =[];
 
-    console.log("metablomicsCtl");
+    console.log("metabolomicsCtl");
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     promise = services.get_adducts();
     promise.then(function(result){
@@ -35,18 +35,18 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
 
         },
         function(err){
-            console.log("metablomicsCtl fail");
+            console.log("metabolomicsCtl fail");
         }
     );
 
     $scope.$watch('trace + tolerance + charges + halogenated + statuses + unit', function() {
-        metablomicsDataFactory.trace =$scope.trace;
-        metablomicsDataFactory.tolerance = $scope.tolerance;
-        metablomicsDataFactory.charges = $scope.charges;
-        metablomicsDataFactory.charge = $scope.charge.name;
-        metablomicsDataFactory.halogenated = $scope.halogenated;
-        metablomicsDataFactory.unit = $scope.unit;
-        metablomicsDataFactory.statuses = $scope.statuses;
+        metabolomicsDataFactory.trace =$scope.trace;
+        metabolomicsDataFactory.tolerance = $scope.tolerance;
+        metabolomicsDataFactory.charges = $scope.charges;
+        metabolomicsDataFactory.charge = $scope.charge.name;
+        metabolomicsDataFactory.halogenated = $scope.halogenated;
+        metabolomicsDataFactory.unit = $scope.unit;
+        metabolomicsDataFactory.statuses = $scope.statuses;
         if ($scope.statuses.length > 0) {
            $scope.enable = false;
           }
@@ -55,7 +55,7 @@ angular.module('app').controller('metablomicsCtl', function($scope,metablomicsDa
 
 })
 
-angular.module('app').controller('metablomicsCompoundsCtl', function($scope,metablomicsDataFactory,DbChoice){
+angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 10;
@@ -65,21 +65,21 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
-    var charge = (metablomicsDataFactory.charge == "Positive");
-    var precision =  metablomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    console.log("met"+metablomicsDataFactory.metaModels.toString())
-    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision, metablomicsDataFactory.statuses, metablomicsDataFactory.metaModels, metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
-    DbChoice.where = "metablomics";
+    var charge = (metabolomicsDataFactory.charge == "Positive");
+    var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
+    console.log("met"+metabolomicsDataFactory.metaModels.toString())
+    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.statuses, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
+    DbChoice.where = "metabolomics";
     promise.then(function(result){
             console.log(result);
             $scope.peaks = result;
             $scope.totalItems = $scope.peaks.length;
             $scope.numPages = Math.ceil($scope.peaks.length / $scope.numPerPage)
-            console.log("metablomicsCtl success");
+            console.log("metabolomicsCtl success");
             $scope.$apply();
         },
         function(err){
-            console.log("metablomicsCompoundsCtl fail");
+            console.log("metabolomicsCompoundsCtl fail");
             $scope.reactants =[];
             $scope.$apply();
         }
@@ -115,7 +115,7 @@ angular.module('app').controller('metablomicsCompoundsCtl', function($scope,meta
     });
 })
 
-angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,metablomicsDataFactory,DbChoice){
+angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 10;
@@ -134,11 +134,11 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
-    var charge = (metablomicsDataFactory.charge == "Positive");
-    var precision =  metablomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    console.log(metablomicsDataFactory.metaModels);
-    promise = services.batch_ms_adduct_search(test_db, metablomicsDataFactory.trace, "form", precision,metablomicsDataFactory.statuses, metablomicsDataFactory.metaModels, metablomicsDataFactory.unit, charge, metablomicsDataFactory.halogenated);
-    DbChoice.where = "metablomics";
+    var charge = (metabolomicsDataFactory.charge == "Positive");
+    var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
+    console.log(metabolomicsDataFactory.metaModels);
+    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision,metabolomicsDataFactory.statuses, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
+    DbChoice.where = "metabolomics";
     promise.then(function(result){
             $scope.peaks = result;
             $scope.totalItems = countData("","","","","");
@@ -147,7 +147,7 @@ angular.module('app').controller('altMetablomicsCompoundsCtl', function($scope,m
             $scope.$apply();
         },
         function(err){
-            console.log("metablomicsCompoundsCtl fail");
+            console.log("metabolomicsCompoundsCtl fail");
             $scope.reactants =[];
             $scope.$apply();
         }

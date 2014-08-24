@@ -10,7 +10,7 @@ angular.module('app').factory('operatorFactory', function(){
             comments:'',
             "generate_reverse": false
         },
-        operator:" ",
+        operator:"",
         validateOperator: function() {
         if (!this.operator) {
             alert("ERROR: Operator is blank.");

@@ -78,7 +78,12 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 
     $scope.addItem = function(array, value){
         if (array == $scope.reactants){
-            array.push(value+": "+ $scope.indices);
+            if ($scope.indices){
+                array.push(value+": "+ $scope.indices);
+            }
+            else{
+                alert("Please specify atom indices for this reactant.");
+            }
         }
         else{
             array.push(value);

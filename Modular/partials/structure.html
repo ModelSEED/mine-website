@@ -1,7 +1,7 @@
 <div ng-model="molstrng">
     <div class="container">
         <div class="col-sm-7 ">
-            <div class="well">.
+            <div id="canvas" class="well">.
                 <iframe src="editorws.html" frameborder="0" id="sketch" class="sketcher-frame" width = "600" height = "600"></iframe>
             </div>
         </div>
@@ -9,11 +9,11 @@
 
 
             <fieldset>
-
+                <div id="search-options">
                 <legend>Search Type</legend>
                 <div class="radio">
                     <label class="radio" for="type_similarity">
-                        <input checked="checked" data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
+                        <input data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
                         Similarity
                     </label>
                 </div>
@@ -29,8 +29,10 @@
                         Exact
                     </label>
                 </div>
+                    </div>
+                <div>
                 <legend>Options</legend>
-                <div class="form-group"><label for="similarity">Similarity threshold</label>
+                <div id="sim-thresh" class="form-group"><label for="similarity">Similarity threshold</label>
                     <input class="form-control input-sm" ng-model="sthresh" id="similarity" name="similarity" type="text" value="0.7" />
                 </div>
 
@@ -43,8 +45,9 @@
                     </select>
                 </div>
                 <button id = "btn-molExport" class="btn  btn-primary" ng-click="find()"><span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
             </fieldset>
-            <a href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
+            <a class="pull-right" href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
         </div>
     </div>
 </div>

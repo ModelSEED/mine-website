@@ -10,7 +10,14 @@ angular.module('app').factory('operatorFactory', function(){
             comments:'',
             "generate_reverse": false
         },
-        operator:""
+        operator:"",
+        validateOperator: function() {
+        if (!this.operator) {
+            alert("ERROR: Operator is blank.");
+            return false
+        }
+        return true
+        }
     };
 });
 
@@ -241,7 +248,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 type: "element",
                 selector: "#bottom-btns",
                 heading: "Fill out the rest of the details",
-                text: "With the for filled out and the reactants and products loaded we are ready to gen",
+                text: "With the for filled out and the reactants and products loaded we are ready to generate the operator.",
                 placement: "left",
                 scroll: true
             },
@@ -276,24 +283,36 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 scroll: true
             },
             {
-                type: "title",
-                heading: "Next Steps",
-                text: "That's the basics of using this web tool to create operators."
+                type: "element",
+                selector: "#upload-op",
+                heading: "Upload an existing operator",
+                text: "You can even use these tools on existing operators. Use this box to upload an operator of your " +
+                    "own from your computer.",
+                scroll: true
+            },
+            {
+                type: "element",
+                selector: "#download",
+                heading: "Download the completed operator",
+                text: "If you are happy with the performance of this operator, click hear to download it as a BNICE " +
+                    "compatible .dat file",
+                placement: "left",
+                scroll: true
             }
         ];
 
         function loadReactants() {
-            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="0.1736421646374966" y2="6.043297435888288"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="1"/><bond atomRefs2="a1 a6" order="2"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/><bond atomRefs2="a8 a7" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707" mrvPseudo="C_W"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="0.1736421646374966" y2="6.043297435888288"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="1"/><bond atomRefs2="a1 a6" order="2"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/><bond atomRefs2="a8 a7" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
               alert(error);
             });
         }
         function loadProducts() {
-            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="-1.9096911686958364" y2="6.001630769221622"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="2"/><bond atomRefs2="a1 a6" order="1"/><bond atomRefs2="a8 a1" order="1"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707" mrvPseudo="C_W"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="-1.9096911686958364" y2="6.001630769221622"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="2"/><bond atomRefs2="a1 a6" order="1"/><bond atomRefs2="a8 a1" order="1"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
             alert(error);
             });
         }
         function fillForm() {
-            $scope.opName='Example_Operator';
+            $scope.operatorName='Example_Operator';
             $scope.reactants = ['Any: 1-8'];
             $scope.products = ['Any'];
             $scope.comments = 'This is an example operator'
@@ -324,27 +343,23 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
 
     var services = new operatorCreator('http://bio-data-1.mcs.anl.gov/services/operator-creator');
 
+    $scope.$watch('operator', function() {
+        operatorFactory.operator = $scope.operator
+    });
+
     $scope.uploadOperator = function(){
         var selectedFile = document.getElementById('operatorFile').files[0];
         var reader = new FileReader();
         reader.readAsText(selectedFile);
         reader.onload=function(){
-            $scope.operator = reader.result;
+            $scope.operator= reader.result;
             $scope.$apply();
         }
     };
 
-    var validate_operator = function(op){
-        if (!op) {
-            alert("ERROR: Operator is blank.");
-            return false
-        }
-        return true
-    };
-
     $scope.testOperator = function(testCompound) {
-        if (validate_operator($scope.operator)) {
-            var promise = services.test_operator($scope.operator, testCompound);
+        if (operatorFactory.validateOperator()) {
+            var promise = services.test_operator(operatorFactory.operator, testCompound);
             $scope.testedCompounds.push([testCompound,"Calculating..."]);
             var i = $scope.testedCompounds.length -1;
             promise.then(
@@ -361,10 +376,10 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
     };
 
     $scope.mapOperator = function(db) {
-        if (validate_operator($scope.operator)) {
+        if (operatorFactory.validateOperator()) {
             var ok = confirm("Mapping an operator takes 5-10 minutes. Proceed?");
             if (ok) {
-                var promise = services.map_operator($scope.operator, db, "");
+                var promise = services.map_operator(operatorFactory.operator, db, "");
                 $('#map-btn').prop('disabled', true).text("Calculating...");
                 promise.then(
                     function(result){

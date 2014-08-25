@@ -7,7 +7,7 @@
 <div class="col-sm-7">
     <h3>Operator Preview</h3>
     <textarea id="op-text" ng-model="operator" class="form-control" style="{resize: none}" rows="30"></textarea>
-    <div class="input-group">
+    <div id="upload-op" class="input-group">
         <input type='file' class="form-control" multiple='false' id='operatorFile'>
         <span class="input-group-btn">
             <button type="button" class="btn btn-primary" ng-click="uploadOperator()">Upload Operator</button>
@@ -61,7 +61,7 @@
             </span>
         </div>
     </div><br>
-    <div class="btn-group btn-group-justified">
+    <div id="download" class="btn-group btn-group-justified">
         <div class="btn-group">
             <button type="button" class="btn btn-danger" ng-click="goEditor()" >Back to Editor</button>
         </div>

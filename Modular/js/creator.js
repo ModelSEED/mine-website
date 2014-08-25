@@ -123,24 +123,35 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     };
 
     $scope.buildOp = function(){
-        operatorFactory.spec = {
-            "operatorName": $scope.operatorName,
-            "reactants": $scope.reactants,
-            "products": $scope.products,
-            "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
-            "generate_reverse": false
-        };
-        var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
-        promise.then(
-            function(result){
-                operatorFactory.operator = result;
-                $state.go('operator');
-            },
-            function(err){
-                alert("ERROR!");
-                console.log(err);
-            }
-        );
+        if (!$scope.operatorName){
+            alert("Please specify an operator name")
+        }
+        else if (!$scope.products){
+            alert("Please specify an operator products")
+        }
+        else if (!$scope.reactants){
+            alert("Please specify an operator reactants")
+        }
+        else{
+            operatorFactory.spec = {
+                "operatorName": $scope.operatorName,
+                "reactants": $scope.reactants,
+                "products": $scope.products,
+                "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
+                "generate_reverse": false
+            };
+            var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
+            promise.then(
+                function(result){
+                    operatorFactory.operator = result;
+                    $state.go('operator');
+                },
+                function(err){
+                    alert("ERROR!");
+                    console.log(err);
+                }
+            );
+        }
     };
     function initializeTour(){
         $scope.tourConfig = [

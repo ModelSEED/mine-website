@@ -151,9 +151,9 @@ var metabolomicsTour = function(){
             {
                 element: "#models_text",
                 placement: "right",
-                title: "Selecting a metabolic model",
-                content: "Type in an organism name to search for a metabolic model. Click a model in the box below to" +
-                    "set the model as the standard for native metabolites."
+                title: "Selecting a Genome Reconstruction",
+                content: "Type in an organism name or KEGG genome id to search for a reconstruction. Click a name in " +
+                    "the box below to set the reconstruction as the standard for native metabolites."
             },
             {
                 element: "#trace",
@@ -193,7 +193,7 @@ var metabolomicsTour = function(){
                 orphan: true,
                 title: "Tabular Metabolomics Results",
                 content: "This page displays information for all compounds which match your search criteria. Compounds " +
-                    "in the source database are shown in green while those in a selected metabolic model are shown in red."
+                    "that appear in a selected genome reconstruction are highlighted blue."
             },
             {
                 element: "#filters",

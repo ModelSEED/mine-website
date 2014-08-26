@@ -11,6 +11,7 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
         charge : 'Positive',
         halogenated : true,
         statuses: ['M+H', 'M+Na'],
+        model: "",
         metaModels:[]
     }
 });
@@ -156,14 +157,13 @@ angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,
         // If native_hit is true, make it green if
         //min_steps is 0 make it lighter green
         if(native == true){
-            return "#FF0000";
-            //return "#008000";
+            return "#428bca";
         }
-        if (typeof steps == "number"){
+        /*if (typeof steps == "number"){
             if (steps ==0){
                 return "#84C884";
             }
-        }
+        }*/
         return "#000000";
     };
 

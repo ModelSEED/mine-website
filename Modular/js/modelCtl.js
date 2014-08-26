@@ -1,10 +1,11 @@
 
 angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, metabolomicsDataFactory){
-    $scope.model = "";
+    $scope.model = metabolomicsDataFactory.model;
     $scope.modelList = [];
     $scope.modelChoice= "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $scope.test_db = DbChoice.dbid;
+    $scope.selectedModels = metabolomicsDataFactory.metaModels
    
     $scope.$watch('model', function() {
         if ($scope.model.length > 2) {
@@ -27,6 +28,7 @@ angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, 
     $scope.$watch('modelChoice', function() {
         if ($scope.modelChoice) {
             metabolomicsDataFactory.metaModels = $scope.modelChoice;
+            metabolomicsDataFactory.model = $scope.model;
             $state.go($state.current, {}, {reload: true});
         }
     });

@@ -13,8 +13,8 @@ var generalTour = function(){
                 element: "#qs_text",
                 placement: "left",
                 title: "Find compounds with Quick Search",
-                content: "You can search the database with chemical identifiers like InChIKeys or KEGG Codes here. You can also " +
-                    "enter text to search aliases, EC Classes and Pathway data."
+                content: "You can search the database with chemical identifiers like InChIKeys or KEGG Codes here or" +
+                    " with textual data such as aliases, EC Classes or KEGG pathway maps."
             },
             {
                 onShow: function(){window.location.assign(host+ '#/structure')},

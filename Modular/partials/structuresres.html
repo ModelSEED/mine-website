@@ -12,11 +12,10 @@
         </tr>  
     </thead>  
     <tbody>
-        <tr ng-repeat="attribute in filteredData" ng-click="setSelected();" >
+        <tr ng-repeat="attribute in filteredData" ng-click="setSelected();" ui-sref="acompound.overview({id:attribute._id})" style="cursor:pointer;">
             <td>
-                <a  ui-sref="acompound.overview({id:attribute._id})">
-                    <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" >
-                </a></td>
+                <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" >
+            </td>
             <td>{{attribute.MINE_id}}</td>
             <td>{{attribute.Names[0]}}</td>
             <td>{{attribute.Formula}}</td>

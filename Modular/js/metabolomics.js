@@ -192,14 +192,13 @@ angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,
             }
         }
         return c;
-    }
+    };
 
 
     $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound', function() {
-         
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
             $scope.totalItems = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
-            $scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage)
+            $scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage);
             $scope.begin = (($scope.currentPage - 1) * $scope.numPerPage);
             $scope.end = $scope.begin + $scope.numPerPage;
             if ($scope.end > $scope.totalItems) {
@@ -237,7 +236,8 @@ angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,
                     }
                 }
             }
+            $scope.filteredData.sort(function(a,b){return a.steps_from_source-b.steps_from_source});
         }
     });
-})
+});
 

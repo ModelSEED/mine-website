@@ -78,7 +78,12 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
 
     $scope.addItem = function(array, value){
         if (array == $scope.reactants){
-            array.push(value+": "+ $scope.indices);
+            if ($scope.indices){
+                array.push(value+": "+ $scope.indices);
+            }
+            else{
+                alert("Please specify atom indices for this reactant.");
+            }
         }
         else{
             array.push(value);
@@ -118,24 +123,35 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     };
 
     $scope.buildOp = function(){
-        operatorFactory.spec = {
-            "operatorName": $scope.operatorName,
-            "reactants": $scope.reactants,
-            "products": $scope.products,
-            "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
-            "generate_reverse": false
-        };
-        var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
-        promise.then(
-            function(result){
-                operatorFactory.operator = result;
-                $state.go('operator');
-            },
-            function(err){
-                alert("ERROR!");
-                console.log(err);
-            }
-        );
+        if (!$scope.operatorName){
+            alert("Please specify an operator name")
+        }
+        else if (!$scope.products){
+            alert("Please specify an operator products")
+        }
+        else if (!$scope.reactants){
+            alert("Please specify an operator reactants")
+        }
+        else{
+            operatorFactory.spec = {
+                "operatorName": $scope.operatorName,
+                "reactants": $scope.reactants,
+                "products": $scope.products,
+                "comments": $scope.comments + "\nGenerated on "+ new Date().toDateString() +" by MINE Operator Creator",
+                "generate_reverse": false
+            };
+            var promise = services.make_operator(operatorFactory.mrvReactants, operatorFactory.mrvProducts, operatorFactory.spec);
+            promise.then(
+                function(result){
+                    operatorFactory.operator = result;
+                    $state.go('operator');
+                },
+                function(err){
+                    alert("ERROR!");
+                    console.log(err);
+                }
+            );
+        }
     };
     function initializeTour(){
         $scope.tourConfig = [
@@ -268,7 +284,8 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 type: "element",
                 selector: "#cpd-test",
                 heading: "Test reactivity with kegg compounds",
-                text: "This feature let's you enter a KEGG compound ID to check how many reactions the operator predicts.",
+                text: "This feature let's you enter a KEGG compound ID to check how many reactions the operator " +
+                    "predicts. You can experiment with the tool to see that C00299 (Uridine) is a valid substrate.",
                 placement: "left",
                 scroll: true
             },
@@ -302,19 +319,19 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
         ];
 
         function loadReactants() {
-            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707" mrvPseudo="C_W"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="0.1736421646374966" y2="6.043297435888288"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="1"/><bond atomRefs2="a1 a6" order="2"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/><bond atomRefs2="a8 a7" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-7.145833333333333" y2="2.0416666666666665" mrvPseudo="OH"/><atom id="a2" elementType="C" x2="-5.738973328563728" y2="2.6680410970033988" mrvPseudo="CH2"/><atom id="a3" elementType="C" x2="-5.237302612324531" y2="0.7957804953292473" mrvPseudo="CH-_N1;51;"/><atom id="a4" elementType="C" x2="-2.9252533190245176" y2="2.6680410970033988" mrvPseudo="O-_N1;51;"/><atom id="a5" elementType="C" x2="2.3541666666666665" y2="1.0416666666666667" mrvPseudo="=P"/><atom id="a6" elementType="C" x2="2.6743506705260156" y2="-0.46468063846339414" mrvPseudo="OH"/><atom id="a7" elementType="C" x2="3.8857303855338072" y2="0.8806928332344803" mrvPseudo="OH"/><atom id="a8" elementType="O" x2="0.8141666666666665" y2="1.041666666666667"/><atom id="a9" elementType="C" x2="-0.6921806384633944" y2="0.7214826628073179" mrvPseudo="=P&lt;"/></atomArray><bondArray><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="1"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a5 a7" order="1"/><bond atomRefs2="a5 a8" order="1"/><bond atomRefs2="a8 a9" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
               alert(error);
             });
         }
         function loadProducts() {
-            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.9166666666666667" y2="4.644200547784747" mrvPseudo="CH_W"/><atom id="a2" elementType="C" x2="-3.2503360077149255" y2="3.874183607225707" mrvPseudo="CH_W"/><atom id="a3" elementType="C" x2="-3.2503360077149255" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a4" elementType="C" x2="-1.9166666666666667" y2="1.5641327855485854" mrvPseudo="CH_W"/><atom id="a5" elementType="C" x2="-0.5829973256184084" y2="2.334149726107626" mrvPseudo="CH_W"/><atom id="a6" elementType="C" x2="-0.5829973256184084" y2="3.874183607225707" mrvPseudo="C_W"/><atom id="a7" elementType="O" x2="0.7506817962096273" y2="4.644183607225707"/><atom id="a8" elementType="H" x2="-1.9096911686958364" y2="6.001630769221622"/></atomArray><bondArray><bond atomRefs2="a6 a7" order="2"/><bond atomRefs2="a1 a6" order="1"/><bond atomRefs2="a8 a1" order="1"/><bond atomRefs2="a1 a2" order="1"/><bond atomRefs2="a2 a3" order="2"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a4 a5" order="2"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
+            marvinSketcherInstance.importStructure("mrv",'<cml><MDocument><MChemicalStruct><molecule molID="m1"><atomArray><atom id="a1" elementType="C" x2="-1.645833333333333" y2="-0.75" mrvPseudo="OH"/><atom id="a2" elementType="C" x2="-5.738973328563728" y2="2.6680410970033988" mrvPseudo="CH2"/><atom id="a3" elementType="C" x2="-4.570635945657864" y2="1.087447161995914" mrvPseudo="CH-_N1;51;"/><atom id="a4" elementType="C" x2="-2.9252533190245176" y2="2.6680410970033988" mrvPseudo="O-_N1;51;"/><atom id="a5" elementType="C" x2="-8.604166666666666" y2="1.2083333333333335" mrvPseudo="=P"/><atom id="a6" elementType="C" x2="-8.283982662807317" y2="-0.2980139717967275" mrvPseudo="OH"/><atom id="a7" elementType="C" x2="-7.072602947799525" y2="1.0473594999011469" mrvPseudo="OH"/><atom id="a8" elementType="O" x2="-8.019166666666665" y2="2.625"/><atom id="a9" elementType="C" x2="-0.6921806384633944" y2="0.7214826628073179" mrvPseudo="=P&lt;"/></atomArray><bondArray><bond atomRefs2="a2 a3" order="1"/><bond atomRefs2="a3 a4" order="1"/><bond atomRefs2="a5 a6" order="1"/><bond atomRefs2="a5 a7" order="1"/><bond atomRefs2="a5 a8" order="1"/><bond atomRefs2="a1 a9" order="1"/><bond atomRefs2="a2 a8" order="1"/></bondArray></molecule></MChemicalStruct></MDocument></cml>').catch(function(error) {
             alert(error);
             });
         }
         function fillForm() {
             $scope.operatorName='Example_Operator';
-            $scope.reactants = ['Any: 1-8'];
-            $scope.products = ['Any'];
+            $scope.reactants = ['Any: 1-4', "ATP: 5-9"];
+            $scope.products = ['Any', 'ADP'];
             $scope.comments = 'This is an example operator'
 
         }

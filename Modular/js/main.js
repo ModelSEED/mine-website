@@ -29,7 +29,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             '':{
                 templateUrl: 'partials/home.html',
                 contoler: "resetCtl"
-            },
+            }
         }
     });
     //FAQ

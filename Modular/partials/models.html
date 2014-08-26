@@ -5,14 +5,17 @@
 </br>
 </br>
 </br>
-<h2>Models</h2>
-<input id="models_text" type="text" placeholder="Models Search" ng-model ="model">
-</br>
-</br>
+<h3>KEGG Genome Reconstructions</h3>
+<div class="alert alert-info" ng-repeat="m in selectedModels">
+    <h4 style="">{{m}}</h4>
+    <!--<span class="glyphicon glyphicon-trash pull-right" style="cursor: pointer;"></span>-->
+</div>
+<input id="models_text" type="text" placeholder="Search Reconstructions" ng-model ="model">
+<br>
+<br>
 
 <select  style="width: 150px; height: 100px;" multiple ng:model="modelChoice">
      <option ng-repeat="s in modelList" value="{{s}}">{{s}}</option>
 </select>
 
 </br>
-{{selectedModels}}

@@ -5,6 +5,7 @@
         </div>
     </div>
     <div  class="col-sm-4 ">
+        <button type="button" class="btn btn-danger pull-right" ng-click='startOpTour()'>Demonstrate the tool</button>
         <div id="op-form">
         <h4>Operator Name</h4>
         <input id="opName" type='text' class="form-control" ng-model='operatorName'>
@@ -64,7 +65,6 @@
             </div>
         </div>
         <a href="http://www.chemaxon.com"><img border="0" src="http://www.chemaxon.com/images/powered_100px.gif" alt="ChemAxon" ></a>
-        <button type="button" class="btn btn-default" ng-click='startOpTour()'>Tour</button>
         <div ng-if="tour">
         <div class="hide" ng-joy-ride="startJoyRide" config="tourConfig" on-finish="onFinish()"  on-skip="onFinish()"></div>
         </div>

@@ -22,7 +22,7 @@ angular.module('app').factory('operatorFactory', function(){
 });
 
 
-angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory) {
+angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory, $cookies, $cookieStore) {
     $scope.operatorName= operatorFactory.spec.operatorName;
     $scope.reactants= operatorFactory.spec.reactants;
     $scope.products= operatorFactory.spec.products;
@@ -71,7 +71,6 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
             "backgroundColor": "#f5f5f5"
             });
         initializeTour();
-        $scope.tour = true
     }, function(error) {
         alert("Loading of the sketcher failed"+error);
     });
@@ -294,8 +293,8 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                 selector: "#map-test",
                 heading: "Test reaction mapping",
                 text: "This feature let's you test how many total reactions the operator predicts when run against all KEGG" +
-                    "compounds as well as how many of those predicted reactions are present in KEGG. This test takes up to" +
-                    "ten minutes to run though so be sure your operator is correct before testing.",
+                    " compounds as well as how many of those predicted reactions are present in KEGG. This test takes up to" +
+                    " ten minutes to run though so be sure your operator is correct before testing.",
                 placement: "left",
                 scroll: true
             },
@@ -344,6 +343,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
         function buildOp() {
             $scope.buildOp()
         }
+        $scope.tour = true
     }
     $scope.startOpTour = function () {
         $scope.startJoyRide = true;

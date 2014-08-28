@@ -36,7 +36,7 @@ var generalTour = function(){
                     "exact matches to your compound"
             },
             {
-                onShow: function(){window.location.assign(host+ '#/structure')},
+                onShown: function(){window.location.assign(host+ '#/structure')},
                 element: "#sim-thresh",
                 placement: "left",
                 title: "Similarity Threshold",
@@ -97,20 +97,6 @@ var generalTour = function(){
                 placement: "left",
                 title: "Examine computationally predicted derivatives",
                 content: "Mouse over a structure to display it's name and MINE id. Click to go to that compound's info page"
-            },
-            {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
-                element: "#struct-tab",
-                placement: "bottom",
-                title: "Use structure search",
-                content: "There are a number of structural search features available here"
-            },
-            {
-                onShow: function(){window.location.assign(host+ '#/structure')},
-                element: "#struct-tab",
-                placement: "bottom",
-                title: "Use structure search",
-                content: "There are a number of structural search features available here"
             },
             {
                 orphan: true,

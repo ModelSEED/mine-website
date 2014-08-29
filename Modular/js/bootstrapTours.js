@@ -7,7 +7,7 @@ var generalTour = function(){
                 orphan: true,
                 title: "Exploring the MINE Databases",
                 content: "Welcome the home of the MINE databases. This tour will give you an overview of the features of this " +
-                    "website and help you find the data you are looking for."
+                    "website and help you find the data you are looking for. You can advance this tour with the arrow keys."
             },
             {
                 element: "#qs_text",
@@ -116,7 +116,7 @@ var metabolomicsTour = function(){
                 orphan: true,
                 title: "Annotating MS/MS data with MINEs",
                 content: "Welcome the home of the MINE databases. This tour will give you an overview of using the MINE" +
-                    "databases to annotate high resolution metabolomics data."
+                    "databases to annotate high resolution metabolomics data. You can advance this tour with the arrow keys."
             },
             {
                 element: "#met-tab",

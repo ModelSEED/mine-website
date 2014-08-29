@@ -28,7 +28,8 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     $scope.products= operatorFactory.spec.products;
     $scope.comments= operatorFactory.spec.comments;
     $scope.opURL = "";
-    $scope.cofactors=[{'id': 0, 'name': 'Any'}, {'id': 1, 'name': '2-oxoglutarate'}, {'id': 2, 'name': '3-5-ADP'},
+
+    $scope.cofactors = [{'id': 0, 'name': 'Any'}, {'id': 1, 'name': '2-oxoglutarate'}, {'id': 2, 'name': '3-5-ADP'},
                      {'id': 3, 'name': '5-Formyl-H4MPT'}, {'id': 4, 'name': 'Acetaldehyde'},
                      {'id': 5, 'name': 'Acetate'}, {'id': 6, 'name': 'AcetylCoa'}, {'id': 7, 'name': 'ADP'},
                      {'id': 8, 'name': 'AMP'}, {'id': 9, 'name': 'ATP'},
@@ -51,16 +52,15 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     /*var promise = services.get_cofactors();
     promise.then(
             function(result){
-                alert(result);
-                $scope.cofactors = result;
+                $scope.cofactors = JSON.parse(String(result))
                 $scope.reactantChoice = $scope.cofactors[0];
                 $scope.productChoice = $scope.cofactors[0];
+                $scope.$apply();
             },
             function(err){
                 alert("ERROR!");
                 console.log(err);
-    });
-    console.log($scope.cofactors);*/
+    });*/
 
     var marvinSketcherInstance;
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
@@ -394,24 +394,28 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
 
     $scope.mapOperator = function(db) {
         if (operatorFactory.validateOperator()) {
-            var ok = confirm("Mapping an operator takes 5-10 minutes. Proceed?");
-            if (ok) {
-                var promise = services.map_operator(operatorFactory.operator, db, "");
-                $('#map-btn').prop('disabled', true).text("Calculating...");
-                promise.then(
-                    function(result){
-                        $scope.mappedReactions = result;
-                        console.log(result);
-                        $('#map-btn').prop('disabled', false).text("Map Operator");
-                        $scope.$apply();
-                        alert("Mapping complete!");
-                    },
-                    function(err){
-                        alert("ERROR!");
-                        console.log(err);
-                        $('#map-btn').prop('disabled', false).text("Map Operator");
-                    }
-                );
+            if (db == "KEGGdb") {
+                var ok = confirm("Mapping an operator takes 5-10 minutes. Proceed?");
+                if (ok) {
+                    var promise = services.map_operator(operatorFactory.operator, db, "");
+                    $('#map-btn').prop('disabled', true).text("Calculating...");
+                    promise.then(
+                        function(result){
+                            $scope.mappedReactions = result;
+                            console.log(result);
+                            $('#map-btn').prop('disabled', false).text("Map Operator");
+                            $scope.$apply();
+                            alert("Mapping complete!");
+                        },
+                        function(err){
+                            alert(err);
+                            $('#map-btn').prop('disabled', false).text("Map Operator");
+                        }
+                    );
+                }
+            }
+            else {
+                alert("Please enter a different database.");
             }
         }
     };

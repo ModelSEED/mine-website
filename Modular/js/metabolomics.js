@@ -28,7 +28,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
 
     console.log("metabolomicsCtl");
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    promise = services.get_adducts();
+    var promise = services.get_adducts();
     promise.then(function(result){
             $scope.adduct = result;
             $scope.statuses = [];
@@ -51,71 +51,10 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
         if ($scope.statuses.length > 0) {
            $scope.enable = false;
           }
-
      });
-
-})
+});
 
 angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
-
-    $scope.currentPage = 1;
-    $scope.numPerPage = 10;
-    $scope.maxSize = 5;
-    $scope.items=0;
-    $scope.numPages =0;
-
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var test_db = DbChoice.dbid;
-    var charge = (metabolomicsDataFactory.charge == "Positive");
-    var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.statuses, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
-    DbChoice.where = "metabolomics";
-    promise.then(function(result){
-            console.log(result);
-            $scope.peaks = result;
-            $scope.totalItems = $scope.peaks.length;
-            $scope.numPages = Math.ceil($scope.peaks.length / $scope.numPerPage)
-            console.log("metabolomicsCtl success");
-            $scope.$apply();
-        },
-        function(err){
-            console.log("metabolomicsCompoundsCtl fail");
-            $scope.reactants =[];
-            $scope.$apply();
-        }
-    );
-    $scope.colour = function(native,steps){
-        // If native_hit is true, make it green if
-        //min_steps is 0 make it lighter green
-        if(native == true){
-            return "#008000";
-        }
-        if (typeof steps == "number"){
-            if (steps ==0){
-                return "#84C884";
-            }
-        }
-        else{
-            for (i = 0; i < steps.length; i++){
-                if (steps[i].steps_from_source == 0){
-                    return "#84C884";
-                }
-            }
-        }
-        return "#000000";
-    };
-    
-    $scope.$watch('currentPage + peaks + items', function() {
-        if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
-            $scope.numPages = Math.ceil($scope.peaks.length / $scope.numPerPage)
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-            var end = begin + $scope.numPerPage;
-            $scope.filteredData = $scope.peaks.slice(begin, end);
-        }
-    });
-})
-
-angular.module('app').controller('altMetabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 10;

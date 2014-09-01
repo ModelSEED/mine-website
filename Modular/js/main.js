@@ -85,26 +85,13 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
         }
     });
-    $stateProvider.state('metabolomicsCompounds', {
-        url: '/metabolomicsCompounds:search' ,
-        views: {
-            '':{      
-                    templateUrl: 'partials/list.html',
-                    controller: "metabolomicsCompoundsCtl"
-                },
-            'sidebar':{
-                templateUrl: 'partials/models.html',
-                controller: "modelsCtl"
-                }
-            }
-    });
 
-    $stateProvider.state('AlternateMetabolomicsCompounds', {
-      url: '/AlternateMetabolomicsCompounds:search',
+    $stateProvider.state('metabolomicsCompounds', {
+      url: '/metabolomicsCompounds:search',
       views: {
             '':{
                 templateUrl: 'partials/metaboliteslist.html',
-                controller: "altMetabolomicsCompoundsCtl"
+                controller: "metabolomicsCompoundsCtl"
                 },
             'sidebar':{
                 templateUrl: 'partials/models.html',

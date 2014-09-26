@@ -5,7 +5,7 @@
             <div class="col-sm-5 ">
                 <div class="form-group">
                     <label>Peak M/Z</label>
-                    <textarea id="trace" ng-model="trace" class="form-control" rows="8"></textarea>
+                    <textarea id="trace" ng-model="trace" class="form-control" rows="12"></textarea>
                 </div>
             </div>
             <div class="col-sm-3 ">
@@ -15,7 +15,7 @@
 
                 <label>Adducts </label></br>
 
-                <select class="form-control" id="adducts" multiple ng:model="statuses" >
+                <select class="form-control" id="adducts" size="9" multiple ng:model="adducts" >
                     <option ng-repeat="s in adduct[charge.id]" value="{{s}}">{{s}}</option>
                 </select>
             </div>

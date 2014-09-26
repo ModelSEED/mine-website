@@ -1,7 +1,7 @@
 <div class="container">
         <div class="row">
             <div class="col-sm-7">
-            <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+            <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
             </div>
             <div class="col-sm-4" ></br></br>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}
                 <div ui-view></div>
@@ -45,4 +45,4 @@
     </div>
   </div>
 </table>
-    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"  style="cursor: pointer;"></pagination>
+    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>

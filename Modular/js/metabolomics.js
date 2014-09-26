@@ -1,7 +1,7 @@
 // Allows for communication between controllers note set up for test data
 angular.module('app').factory('metabolomicsDataFactory',function(){
     return{
-        trace :  "164.0937301", //moverz
+        trace :  "164.0937301",
         tolerance : 3,
         unit : false,
         charges :  [
@@ -10,7 +10,7 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
         {name:'None',id:0}],
         charge : 'Positive',
         halogenated : true,
-        statuses: ['M+H', 'M+Na'],
+        adducts: ['M+H', 'M+Na'],
         model: "",
         metaModels:[]
     }
@@ -24,14 +24,14 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
     $scope.halogenated = metabolomicsDataFactory.halogenated;
     $scope.unit = metabolomicsDataFactory.unit;
     $scope.enable = true;
-    $scope.statuses =[];
+    $scope.adducts =[];
 
     console.log("metabolomicsCtl");
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var promise = services.get_adducts();
     promise.then(function(result){
             $scope.adduct = result;
-            $scope.statuses = [];
+            $scope.adducts = [];
             $scope.$apply();
 
         },
@@ -40,15 +40,15 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
         }
     );
 
-    $scope.$watch('trace + tolerance + charges + halogenated + statuses + unit', function() {
+    $scope.$watch('trace + tolerance + charges + halogenated + adducts + unit', function() {
         metabolomicsDataFactory.trace =$scope.trace;
         metabolomicsDataFactory.tolerance = $scope.tolerance;
         metabolomicsDataFactory.charges = $scope.charges;
         metabolomicsDataFactory.charge = $scope.charge.name;
         metabolomicsDataFactory.halogenated = $scope.halogenated;
         metabolomicsDataFactory.unit = $scope.unit;
-        metabolomicsDataFactory.statuses = $scope.statuses;
-        if ($scope.statuses.length > 0) {
+        metabolomicsDataFactory.adducts = $scope.adducts;
+        if ($scope.adducts.length > 0) {
            $scope.enable = false;
           }
      });
@@ -57,10 +57,9 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
 angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
 
     $scope.currentPage = 1;
-    $scope.numPerPage = 10;
+    $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
-    $scope.numPages =0;
     $scope.filteredData = [];
     $scope.totalItems = 0;
     $scope.searchMINE = "";
@@ -77,13 +76,13 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
     var charge = (metabolomicsDataFactory.charge == "Positive");
     var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
     console.log(metabolomicsDataFactory.metaModels);
-    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision,metabolomicsDataFactory.statuses, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
+    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision,metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
             $scope.peaks = result;
             $scope.totalItems = countData("","","","","");
             $scope.items = $scope.totalItems;
-            $scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage)
+            //$scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage)
             $scope.$apply();
         },
         function(err){
@@ -137,7 +136,6 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
     $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound', function() {
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
             $scope.totalItems = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
-            $scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage);
             $scope.begin = (($scope.currentPage - 1) * $scope.numPerPage);
             $scope.end = $scope.begin + $scope.numPerPage;
             if ($scope.end > $scope.totalItems) {

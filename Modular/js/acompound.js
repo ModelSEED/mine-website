@@ -19,8 +19,6 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var test_db = DbChoice.dbid;
-
     CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
 
     $scope.$on("compoundLoaded", function () {
@@ -73,10 +71,9 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
 
 angular.module('app').controller('productsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 10;
+    $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
-    $scope.numPages =0;
     $scope.searchOn = "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     if (!CompoundDataFactory.compound) {
@@ -91,7 +88,6 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
                 $scope.products = result;
                 $scope.items = result.length
                 $scope.totalItems = $scope.products.length;
-                $scope.numPages = Math.ceil($scope.products.length / $scope.numPerPage)
                 $scope.$apply();
             },
             function (err) {
@@ -111,7 +107,6 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
         var gPromise = services.get_comps(DbChoice.dbid, [id]);
         gPromise.then(
             function(result){
-                //console.log(result[0]);
                 if((id.substring(0, 1) == "X")||(result[0].Names==null)){
                     console.log("none"+id);
                     if(result[0].MINE_id==null){
@@ -137,12 +132,11 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
         if((typeof($scope.products) != 'undefined') &&($scope.products.length > 0)){
         var subList = [];
             for (var i = $scope.products.length - 1; i >= 0; i--) {
-                //console.log($scope.products[i].Operators[0]);
                 if ($scope.products[i].Operators[0].indexOf($scope.searchOn) > -1){
                     subList.push($scope.products[i]);
                 }
             }
-            $scope.numPages = Math.ceil(subList.length / $scope.numPerPage);
+            $scope.totalItems = subList.length;
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
             $scope.filteredData = subList.slice(begin, end);        }
@@ -152,10 +146,9 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
 
 angular.module('app').controller('reactantsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 10;
+    $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
-    $scope.numPages =0;
     $scope.searchOn = "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
 
@@ -172,7 +165,6 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
                 $scope.reactants = result;
                 $scope.items = result.length;
                 $scope.totalItems = $scope.reactants.length;
-                $scope.numPages = Math.ceil($scope.reactants.length / $scope.numPerPage)
                 $scope.$apply();
             },
             function (err) {
@@ -192,7 +184,6 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
         var gPromise = services.get_comps(DbChoice.dbid, [id]);
         gPromise.then(
             function(result){
-                //console.log(result[0]);
                 if((id.substring(0, 1) == "X")||(result[0].Names==null)){
                     console.log("none"+id);
                     if(result[0].MINE_id==null){
@@ -218,12 +209,11 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
         if((typeof($scope.reactants) != 'undefined') &&($scope.reactants.length > 0)){
             var subList = [];
             for (var i = $scope.reactants.length - 1; i >= 0; i--) {
-                //console.log($scope.reactants[i].Operators[0]);
                 if ($scope.reactants[i].Operators[0].indexOf($scope.searchOn) > -1){
                     subList.push($scope.reactants[i]);
                 }
             }
-            $scope.numPages = Math.ceil(subList.length / $scope.numPerPage);
+            $scope.totalItems = subList.length;
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
             $scope.filteredData = subList.slice(begin, end);

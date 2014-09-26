@@ -24,13 +24,14 @@
                     <label>Tolerance </label></br>
                     <input type="number" name="input" ng-model="tolerance" min="0" max="99" required>
                     <div class="radio">
+                        <input type="radio"  value=false ng-model="unit" ng-checked="!unit">
+                        mDa
+                    </div>
+                    <div class="radio">
                         <input type="radio" value=true ng-model="unit">
                         ppm
                     </div>
-                    <div class="radio">
-                        <input type="radio"  value=false ng-model="unit" ng-checked="1">
-                        mDa
-                    </div>
+
                 </div>
                 <div id="halogen" class="checkbox">
                     <label>Halogenated compounds <input type="checkbox" ng-model="halogenated" ng-checked="0">

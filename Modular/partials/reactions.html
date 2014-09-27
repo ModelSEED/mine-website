@@ -13,7 +13,7 @@
 			<td id="rxn-img" ng-repeat="img in attribute.Reactants" >
 				<div ng-if= "grtZero(img[0])">{{img[1]}} <span ng-show=" ! $last ">+</span></div>
 				<div ng-mouseover="getCompoundName(img[1])" >
-				 <a  ui-sref="compounds({search:img[1]})">
+				 <a  ui-sref="acompound.overview({id:img[1]})">
 					<img popover="{{cName}}" popover-trigger="mouseenter"   ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{img[1]}}.svg" width="75">
 				</a>
 			</div>
@@ -24,7 +24,7 @@
 			<td ng-repeat="img in attribute.Products">
 			    <div ng-if= "grtZero(img[0])">{{img[1]}}</div>
 					<div ng-mouseover="getCompoundName(img[1])" >
-				<a  ui-sref="compounds({search:img[1]})">
+				<a  ui-sref="acompound.overview({id:img[1]})">
 					<img popover="{{cName}}" popover-trigger="mouseenter"   ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{img[1]}}.svg" width="75">
 				</a>
 			</div>

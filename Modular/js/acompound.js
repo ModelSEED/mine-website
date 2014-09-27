@@ -19,7 +19,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+    CompoundDataFactory.getCompound(DbChoice.dbid, parseInt($stateParams.id));
 
     $scope.$on("compoundLoaded", function () {
         //console.log("compLoaded");

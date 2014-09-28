@@ -4,6 +4,7 @@
             <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
             </div>
             <div class="col-sm-4" ></br></br>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}
+                <button class="btn-primary" ng-show="filteredData" ng-click="downloadResults()">Download Results</button>
                 <div ui-view></div>
             </div>
         </div>
@@ -28,7 +29,7 @@
 </tr>
 </thead>
             <tr ng-repeat="f in filteredData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
-              <td style="vertical-align:middle">{{f.name}}</td>
+              <td style="vertical-align:middle">{{f.MZ}}</td>
               <td style="vertical-align:middle">{{f.adduct}}</td>
               <td style="vertical-align:middle">{{f.formula}}</td>
               <td style="text-align: center">
@@ -36,7 +37,7 @@
                 <li>
                   <img id="met-img" class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
                 </li>
-                <li  >{{f.fname}}</li>
+                <li  >{{f.name}}</li>
             </Ui>
               </td>
               <td style="vertical-align:middle">{{f.MINE_id}}</td>
@@ -45,4 +46,4 @@
     </div>
   </div>
 </table>
-    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
+<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>

@@ -10,12 +10,13 @@
     <h4 style="">{{m}}</h4>
     <!--<span class="glyphicon glyphicon-trash pull-right" style="cursor: pointer;"></span>-->
 </div>
-<input id="models_text" type="text" placeholder="Search Reconstructions" ng-model ="model">
+<input id="models_text" type="text"
+       placeholder="Search Reconstructions" ng-model ="model">
+<p ng-hide="modelList">Type an organism name eg. yeast</p>
 <br>
 <br>
-
-<select  style="width: 150px; height: 100px;" multiple ng:model="modelChoice">
+<select ng-show="modelList" style="width: 150px; height: 100px;" multiple ng:model="modelChoice">
      <option ng-repeat="s in modelList" value="{{s}}">{{s}}</option>
 </select>
-
-</br>
+<br>
+<button class="btn-primary btn-block" ng-show="filteredData" ng-click="download()">Download Results</button>

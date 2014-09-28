@@ -6,17 +6,16 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
         unit : false,
         charges :  [
         {name:'Positive',id:0},
-        {name:'Negative',id:1},
-        {name:'None',id:0}],
+        {name:'Negative',id:1}],
         charge : 'Positive',
         halogenated : true,
-        adducts: ['M+H', 'M+Na'],
+        adducts: [],
         model: "",
         metaModels:[]
     }
 });
 
-angular.module('app').controller('metabolomicsCtl', function($scope,metabolomicsDataFactory,DbChoice){
+angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$cookieStore,metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance =metabolomicsDataFactory.tolerance;
     $scope.charges =  metabolomicsDataFactory.charges;
@@ -31,7 +30,12 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
     var promise = services.get_adducts();
     promise.then(function(result){
             $scope.adduct = result;
-            $scope.adducts = [];
+            var adducts = $cookieStore.get($scope.charge.name);
+            console.log(adducts);
+            if( typeof(adducts) == 'object') {
+                $scope.adducts = adducts
+            }
+            else {$scope.adducts =[];}
             $scope.$apply();
 
         },
@@ -39,8 +43,17 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
             console.log("metabolomicsCtl fail");
         }
     );
+    $scope.$watch('charge', function() {
+        metabolomicsDataFactory.charge = $scope.charge.name;
+        var adducts = $cookieStore.get($scope.charge.name);
+        console.log(adducts);
+        if( typeof(adducts) == 'object') {
+            $scope.adducts = adducts
+        }
+        else {$scope.adducts =[];}
+    });
 
-    $scope.$watch('trace + tolerance + charges + halogenated + adducts + unit', function() {
+    $scope.$watch('trace + tolerance + halogenated + adducts + unit', function() {
         metabolomicsDataFactory.trace =$scope.trace;
         metabolomicsDataFactory.tolerance = $scope.tolerance;
         metabolomicsDataFactory.charges = $scope.charges;
@@ -50,11 +63,11 @@ angular.module('app').controller('metabolomicsCtl', function($scope,metabolomics
         metabolomicsDataFactory.adducts = $scope.adducts;
         if ($scope.adducts.length > 0) {
            $scope.enable = false;
-          }
+        }
      });
 });
 
-angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,DbChoice){
+angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$cookieStore,metabolomicsDataFactory,DbChoice){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
@@ -73,10 +86,11 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
 
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var test_db = DbChoice.dbid;
+    $cookieStore.put(metabolomicsDataFactory.charge, metabolomicsDataFactory.adducts);
     var charge = (metabolomicsDataFactory.charge == "Positive");
     var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
     console.log(metabolomicsDataFactory.metaModels);
-    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision,metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
+    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
             $scope.peaks = result;
@@ -104,6 +118,38 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
         }*/
         return "#000000";
     };
+
+    $scope.downloadResults = function(){
+        var jsonObject = JSON.stringify($scope.filteredData);
+        var exclude = {"$$hashKey":"", 'id':""};
+        var csv = ConvertToCSV(jsonObject, exclude);
+        downloadFile(csv, "test");
+    };
+
+    function ConvertToCSV(objArray, exclude) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var out = '';
+        for (var key in array[0]) {
+            if (!(key in exclude)){
+                if (out != '') out += ',';
+                out += key;
+            }
+        }
+        out += '\r\n';
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (key in array[i]) {
+                if (!(key in exclude)){
+                    if (line != '') line += ',';
+                    line += array[i][key];
+                }
+            }
+
+            out += line + '\r\n';
+        }
+
+        return out;
+    }
 
     var countData = function(id,mz,adduct,compound,formula){
         var c = 0;
@@ -135,17 +181,15 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
 
     $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound', function() {
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
-            $scope.totalItems = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
+            /*$scope.totalItems = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
             $scope.begin = (($scope.currentPage - 1) * $scope.numPerPage);
             $scope.end = $scope.begin + $scope.numPerPage;
             if ($scope.end > $scope.totalItems) {
                 $scope.end = $scope.totalItems
-            }
+            }*/
             $scope.filteredData = [];
-            var c = 0;
             for (var i = 0; i < $scope.peaks.length  ; i++) {
                 for (var j = 0; j < $scope.peaks[i].adducts.length; j++) {
-                    var li = $scope.peaks[i].adducts[j].isomers.length
                     for(var k = 0; k<$scope.peaks[i].adducts[j].isomers.length ;k++ ){
                         var fname = "";
                         if(typeof($scope.peaks[i].adducts[j].isomers[k].Names) != 'undefined'){
@@ -163,13 +207,15 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
                             &&
                             ($scope.peaks[i].adducts[j].isomers[k].MINE_id.toString().indexOf($scope.searchMINE) > -1)
                             ){
-                            if((c>=$scope.begin)&&(c<=$scope.end)){
-                                
-                                $scope.filteredData.push({name:$scope.peaks[i].name,id:$scope.peaks[i].adducts[j].isomers[k]._id,adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, fname:fname, native_hit:$scope.peaks[i].adducts[j].isomers[k].native_hit, steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source})
-                            }
-                            c++;
+                                $scope.filteredData.push({MZ:$scope.peaks[i].name,
+                                    id:$scope.peaks[i].adducts[j].isomers[k]._id,
+                                    adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,
+                                    MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, name:fname,
+                                    smiles:$scope.peaks[i].adducts[j].isomers[k].SMILES,
+                                    inchikey:$scope.peaks[i].adducts[j].isomers[k].Inchikey,
+                                    native_hit:$scope.peaks[i].adducts[j].isomers[k].native_hit,
+                                    steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source})
                         }
-                            
                     }
                 }
             }

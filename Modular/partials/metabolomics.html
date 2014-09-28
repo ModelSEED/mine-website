@@ -15,14 +15,13 @@
 
                 <label>Adducts </label></br>
 
-                <select class="form-control" id="adducts" size="9" multiple ng:model="adducts" >
-                    <option ng-repeat="s in adduct[charge.id]" value="{{s}}">{{s}}</option>
-                </select>
+                <select class="form-control" id="adducts" size="9" multiple ng-model="adducts"
+                        ng-options="s for s in adduct[charge.id]"></select>
             </div>
             <div class="col-sm-3 ">
                 <div id="tolerance" class="form-group">
                     <label>Tolerance </label></br>
-                    <input type="number" name="input" ng-model="tolerance" min="0" max="99" required>
+                    <input type="number" name="input" ng-model="tolerance" min="0" max="15" required>
                     <div class="radio">
                         <input type="radio"  value=false ng-model="unit" ng-checked="!unit">
                         mDa
@@ -37,7 +36,7 @@
                     <label>Halogenated compounds <input type="checkbox" ng-model="halogenated" ng-checked="0">
                     </label>
                 </div>
-                <a class="btn btn-block btn-primary" style="margin: 0 auto;" ng-disabled="enable" ui-sref="metabolomicsCompounds">
+                <a class="btn btn-block btn-default" style="margin: 0 auto;" ng-disabled='!adducts.length' ui-sref="metabolomicsCompounds">
                 <span class="glyphicon glyphicon-search"></span> Search</a>
             </div>
         </div>

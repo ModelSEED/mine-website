@@ -4,7 +4,7 @@
             <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
             </div>
             <div class="col-sm-4" ></br></br>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}
-                <button class="btn-primary" ng-show="filteredData" ng-click="downloadResults()">Download Results</button>
+                <button id="met-download" class="btn-primary" ng-show="filteredData" ng-click="downloadResults()">Download Results</button>
                 <div ui-view></div>
             </div>
         </div>

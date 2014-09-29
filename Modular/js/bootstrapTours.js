@@ -172,7 +172,7 @@ var metabolomicsTour = function(){
                 content: "You can select potential adduct types here. use CTRL+click to select individual adducts or " +
                     "SHIFT+click to select a range of compounds",
                 onNext: function(){
-                    window.location.assign(host+ '#/AlternateMetabolomicsCompounds')
+                    window.location.assign(host+ '#/metabolomicsCompounds')
                 }
             },
             {
@@ -190,6 +190,13 @@ var metabolomicsTour = function(){
                 element: "#met-img",
                 title: "Getting more information",
                 content: "Click the compound image to see the compound's full entry."
+            },
+            {
+                element: "#met-download",
+                placement: "left",
+                title: "Download your search results",
+                content: "Click here to download a CSV file with your search results. This file can be opened with " +
+                    "Microsoft Excel or parsed as a part of a annotation pipeline"
             },
             {
                 orphan: true,

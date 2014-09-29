@@ -123,7 +123,8 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
         var jsonObject = JSON.stringify($scope.filteredData);
         var exclude = {"$$hashKey":"", 'id':""};
         var csv = ConvertToCSV(jsonObject, exclude);
-        downloadFile(csv, "test");
+        var d = new Date();
+        downloadFile(csv, d.toISOString()+'.csv');
     };
 
     function ConvertToCSV(objArray, exclude) {
@@ -132,7 +133,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
         for (var key in array[0]) {
             if (!(key in exclude)){
                 if (out != '') out += ',';
-                out += key;
+                out += '"'+key+'"';
             }
         }
         out += '\r\n';
@@ -141,7 +142,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
             for (key in array[i]) {
                 if (!(key in exclude)){
                     if (line != '') line += ',';
-                    line += array[i][key];
+                    line += '"'+array[i][key]+'"';
                 }
             }
 

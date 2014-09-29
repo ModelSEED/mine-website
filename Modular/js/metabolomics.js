@@ -3,7 +3,7 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
     return{
         trace :  "164.0937301",
         tolerance : 3,
-        unit : false,
+        ppm : false,
         charges :  [
         {name:'Positive',id:0},
         {name:'Negative',id:1}],
@@ -21,10 +21,9 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$co
     $scope.charges =  metabolomicsDataFactory.charges;
     $scope.charge=$scope.charges[0];
     $scope.halogenated = metabolomicsDataFactory.halogenated;
-    $scope.unit = metabolomicsDataFactory.unit;
+    $scope.ppm = metabolomicsDataFactory.ppm;
     $scope.enable = true;
     $scope.adducts =[];
-
     console.log("metabolomicsCtl");
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var promise = services.get_adducts();
@@ -53,13 +52,13 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$co
         else {$scope.adducts =[];}
     });
 
-    $scope.$watch('trace + tolerance + halogenated + adducts + unit', function() {
+    $scope.$watch('trace + tolerance + halogenated + adducts + ppm', function() {
         metabolomicsDataFactory.trace =$scope.trace;
         metabolomicsDataFactory.tolerance = $scope.tolerance;
         metabolomicsDataFactory.charges = $scope.charges;
         metabolomicsDataFactory.charge = $scope.charge.name;
         metabolomicsDataFactory.halogenated = $scope.halogenated;
-        metabolomicsDataFactory.unit = $scope.unit;
+        metabolomicsDataFactory.ppm = $scope.ppm;
         metabolomicsDataFactory.adducts = $scope.adducts;
         if ($scope.adducts.length > 0) {
            $scope.enable = false;
@@ -83,20 +82,17 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     $scope.begin=0;
     $scope.end=0;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
-
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var test_db = DbChoice.dbid;
     $cookieStore.put(metabolomicsDataFactory.charge, metabolomicsDataFactory.adducts);
     var charge = (metabolomicsDataFactory.charge == "Positive");
     var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
     console.log(metabolomicsDataFactory.metaModels);
-    promise = services.batch_ms_adduct_search(test_db, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.unit, charge, metabolomicsDataFactory.halogenated);
+    promise = services.batch_ms_adduct_search(DbChoice.dbid, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.ppm, charge, metabolomicsDataFactory.halogenated);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
             $scope.peaks = result;
             $scope.totalItems = countData("","","","","");
             $scope.items = $scope.totalItems;
-            //$scope.numPages = Math.ceil($scope.totalItems/ $scope.numPerPage)
             $scope.$apply();
         },
         function(err){

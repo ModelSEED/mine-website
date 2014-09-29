@@ -23,11 +23,11 @@
                     <label>Tolerance </label></br>
                     <input type="number" name="input" ng-model="tolerance" min="0" max="15" required>
                     <div class="radio">
-                        <input type="radio"  value=false ng-model="unit" ng-checked="!unit">
+                        <input type="radio"  ng-value="false" ng-model="ppm" ng-checked="!ppm">
                         mDa
                     </div>
                     <div class="radio">
-                        <input type="radio" value=true ng-model="unit">
+                        <input type="radio" ng-value="true" ng-model="ppm">
                         ppm
                     </div>
 

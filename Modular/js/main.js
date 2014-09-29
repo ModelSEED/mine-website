@@ -85,26 +85,13 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
         }
     });
-    $stateProvider.state('metabolomicsCompounds', {
-        url: '/metabolomicsCompounds:search' ,
-        views: {
-            '':{      
-                    templateUrl: 'partials/list.html',
-                    controller: "metabolomicsCompoundsCtl"
-                },
-            'sidebar':{
-                templateUrl: 'partials/models.html',
-                controller: "modelsCtl"
-                }
-            }
-    });
 
-    $stateProvider.state('AlternateMetabolomicsCompounds', {
-      url: '/AlternateMetabolomicsCompounds:search',
+    $stateProvider.state('metabolomicsCompounds', {
+      url: '/metabolomicsCompounds:search',
       views: {
             '':{
                 templateUrl: 'partials/metaboliteslist.html',
-                controller: "altMetabolomicsCompoundsCtl"
+                controller: "metabolomicsCompoundsCtl"
                 },
             'sidebar':{
                 templateUrl: 'partials/models.html',
@@ -147,3 +134,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 });
 
+function downloadFile(contents,filename) {
+    var link = document.createElement('a');
+    link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

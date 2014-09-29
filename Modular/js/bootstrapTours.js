@@ -60,13 +60,13 @@ var generalTour = function(){
                 content: "Once you have found an interesting compound, click on the row to see more details"
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
+                onShow: function(){window.location.assign(host+ '#/acompound42050/overview')},
                 orphan: true,
                 title: "Compound Data page",
                 content: "This page displays any data available for a MINE compound."
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/overview')},
+                onShow: function(){window.location.assign(host+ '#/acompound42050/overview')},
                 element: "#compound-image",
                 title: "Get a closer look at the compound",
                 content: "Click the compound image to get a closer look at the chemical structure. When you are done " +
@@ -80,19 +80,19 @@ var generalTour = function(){
                     "databases in various chiral and charged forms"
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
+                onShow: function(){window.location.assign(host+ '#/acompound42050/reactants')},
                 element: "#reactions",
                 title: "Explore reactions that involve this compound",
                 content: "See all the predicted reactions that produce or consume this compound."
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
+                onShow: function(){window.location.assign(host+ '#/acompound42050/reactants')},
                 element: "#rxn-filter",
                 title: "Filter by reaction type",
                 content: "Enter a partial EC number to show only reactions predicted by an operator"
             },
             {
-                onShow: function(){window.location.assign(host+ '#/acompoundC87aef7cd8fe907e7d7ef27f8e917e39cba5e0cee/reactants')},
+                onShow: function(){window.location.assign(host+ '#/acompound42050/reactants')},
                 element: "#rxn-img",
                 placement: "left",
                 title: "Examine computationally predicted derivatives",
@@ -172,7 +172,7 @@ var metabolomicsTour = function(){
                 content: "You can select potential adduct types here. use CTRL+click to select individual adducts or " +
                     "SHIFT+click to select a range of compounds",
                 onNext: function(){
-                    window.location.assign(host+ '#/AlternateMetabolomicsCompounds')
+                    window.location.assign(host+ '#/metabolomicsCompounds')
                 }
             },
             {
@@ -190,6 +190,13 @@ var metabolomicsTour = function(){
                 element: "#met-img",
                 title: "Getting more information",
                 content: "Click the compound image to see the compound's full entry."
+            },
+            {
+                element: "#met-download",
+                placement: "left",
+                title: "Download your search results",
+                content: "Click here to download a CSV file with your search results. This file can be opened with " +
+                    "Microsoft Excel or parsed as a part of a annotation pipeline"
             },
             {
                 orphan: true,

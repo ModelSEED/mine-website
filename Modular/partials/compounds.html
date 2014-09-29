@@ -12,12 +12,12 @@
         </tr>  
     </thead>  
     <tbody>
-        <tr id="comp-row" ng-repeat="attribute in filteredData" ui-sref="acompound.overview({id:attribute._id})" style="cursor: pointer;">
+        <tr id="comp-row" ng-repeat="compound in filteredData" ui-sref="acompound.overview({id:compound.MINE_id})" style="cursor: pointer;">
             <td >
-                <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" ></td>
-            <td  style="vertical-align:middle">{{attribute.MINE_id}}</td>
-            <td  style="vertical-align:middle"><div ng-repeat="name in attribute.Names|limitTo:5">{{name}}<br></div></td>
-            <td  style="vertical-align:middle">{{attribute.Formula}}</td>
+                <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{compound._id}}.svg" width="150" ></td>
+            <td  style="vertical-align:middle">{{compound.MINE_id}}</td>
+            <td  style="vertical-align:middle"><div ng-repeat="name in compound.Names|limitTo:5">{{name}}<br></div></td>
+            <td  style="vertical-align:middle">{{compound.Formula}}</td>
         </tr>
     </tbody>  
     

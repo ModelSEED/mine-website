@@ -3,10 +3,16 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var out = {
         getCompound: function (db, id){
-            var promise = services.get_comps(db, [id]);
+            if (parseInt(id)) {
+                var promise = services.get_comps(db, [parseInt(id)]);
+            }
+            else{
+                var promise = services.get_comps(db, [id]);
+            }
             promise.then(
                 function(result){
                     out.compound = result[0];
+                    console.log(out.compound);
                     $rootScope.$broadcast("compoundLoaded")
                 },
                 function(err){
@@ -19,7 +25,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    CompoundDataFactory.getCompound(DbChoice.dbid, parseInt($stateParams.id));
+    CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
 
     $scope.$on("compoundLoaded", function () {
         //console.log("compLoaded");

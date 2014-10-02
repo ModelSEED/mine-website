@@ -18,6 +18,7 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     console.log("at structureCtl"+DbChoice.dbid);
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
         marvinSketcherInstance = sketcherInstance;
+        marvinSketcherInstance.importStructure("mol", structuresresFactory.mol)
     }, function(error) {
         alert("Loading of the sketcher failed"+error);
     });

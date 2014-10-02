@@ -3,10 +3,16 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var out = {
         getCompound: function (db, id){
-            var promise = services.get_comps(db, [id]);
+            if (parseInt(id)) {
+                var promise = services.get_comps(db, [parseInt(id)]);
+            }
+            else{
+                var promise = services.get_comps(db, [id]);
+            }
             promise.then(
                 function(result){
                     out.compound = result[0];
+                    console.log(out.compound);
                     $rootScope.$broadcast("compoundLoaded")
                 },
                 function(err){
@@ -19,7 +25,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    CompoundDataFactory.getCompound(DbChoice.dbid, parseInt($stateParams.id));
+    CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
 
     $scope.$on("compoundLoaded", function () {
         //console.log("compLoaded");
@@ -34,36 +40,38 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     };
 
     $scope.mapLink = function(keggMap){
-        window.location.assign('http://www.genome.jp/kegg-bin/show_pathway?map' + keggMap.slice(0,5) + '+' +
+        return('http://www.genome.jp/kegg-bin/show_pathway?map' + keggMap.slice(0,5) + '+' +
             $scope.data.DB_links.KEGG.join('+'));
     };
 
     $scope.dbLink = function(db, id) {
         switch (db) {
             case 'KEGG':
-                window.open('http://www.genome.jp/dbget-bin/www_bget?cpd:' + id);
+                return('http://www.genome.jp/dbget-bin/www_bget?cpd:' + id);
                 break;
             case "CAS":
-                window.open('http://www.sigmaaldrich.com/catalog/search?interface=CAS%20No.&term=' + id);
+                return('http://www.sigmaaldrich.com/catalog/search?interface=CAS%20No.&term=' + id);
                 break;
             case "ChEBI":
-                window.open('http://www.ebi.ac.uk/chebi/searchId.do;92DBE16B798171059DA73B3E187F622F?chebiId=' + id);
+                return('http://www.ebi.ac.uk/chebi/searchId.do;92DBE16B798171059DA73B3E187F622F?chebiId=' + id);
                 break;
             case "KNApSAcK":
-                window.open('http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=' + id);
+                return('http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=' + id);
                 break;
             case "Model_SEED":
-                window.open('http://seed-viewer.theseed.org/seedviewer.cgi?page=CompoundViewer&compound=' + id);
+                return('http://seed-viewer.theseed.org/seedviewer.cgi?page=CompoundViewer&compound=' + id);
                 break;
             case "NIKKAJI":
-                window.open('http://nikkajiweb.jst.go.jp/nikkaji_web/pages/top_e.jsp?CONTENT=syosai&SN=' + id);
+                return('http://nikkajiweb.jst.go.jp/nikkaji_web/pages/top_e.jsp?CONTENT=syosai&SN=' + id);
                 break;
             case "PDB-CCD":
-                window.open('http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/' + id);
+                return('http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/' + id);
                 break;
             case "PubChem":
-                window.open('http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=' + id);
+                return('http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=' + id);
                 break;
+            default:
+                return("");
         }
 
     };

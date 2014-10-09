@@ -4,7 +4,7 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
         trace :  "164.0937301",
         model_term: "",
         filterKovats: false,
-        kovats: [0, 20500],
+        kovats: [0, 20000],
         filterLogP: false,
         logP: [-35, 35],
         params:{
@@ -85,7 +85,8 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $cookieStore.put("charge: "+ metabolomicsDataFactory.params.charge, metabolomicsDataFactory.params.adducts);
-    var params = metabolomicsDataFactory.params;
+    var params = jQuery.extend({}, metabolomicsDataFactory.params);
+    console.log(Object.keys(params).toString());
     params.db = DbChoice.dbid;
     if (metabolomicsDataFactory.filterLogP) {params.logP = metabolomicsDataFactory.logP}
     if (metabolomicsDataFactory.filterKovats) {params.kovats = metabolomicsDataFactory.kovats}

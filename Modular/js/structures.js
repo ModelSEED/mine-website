@@ -43,7 +43,6 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.data=[];
-    $scope.numPages =0;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var promise;
     if (structuresresFactory.stype == "exact"){
@@ -64,7 +63,6 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
                 }
                 $scope.data = result;
                 $scope.totalItems = $scope.data.length;
-                $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage)
                 $scope.$apply();
             },
             function(err){
@@ -77,7 +75,6 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
 
     $scope.$watch('currentPage + items', function() {
         if($scope.data.length > 0){
-            $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage);
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
             $scope.filteredData = $scope.data.slice(begin, end);

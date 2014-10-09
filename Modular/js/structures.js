@@ -26,7 +26,7 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     $scope.find = function(){
         var exportPromise = marvinSketcherInstance.exportStructure('mol', null);
         exportPromise.then(function (source) {
-            $state.go('structuresres', {search:source});
+            $state.go('structuresres');
             structuresresFactory.mol = source;
             structuresresFactory.stype = $scope.stype;
             structuresresFactory.maxres = parseInt($scope.maxres);
@@ -37,25 +37,23 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     }
 });
 
-angular.module('app').controller('structuresresCtl', function($scope,$stateParams,DbChoice,structuresresFactory){
+angular.module('app').controller('structuresresCtl', function($scope,DbChoice,structuresresFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 10;
+    $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.data=[];
     $scope.numPages =0;
-    console.log($stateParams+"at structure"+DbChoice.dbid);
-    console.log(structuresresFactory.sthresh)
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var test_db = DbChoice.dbid;
+    var promise;
     if (structuresresFactory.stype == "exact"){
-        promise = services.structure_search(test_db,"mol",structuresresFactory.mol);
+        promise = services.structure_search(DbChoice.dbid,"mol",structuresresFactory.mol);
     }
     if (structuresresFactory.stype == "substructure"){
-        promise = services.substructure_search(test_db,structuresresFactory.mol,structuresresFactory.maxres);
+        promise = services.substructure_search(DbChoice.dbid,structuresresFactory.mol,structuresresFactory.maxres);
     }
     if (structuresresFactory.stype == "similarity"){
-        promise = services.similarity_search(test_db,structuresresFactory.mol,structuresresFactory.sthresh,'FP4',structuresresFactory.maxres);
+        promise = services.similarity_search(DbChoice.dbid,structuresresFactory.mol,structuresresFactory.sthresh,'FP4',structuresresFactory.maxres);
     }
     promise.then(
             function(result){

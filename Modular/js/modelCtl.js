@@ -1,16 +1,15 @@
 
 angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, metabolomicsDataFactory){
-    $scope.model = metabolomicsDataFactory.model;
+    $scope.model_term = metabolomicsDataFactory.model_term;
     $scope.modelList = [];
     $scope.modelChoice= "";
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $scope.test_db = DbChoice.dbid;
-    $scope.selectedModels = metabolomicsDataFactory.metaModels
+    $scope.selectedModels = metabolomicsDataFactory.params.models;
    
-    $scope.$watch('model', function() {
-        if ($scope.model.length > 2) {
-            console.log($scope.model);
-            var promise = services.model_search($scope.model);
+    $scope.$watch('model_term', function() {
+        if ($scope.model_term.length > 2) {
+            var promise = services.model_search($scope.model_term);
             promise.then(
                 function(result){
                     console.log(result);
@@ -27,8 +26,8 @@ angular.module('app').controller('modelsCtl', function($scope,DbChoice, $state, 
     });
     $scope.$watch('modelChoice', function() {
         if ($scope.modelChoice) {
-            metabolomicsDataFactory.metaModels = $scope.modelChoice;
-            metabolomicsDataFactory.model = $scope.model;
+            metabolomicsDataFactory.params.models = $scope.modelChoice;
+            metabolomicsDataFactory.model_term = $scope.model_term;
             $state.go($state.current, {}, {reload: true});
         }
     });

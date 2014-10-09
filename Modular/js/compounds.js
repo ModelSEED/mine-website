@@ -1,6 +1,6 @@
 angular.module('app').controller('compoundsCtl', function($scope,$stateParams,DbChoice){
     $scope.currentPage = 1;
-    $scope.numPerPage = 10;
+    $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.data=[];
@@ -46,7 +46,6 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
     $scope.$watch('$scope.test_db + currentPage + items', function() {
         console.log($scope.test_db);
         if($scope.data.length > 0){
-            $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage)
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
             $scope.filteredData = $scope.data.slice(begin, end);

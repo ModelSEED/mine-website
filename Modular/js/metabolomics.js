@@ -2,64 +2,65 @@
 angular.module('app').factory('metabolomicsDataFactory',function(){
     return{
         trace :  "164.0937301",
-        tolerance : 3,
-        ppm : false,
-        charges :  [
-        {name:'Positive',id:0},
-        {name:'Negative',id:1}],
-        charge : 'Positive',
-        halogenated : true,
-        adducts: [],
-        model: "",
-        metaModels:[]
+        model_term: "",
+        filterKovats: false,
+        kovats: [0, 20500],
+        filterLogP: false,
+        logP: [-35, 35],
+        params:{
+            tolerance : 3,
+            ppm : false,
+            charge : true,
+            halogens : true,
+            adducts: [],
+            models:[]
+        }
     }
 });
 
 angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$cookieStore,metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
-    $scope.tolerance =metabolomicsDataFactory.tolerance;
-    $scope.charges =  metabolomicsDataFactory.charges;
-    $scope.charge=$scope.charges[0];
-    $scope.halogenated = metabolomicsDataFactory.halogenated;
-    $scope.ppm = metabolomicsDataFactory.ppm;
-    $scope.enable = true;
-    $scope.adducts =[];
-    console.log("metabolomicsCtl");
+    $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
+    $scope.charge = metabolomicsDataFactory.params.charge;
+    $scope.halogens = metabolomicsDataFactory.params.halogens;
+    $scope.ppm = metabolomicsDataFactory.params.ppm;
+    $scope.filterLogP = metabolomicsDataFactory.filterLogP;
+    $scope.logP = metabolomicsDataFactory.logP;
+    $scope.filterKovats = metabolomicsDataFactory.filterKovats;
+    $scope.kovats = metabolomicsDataFactory.kovats;
+    $scope.adducts = [];
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    var promise = services.get_adducts();
-    promise.then(function(result){
-            $scope.adduct = result;
-            var adducts = $cookieStore.get($scope.charge.name);
-            console.log(adducts);
-            if( typeof(adducts) == 'object') {
-                $scope.adducts = adducts
-            }
-            else {$scope.adducts =[];}
-            $scope.$apply();
 
-        },
-        function(err){
-            console.log("metabolomicsCtl fail");
-        }
-    );
     $scope.$watch('charge', function() {
-        metabolomicsDataFactory.charge = $scope.charge.name;
-        var adducts = $cookieStore.get($scope.charge.name);
-        console.log(adducts);
-        if( typeof(adducts) == 'object') {
-            $scope.adducts = adducts
-        }
-        else {$scope.adducts =[];}
+        metabolomicsDataFactory.params.charge = $scope.charge;
+        var promise = services.get_adducts();
+        promise.then(function(result){
+                if ($scope.charge) {$scope.adduct_list = result[0];}
+                else {$scope.adduct_list = result[1]}
+                var adducts = $cookieStore.get("charge: "+ $scope.charge);
+                console.log(adducts);
+                if( typeof(adducts) == 'object') {
+                    $scope.adducts = adducts
+                }
+                else {$scope.adducts =[];}
+                $scope.$apply();
+            },
+            function(err){
+                console.log("metabolomicsCtl fail");
+            }
+        );
     });
 
-    $scope.$watch('trace + tolerance + halogenated + adducts + ppm', function() {
+    $scope.$watch('trace + tolerance + halogenated + adducts + ppm + filterKovats + kovats + filterLogP +logP', function() {
         metabolomicsDataFactory.trace =$scope.trace;
-        metabolomicsDataFactory.tolerance = $scope.tolerance;
-        metabolomicsDataFactory.charges = $scope.charges;
-        metabolomicsDataFactory.charge = $scope.charge.name;
-        metabolomicsDataFactory.halogenated = $scope.halogenated;
-        metabolomicsDataFactory.ppm = $scope.ppm;
-        metabolomicsDataFactory.adducts = $scope.adducts;
+        metabolomicsDataFactory.params.tolerance = $scope.tolerance + + 0.000000000000001;
+        metabolomicsDataFactory.params.halogens = $scope.halogens;
+        metabolomicsDataFactory.params.ppm = $scope.ppm;
+        metabolomicsDataFactory.params.adducts = $scope.adducts;
+        metabolomicsDataFactory.filterKovats = $scope.filterKovats;
+        metabolomicsDataFactory.kovats = $scope.kovats;
+        metabolomicsDataFactory.filterLogP = $scope.filterLogP;
+        metabolomicsDataFactory.logP = $scope.logP;
         if ($scope.adducts.length > 0) {
            $scope.enable = false;
         }
@@ -83,11 +84,14 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     $scope.end=0;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    $cookieStore.put(metabolomicsDataFactory.charge, metabolomicsDataFactory.adducts);
-    var charge = (metabolomicsDataFactory.charge == "Positive");
-    var precision =  metabolomicsDataFactory.tolerance + 1.000000000000001; // revert to int problem work around
-    console.log(metabolomicsDataFactory.metaModels);
-    promise = services.batch_ms_adduct_search(DbChoice.dbid, metabolomicsDataFactory.trace, "form", precision, metabolomicsDataFactory.adducts, metabolomicsDataFactory.metaModels, metabolomicsDataFactory.ppm, charge, metabolomicsDataFactory.halogenated);
+    $cookieStore.put("charge: "+ metabolomicsDataFactory.params.charge, metabolomicsDataFactory.params.adducts);
+    var params = metabolomicsDataFactory.params;
+    params.db = DbChoice.dbid;
+    if (metabolomicsDataFactory.filterLogP) {params.logP = metabolomicsDataFactory.logP}
+    if (metabolomicsDataFactory.filterKovats) {params.kovats = metabolomicsDataFactory.kovats}
+    console.log(params);
+    console.log(metabolomicsDataFactory);
+    var promise = services.mz_search(metabolomicsDataFactory.trace, "form", params);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
             $scope.peaks = result;

@@ -18,7 +18,7 @@ angular.module('app').factory('metabolomicsDataFactory',function(){
     }
 });
 
-angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$cookieStore,metabolomicsDataFactory){
+angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$cookieStore,metabolomicsDataFactory, DbChoice){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
     $scope.charge = metabolomicsDataFactory.params.charge;
@@ -30,6 +30,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$cookies,$co
     $scope.kovats = metabolomicsDataFactory.kovats;
     $scope.adducts = [];
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
+    DbChoice.where = "";
 
     $scope.$watch('charge', function() {
         metabolomicsDataFactory.params.charge = $scope.charge;

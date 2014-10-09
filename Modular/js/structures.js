@@ -13,7 +13,7 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     $scope.stype="similarity";
     $scope.maxres=100;
     $scope.sthresh=0.7;
-    DbChoice.where = 'structure';
+    DbChoice.where = "";
     var marvinSketcherInstance;
     console.log("at structureCtl"+DbChoice.dbid);
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
@@ -43,6 +43,7 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.data=[];
+    DbChoice.where = 'structure';
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var promise;
     if (structuresresFactory.stype == "exact"){

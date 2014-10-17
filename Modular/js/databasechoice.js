@@ -18,16 +18,19 @@ angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
 });
 
 angular.module('app').controller('datbaseCtl',  function ($scope,$state,DbChoice,quickFactory) {
+    $scope.otherDB = '';
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
+        //{id:3, name:'Other', db : ''}
     ];
     console.log(DbChoice.where+' '+quickFactory.name);
     $scope.database = $scope.databases[0];
-    $scope.$watch('database', function() {
+    $scope.$watch('database +otherDB', function() {
         //console.log($scope.database.db+" "+DbChoice.where+' '+quickFactory.name);
         DbChoice.dbid = $scope.database.db;
+        if($scope.database.id == 3) {DbChoice.dbid = $scope.otherDB;}
         if(DbChoice.where == "quick"){console.log("quick");
             $state.go("compounds",{search:quickFactory.name+','+DbChoice.dbid});
         }

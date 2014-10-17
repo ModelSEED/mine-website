@@ -43,6 +43,7 @@
                 <h2>Database</h2>
                 <div ng-controller="datbaseCtl">
                     <select id="db-select" class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
+                    <input type="text" placeholder="Enter database name" class="form-control" ng-model="otherDB" ng-show="{{databases.length == 4}}">
                 </div>
                 <div ui-view = "sidebar"></div>
             </div>

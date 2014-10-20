@@ -83,6 +83,8 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     $scope.searchCompound = "";
     $scope.begin=0;
     $scope.end=0;
+    $scope.sortColumn = 'steps_from_source';
+    $scope.sortInvert = true;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $cookieStore.put("charge: "+ metabolomicsDataFactory.params.charge, metabolomicsDataFactory.params.adducts);
@@ -90,7 +92,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     params.db = DbChoice.dbid;
     if (metabolomicsDataFactory.filterLogP) {params.logP = metabolomicsDataFactory.logP}
     if (metabolomicsDataFactory.filterKovats) {params.kovats = metabolomicsDataFactory.kovats}
-    console.log(params)
+    console.log(params);
     var promise = services.mz_search(metabolomicsDataFactory.trace, "form", params);
     DbChoice.where = "metabolomics";
     promise.then(function(result){
@@ -145,10 +147,8 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
                     line += '"'+array[i][key]+'"';
                 }
             }
-
             out += line + '\r\n';
         }
-
         return out;
     }
 
@@ -180,7 +180,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     };
 
 
-    $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound', function() {
+    $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound + sortColumn + sortInvert', function() {
         if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
             $scope.totalItems = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
@@ -208,19 +208,30 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
                             &&
                             ($scope.peaks[i].adducts[j].isomers[k].MINE_id.toString().indexOf($scope.searchMINE) > -1)
                             ){
-                                filteredData.push({MZ:$scope.peaks[i].name,
+                            filteredData.push({MZ:$scope.peaks[i].name,
                                     id:$scope.peaks[i].adducts[j].isomers[k]._id,
                                     adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,
                                     MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, name:fname,
                                     smiles:$scope.peaks[i].adducts[j].isomers[k].SMILES,
                                     inchikey:$scope.peaks[i].adducts[j].isomers[k].Inchikey,
                                     native_hit:$scope.peaks[i].adducts[j].isomers[k].native_hit,
-                                    steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source})
+                                    steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source,
+                                    logP:$scope.peaks[i].adducts[j].isomers[k].logP,
+                                    minKovatsRI:$scope.peaks[i].adducts[j].isomers[k].minKovatsRI,
+                                    maxKovatsRI:$scope.peaks[i].adducts[j].isomers[k].maxKovatsRI,
+                                    npLikeness:$scope.peaks[i].adducts[j].isomers[k].NP_likeness})
                         }
                     }
                 }
             }
-            filteredData.sort(function(a,b){return a.steps_from_source-b.steps_from_source});
+            filteredData.sort(function(a,b){
+                if ($scope.sortInvert){
+                    return a[$scope.sortColumn]-b[$scope.sortColumn]
+                }
+                else{
+                    return b[$scope.sortColumn]-a[$scope.sortColumn]
+                }
+            });
             $scope.displayData = filteredData.slice(begin, end)
 
         }

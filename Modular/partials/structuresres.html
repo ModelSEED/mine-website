@@ -1,7 +1,8 @@
 <div>
 <br>
 <pagination class="pull-right" total-items="totalItems" page="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"  style="cursor: pointer;"></pagination>
-<h3>{{items}}</h3>
+<h3 ng-show="!items">Searching...</h3>
+<h3 ng-show="items">{{items}}</h3>
 <table class="table table-striped table-hover">  
     <thead>  
         <tr>  

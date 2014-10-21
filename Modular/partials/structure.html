@@ -12,28 +12,31 @@
                 <div id="search-options">
                 <legend>Search Type</legend>
                 <div class="radio">
+                    <label class="radio" for="type_exact">
+                        <input id="type_exact" name="search_type" type="radio" value="exact" ng-model="stype">
+                        Exact
+                    </label>
+                </div>
+                <div class="radio">
                     <label class="radio" for="type_similarity">
-                        <input data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity"ng-model="stype" />
+                        <input data-similarity="true" id="type_similarity" name="search_type" type="radio" value="similarity" ng-model="stype">
                         Similarity
                     </label>
                 </div>
                 <div class="radio">
                     <label class="radio" for="type_substructure">
-                        <input id="type_substructure" name="search_type" type="radio" value="substructure"  ng-model="stype" />
+                        <input id="type_substructure" name="search_type" type="radio" value="substructure"  ng-model="stype">
                         Substructure
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="radio" for="type_exact">
-                        <input id="type_exact" name="search_type" type="radio" value="exact" ng-model="stype"/>
-                        Exact
                     </label>
                 </div>
                     </div>
                 <div>
                 <legend>Options</legend>
-                <div id="sim-thresh" class="form-group"><label for="similarity">Similarity threshold</label>
-                    <input class="form-control input-sm" ng-model="sthresh" id="similarity" name="similarity" type="text" value="0.7" />
+                <div id="sim-thresh" class="form-group"><label for="similarity">Similarity threshold
+                    <span tooltip="This is a minimum value for chemical similarity to the query structure. Ranges from 0
+                    to 1." class="glyphicon glyphicon-question-sign"></span></label>
+                    <input class="form-control input-sm" ng-model="sthresh" id="similarity" name="similarity" type="text" value="0.7" >
+
                 </div>
 
                 <div class="form-group"><label for="max_results">Maximum Results</label>

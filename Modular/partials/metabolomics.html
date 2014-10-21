@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div class="col-sm-3 ">
-                <div class="form-inline">
-                    <label>Charge </label><br>
+                <label>Charge </label><br>
+                <div class="form-inline form-control">
                     <label class="radio-inline">
                         <input type="radio"  ng-value="true" ng-model="charge" ng-checked="charge">
                         Positive
@@ -20,7 +20,9 @@
                         Negative
                     </label>
                 </div><br>
-                <label>Adducts </label>
+                <label>Adducts <span tooltip="Select a range of adducts with Shift+Click or select multipule individual
+                                              adducts with Control(Command)+Click" tooltip-placement="right"
+                                     class="glyphicon glyphicon-question-sign"></span></label>
 
                 <select class="form-control" id="adducts" size="10" multiple ng-model="adducts"
                         ng-options="s for s in adduct_list"></select>
@@ -28,16 +30,18 @@
             <div class="col-sm-4 ">
                 <div id="tolerance" class="form-inline">
                     <label>Tolerance </label><br>
-                    <input type="number" name="input" ng-model="tolerance" min="0" max="15">
-                    <div class="form-group pull-right">
-                        <label class="radio-inline">
-                            <input type="radio"  ng-value="false" ng-model="ppm" ng-checked="!ppm">
-                            mDa
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" ng-value="true" ng-model="ppm">
-                            PPM
-                        </label>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="input" ng-model="tolerance" min="0" max="15">
+                        <div class="form-control">
+                            <label class="radio-inline">
+                                <input type="radio"  ng-value="false" ng-model="ppm" ng-checked="!ppm">
+                                mDa
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" ng-value="true" ng-model="ppm">
+                                PPM
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <br>

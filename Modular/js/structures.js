@@ -10,7 +10,7 @@ angular.module('app').factory('structuresresFactory', function(){
 
 
 angular.module('app').controller('structureCtl',  function($scope,$state,DbChoice,structuresresFactory) {
-    $scope.stype="similarity";
+    $scope.stype="exact";
     $scope.maxres=100;
     $scope.sthresh=0.7;
     DbChoice.where = "";

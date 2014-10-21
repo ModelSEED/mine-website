@@ -10,9 +10,10 @@
     <h4 style="">{{m}}</h4>
     <!--<span class="glyphicon glyphicon-trash pull-right" style="cursor: pointer;"></span>-->
 </div>
-<input id="models_text" type="text"
-       placeholder="Search Reconstructions" ng-model ="model_term">
-<p ng-hide="modelList">Type an organism name eg. yeast</p>
+<input id="models_text" type="text" style="width: 145px"
+       placeholder="Search reconstructions" ng-model ="model_term">
+<span tooltip="Type an organism name (eg. yeast) to search the genomes. Click a model below to highlight compounds
+               native to that organism" tooltip-placement="right" class="glyphicon glyphicon-question-sign"></span>
 <br>
 <br>
 <select ng-show="modelList" style="width: 150px; height: 100px;" multiple ng:model="modelChoice">

@@ -1,57 +1,67 @@
-<div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-            <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
-            </div>
-            <div style="text-align: right" class="col-sm-4" >
-                <br><button id="met-download" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
-                <br><b>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}</b>
-                <div ui-view></div>
-            </div>
-        </div>
+<div>
+    <div class="col-sm-4">
+        <br><h4>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}</h4>
     </div>
+    <div class="col-sm-2">
+        <br>
+        <h3 ng-show="!items">Searching...</h3>
+        <button id="met-download" ng-show="totalItems" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
+    </div>
+    <div class="col-sm-6">
+        <pagination class="pull-right" total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
+    </div>
+    <!--
+    <div class="col-sm-6">
+    <pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
+    </div>
+    <div style="text-align: right" class="col-sm-4" >
+        <br><button id="met-download" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
+        <br><b>{{begin}} - {{end}} of {{totalItems}} Total Hits: {{items}}</b>
+        <div ui-view></div>
+    </div>
+    -->
 <table class="table table-striped table-hover" style="text-align: center">
-<thead>
-  <tr>
-    <th>M/Z</th>
-    <th>Adduct</th>
-    <th>Formula</th>
-    <th>Compound</th>
-    <th>MINE ID</th>
-    <th>logP</th>
-    <th>Kovats RI</th>
-    <th>NP Likeness</th>
-  </tr>
-<tr id="filters">
-    <th><input type="text" class="form-control" style='width: 100px' placeholder="Search" ng-model="searchMZ"></th>
-    <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchAdduct"></th>
-    <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchFormula"></th>
-    <th><input type="text" class="form-control" placeholder="Search" ng-model="searchCompound"></th>
-    <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchMINE"></th>
-    <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert"> Sort by </button></th>
-    <th><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert">Sort by</button></th>
-    <th><button class="btn btn-block btn-primary" ng-click="sortColumn='npLikeness'; sortInvert=!sortInvert">Sort by</button></th>
-</tr>
-</thead>
-            <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
-              <td style="vertical-align:middle">{{f.MZ}}</td>
-              <td style="vertical-align:middle">{{f.adduct}}</td>
-              <td style="vertical-align:middle">{{f.formula}}</td>
-              <td style="text-align: center">
-              <Ui style="list-style: none;">
-                <li>
-                  <img id="met-img" class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="70" alt="No image avalable">
-                </li>
-                <li  >{{f.name}}</li>
-            </Ui>
-              </td>
-              <td style="vertical-align:middle">{{f.MINE_id}}</td>
-              <td style="vertical-align: middle">{{f.logP}}</td>
-              <td style="vertical-align: middle">{{f.minKovatsRI}}-{{f.maxKovatsRI}}</td>
-              <td style="vertical-align: middle">{{f.npLikeness}}</td>
-            </tr>
-          </table>
-    </div>
-  </div>
+    <thead>
+      <tr>
+        <th>M/Z</th>
+        <th>Adduct</th>
+        <th>Formula</th>
+        <th>Compound</th>
+        <th>MINE ID</th>
+        <th>logP</th>
+        <th>Kovats RI</th>
+        <th>NP Likeness<span tooltip="NP Likeness is a quantitative measure of how similar a given compound is to known
+                                      natural products. The values range from -3 (very synthetic) to 3 (very natural)."
+                             class="glyphicon glyphicon-question-sign"></span></th>
+      </tr>
+    <tr id="filters">
+        <th><input type="text" class="form-control" style='width: 100px' placeholder="Search" ng-model="searchMZ"></th>
+        <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchAdduct"></th>
+        <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchFormula"></th>
+        <th><input type="text" class="form-control" placeholder="Search" ng-model="searchCompound"></th>
+        <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchMINE"></th>
+        <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert"> Sort by </button></th>
+        <th><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert">Sort by</button></th>
+        <th><button class="btn btn-block btn-primary" ng-click="sortColumn='npLikeness'; sortInvert=!sortInvert">Sort by</button></th>
+    </tr>
+    </thead>
+        <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
+          <td style="vertical-align:middle">{{f.MZ}}</td>
+          <td style="vertical-align:middle">{{f.adduct}}</td>
+          <td style="vertical-align:middle">{{f.formula}}</td>
+          <td style="text-align: center">
+          <ui style="list-style: none;">
+            <li>
+              <img id="met-img" class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{f.id}}.svg" width="100" alt="No image avalable">
+            </li>
+            <li  >{{f.name}}</li>
+        </ui>
+          </td>
+          <td style="vertical-align:middle">{{f.MINE_id}}</td>
+          <td style="vertical-align: middle">{{f.logP}}</td>
+          <td style="vertical-align: middle">{{f.minKovatsRI}}-{{f.maxKovatsRI}}</td>
+          <td style="vertical-align: middle">{{f.npLikeness}}</td>
+        </tr>
 </table>
-<pagination total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
+<pagination class="pull-right" total-items="totalItems" page="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="numPerPage"  style="cursor: pointer;"></pagination>
+</div>

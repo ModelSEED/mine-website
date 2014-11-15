@@ -15,7 +15,7 @@
     <tbody>
         <tr ng-repeat="attribute in filteredData" ng-click="setSelected();" ui-sref="acompound.overview({id:attribute.MINE_id})" style="cursor:pointer;">
             <td>
-                <img class="logo" ng-src="http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/{{attribute._id}}.svg" width="150" >
+                <img class="logo" ng-src="{{img_src+attribute._id}}.svg" width="150" >
             </td>
             <td>{{attribute.MINE_id}}</td>
             <td>{{attribute.Names[0]}}</td>

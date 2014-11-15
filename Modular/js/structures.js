@@ -43,6 +43,7 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.data=[];
+    $scope.img_src = img_src;
     DbChoice.where = 'structure';
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var promise;

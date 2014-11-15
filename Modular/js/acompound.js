@@ -26,6 +26,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+    $scope.img_src = img_src;
 
     $scope.$on("compoundLoaded", function () {
         //console.log("compLoaded");
@@ -83,6 +84,7 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.searchOn = "";
+    $scope.img_src = img_src;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     if (!CompoundDataFactory.compound) {
         CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
@@ -158,6 +160,7 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.searchOn = "";
+    $scope.img_src = img_src;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
 
     if (!CompoundDataFactory.compound){

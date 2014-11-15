@@ -133,6 +133,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
+img_src = "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/";
 
 function downloadFile(contents,filename) {
     var link = document.createElement('a');

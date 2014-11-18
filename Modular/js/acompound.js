@@ -193,7 +193,7 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
     });
 
     $scope.getCompoundName= function($event, id){
-        if (!$($event.target).data('bs.popover')) {
+        if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
             var gPromise = services.get_comps(DbChoice.dbid, [id]);
             gPromise.then(
                 function (result) {

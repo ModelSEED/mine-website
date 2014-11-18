@@ -13,25 +13,25 @@
                 </div>
             </td>
 			<td id="rxn-img" ng-repeat="comp in reaction.Reactants">
-				<div class="pull-left" style="font-size:16px;line-height: 75px" ng-if="comp[0]-1">
+			<div style="display: inline-flex">
+                <div style="font-size:16px;line-height: 75px" ng-if="comp[0]-1">
                     {{comp[0]}}
                 </div>
-				<div class="pull-right" ng-mouseover="getCompoundName(comp[1])" >
 				 <a  ui-sref="acompound.overview({id:img[1]})">
-					<img style="vertical-align:middle" popover="{{cName}}" popover-trigger="mouseenter" ng-src="{{img_src+comp[1]}}.svg" width="80">
+					<img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.svg" width="80">
 				</a>
 			</div>
 			</td>
 			<td>
-				<span style="font-size:40px" ng-keypress="getCompoundName()"> &#8594</span>
+				<span style="font-size:40px"> &#8594</span>
 			</td>
 			<td ng-repeat="comp in reaction.Products" style="vertical-align:middle">
-			    <div class="pull-left" style="font-size:16px;line-height: 75px" ng-if= "comp[0]-1">
-                    {{comp[0]}}
-                </div>
-				<div class="pull-right" ng-mouseover="getCompoundName(comp[1])" >
+			    <div style="display: inline-flex">
+                    <div style="font-size:16px;line-height: 75px;" ng-if= "comp[0]-1">
+                        {{comp[0]}}
+                    </div>
 				    <a  ui-sref="acompound.overview({id:img[1]})">
-					    <img popover="{{cName}}" popover-trigger="mouseenter"   ng-src="{{img_src+comp[1]}}.svg" width="80">
+					    <img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.svg" width="80">
 				    </a>
 			    </div>
 			</td>

@@ -23,3 +23,21 @@ angular.module('app').controller('firstSubCtl', function($scope,DataFactory){
 });
 
 });
+
+angular.module('app').directive('cpdDetail', function() {
+    return {
+        link: function(scope, ele, attr) {
+            var id = scope.comp[1];
+            if (id[0]=="C") {
+                $(ele).popover({title: scope.cName,
+                    trigger: 'hover',
+                    html: true,
+                    content: '<img src="' + img_src + id + '.svg" width="250">',
+                    template: '<div class="popover" role="tooltip" ><div class="arrow"></div>'
+                        + '<h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                })
+            }
+        }
+    }
+
+});

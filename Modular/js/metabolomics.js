@@ -85,6 +85,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
     $scope.end=0;
     $scope.sortColumn = 'steps_from_source';
     $scope.sortInvert = true;
+    $scope.img_src = img_src;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $cookieStore.put("charge: "+ metabolomicsDataFactory.params.charge, metabolomicsDataFactory.params.adducts);
@@ -210,7 +211,8 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$co
                             ){
                             filteredData.push({MZ:$scope.peaks[i].name,
                                     id:$scope.peaks[i].adducts[j].isomers[k]._id,
-                                    adduct:$scope.peaks[i].adducts[j].adduct,formula:$scope.peaks[i].adducts[j].formula,
+                                    adduct:$scope.peaks[i].adducts[j].adduct,
+                                    formula:$scope.peaks[i].adducts[j].formula,
                                     MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, name:fname,
                                     smiles:$scope.peaks[i].adducts[j].isomers[k].SMILES,
                                     inchikey:$scope.peaks[i].adducts[j].isomers[k].Inchikey,

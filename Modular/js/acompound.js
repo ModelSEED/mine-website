@@ -1,6 +1,5 @@
 // Allows for communication between controlers
 angular.module('app').factory('CompoundDataFactory', function($rootScope){
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     var out = {
         getCompound: function (db, id){
             if (parseInt(id)) {
@@ -24,8 +23,8 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 });
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+    $scope.img_src = img_src;
 
     $scope.$on("compoundLoaded", function () {
         //console.log("compLoaded");
@@ -77,12 +76,13 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     };
 });
 
-angular.module('app').controller('productsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
+angular.module('app').controller('productsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory,$sce){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.searchOn = "";
+    $scope.img_src = img_src;
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     if (!CompoundDataFactory.compound) {
         CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
@@ -94,7 +94,7 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
         var promise = services.get_rxns(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
         promise.then(function (result) {
                 $scope.products = result;
-                $scope.items = result.length
+                $scope.items = result.length;
                 $scope.totalItems = $scope.products.length;
                 $scope.$apply();
             },
@@ -111,29 +111,34 @@ angular.module('app').controller('productsCtl', function($scope,$stateParams,DbC
         get_products();
     });
 
-    $scope.getCompoundName= function(id){
-        var gPromise = services.get_comps(DbChoice.dbid, [id]);
-        gPromise.then(
-            function(result){
-                if((id.substring(0, 1) == "X")||(result[0].Names==null)){
-                    console.log("none"+id);
-                    if(result[0].MINE_id==null){
-                        $scope.cName = "";
-                    }else{
-                        $scope.cName = "Id:"+result[0].MINE_id;
+    $scope.getCompoundName= function($event, id){
+        if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
+            var gPromise = services.get_comps(DbChoice.dbid, [id]);
+            gPromise.then(
+                function (result) {
+                    var cTitle;
+                    if (result[0].Names) {
+                        cTitle = result[0].Names[0]
                     }
-                }else{
-                    console.log(result[0]);
-                    $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
+                    else if (result[0].MINE_id) {
+                        cTitle = result[0].MINE_id
+                    }
+                    if (cTitle) {
+                        $($event.target).popover({title: cTitle,
+                            trigger: 'hover',
+                            html: true,
+                            content: '<img src="' + img_src + id + '.svg" width="250">'
+                        });
+                        $($event.target).popover('show');
+                    }
+                },
+                function (err) {
+                    console.log("acompoundCtl fail");
+                    $scope.data = [];
+                    $scope.$apply();
                 }
-                $scope.$apply();
-            },
-            function(err){
-                console.log("acompoundCtl fail");
-                $scope.data =[];
-                $scope.$apply();
-            }
-        );
+            );
+        }
     };
 
     $scope.$watch('currentPage + products + items + searchOn', function() {
@@ -158,8 +163,7 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
     $scope.maxSize = 5;
     $scope.items=0;
     $scope.searchOn = "";
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-
+    $scope.img_src = img_src;
     if (!CompoundDataFactory.compound){
         CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
     }
@@ -188,29 +192,34 @@ angular.module('app').controller('reactantsCtl', function($scope,$stateParams,Db
         get_reactants();
     });
 
-    $scope.getCompoundName= function(id){
-        var gPromise = services.get_comps(DbChoice.dbid, [id]);
-        gPromise.then(
-            function(result){
-                if((id.substring(0, 1) == "X")||(result[0].Names==null)){
-                    console.log("none"+id);
-                    if(result[0].MINE_id==null){
-                        $scope.cName = "";
-                    }else{
-                        $scope.cName = "Id:"+result[0].MINE_id;
+    $scope.getCompoundName= function($event, id){
+        if (!$($event.target).data('bs.popover')) {
+            var gPromise = services.get_comps(DbChoice.dbid, [id]);
+            gPromise.then(
+                function (result) {
+                    var cTitle;
+                    if (result[0].Names) {
+                        cTitle = result[0].Names[0]
                     }
-                }else{
-                    console.log(result[0]);
-                    $scope.cName = "Id:"+result[0].MINE_id+"\t"+"Name:"+result[0].Names[0];
+                    else if (result[0].MINE_id) {
+                        cTitle = result[0].MINE_id
+                    }
+                    if (cTitle) {
+                        $($event.target).popover({title: cTitle,
+                            trigger: 'hover',
+                            html: true,
+                            content: '<img src="' + img_src + id + '.svg" width="250">'
+                        });
+                        $($event.target).popover('show');
+                    }
+                },
+                function (err) {
+                    console.log("acompoundCtl fail");
+                    $scope.data = [];
+                    $scope.$apply();
                 }
-                $scope.$apply();
-            },
-            function(err){
-                console.log("acompoundCtl fail");
-                $scope.data =[];
-                $scope.$apply();
-            }
-        );
+            );
+        }
     };
 
     $scope.$watch('currentPage + reactants + items+searchOn', function() {

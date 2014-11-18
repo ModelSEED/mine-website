@@ -1,6 +1,12 @@
-angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'ngSanitize']);
 angular.module('app').factory('currentState', function(){
     return 'home';
+});
+
+angular.module('app').filter('unsafe', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
 });
 
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
@@ -133,6 +139,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
+img_src = "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/";
+services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
 
 function downloadFile(contents,filename) {
     var link = document.createElement('a');

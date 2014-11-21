@@ -3,12 +3,6 @@ angular.module('app').factory('currentState', function(){
     return 'home';
 });
 
-angular.module('app').filter('unsafe', function($sce) {
-    return function(val) {
-        return $sce.trustAsHtml(val);
-    };
-});
-
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
     $scope.startGeneralTour = function () {
         var tour = new Tour(generalTour());
@@ -31,12 +25,8 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     //HOME
     $stateProvider.state('home', {
         url: '/home',
-        views: {
-            '':{
-                templateUrl: 'partials/home.html',
-                controller: "resetCtl"
-            }
-        }
+        templateUrl: 'partials/home.html',
+        controller: "resetCtl"
     });
     //FAQ
     $stateProvider.state('faq', {
@@ -45,7 +35,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "resetCtl"
     });
 
-    // COMPOUNDS QUICK SEARCH see compounds.js
+    // COMPOUNDS QUICK SEARCH see textSearch.js
     $stateProvider.state('compounds', {
         url: '/compounds:search',
         templateUrl: 'partials/compoundslist.html',
@@ -91,7 +81,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
         }
     });
-
     $stateProvider.state('metabolomicsCompounds', {
       url: '/metabolomicsCompounds:search',
       views: {

@@ -29,7 +29,7 @@
                 <li><a ui-sref="faq">FAQs</a></li>
             </ul>
             <form class=" navbar-form navbar-right" role="form">
-                <div ng-controller="mineCtl">
+                <div ng-controller="quickSearchCtl">
                     <input id="qs_text" type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
                     <button id="qs_btn" class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
                 </div>
@@ -68,17 +68,13 @@
 <script src="bower_components/angular-rangeslider-master/angular.rangeSlider.js"></script>
 
 <!-- Marvin-->
-<script src="js/lib/rainbow/rainbow-custom.min.js"></script>
-<script src="js/promise-0.1.1.min.js"></script>
 <script src="js/marvinjslauncher.js"></script>
 <script src="js/webservices.js"></script>
-<script src="gui/gui.nocache.js"></script>
 
 <!-- MINE-->
-<script src="js/mainDataBase.js"></script>
+<script src="js/databaseClient.js"></script>
 <script src="js/main.js"></script>
-<script src="js/quicksearch.js"></script>
-<script src="js/compounds.js"></script>
+<script src="js/textSearch.js"></script>
 <script src="js/acompound.js"></script>
 <script src="js/metabolomics.js"></script>
 <script src="js/structures.js"></script>

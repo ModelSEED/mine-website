@@ -1,4 +1,3 @@
-// Allows for communication between controlers
 angular.module('app').factory('operatorFactory', function(){
     return{
         mrvReactants:'',
@@ -20,7 +19,6 @@ angular.module('app').factory('operatorFactory', function(){
         }
     };
 });
-
 
 angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory, $cookies, $cookieStore) {
     $scope.operatorName= operatorFactory.spec.operatorName;

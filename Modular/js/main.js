@@ -23,7 +23,7 @@ angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieSto
     }
 });
 
-// default contoler on the mine quick search is in quicksearch.js
+// default controller on the mine quick search is in quicksearch.js
 
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
@@ -34,7 +34,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         views: {
             '':{
                 templateUrl: 'partials/home.html',
-                contoler: "resetCtl"
+                controller: "resetCtl"
             }
         }
     });
@@ -42,13 +42,13 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('faq', {
         url: '/faq',
         templateUrl: 'partials/FAQ.html',
-        contoler: "resetCtl"
+        controller: "resetCtl"
     });
 
     // COMPOUNDS QUICK SEARCH see compounds.js
     $stateProvider.state('compounds', {
         url: '/compounds:search',
-        templateUrl: 'partials/compounds.html',
+        templateUrl: 'partials/compoundslist.html',
         controller: "compoundsCtl"
     });
 
@@ -62,17 +62,17 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('acompound.overview', {
         url: '/overview',
         templateUrl: 'partials/overview.html',
-        contoler: "resetCtl"
+        controller: "resetCtl"
     });
     $stateProvider.state('acompound.reactants', {
-        url: '/reactants',
+        url: '/reactantIn',
         templateUrl: 'partials/reactions.html',
-        controller: "reactantsCtl"
+        controller: "reactantInCtl"
     });
     $stateProvider.state('acompound.products', {
-        url: '/products',
+        url: '/productOf',
         templateUrl: 'partials/reactions.html',
-        controller: "productsCtl"
+        controller: "productOfCtl"
     });
 
 
@@ -110,17 +110,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     // STRUCTURES see structures.js
     $stateProvider.state('structuresres', {
         url: '/structuresres:search',
-        templateUrl: 'partials/structuresres.html',
+        templateUrl: 'partials/compoundslist.html',
         controller: "structuresresCtl"
-    });
-    $stateProvider.state('struccompounds', {
-        url: '/struccompounds:search',
-        templateUrl: 'partials/compounds.html',
-        controller: "struccompoundsCtl"
     });
     $stateProvider.state('structure', {
         url: '/structure',
-        templateUrl: 'partials/structure.html',
+        templateUrl: 'partials/structureSearch.html',
         controller: "structureCtl"
     });
 
@@ -132,7 +127,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'partials/creator.html',
         controller: "creatorCtl"
     });
-
     $stateProvider.state('operator', {
         url: '/operator',
         templateUrl: 'partials/operator.html',

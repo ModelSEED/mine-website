@@ -1,25 +1,70 @@
-// Allows for communication between controlers
 angular.module('app').factory('CompoundDataFactory', function($rootScope){
-    var out = {
+    var factory = {
         getCompound: function (db, id){
-            if (parseInt(id)) {
-                var promise = services.get_comps(db, [parseInt(id)]);
-            }
-            else{
-                var promise = services.get_comps(db, [id]);
-            }
+            var promise;
+            //Controls for _id and MINE ids
+            if (parseInt(id)) {promise = services.get_comps(db, [parseInt(id)]);}
+            else{promise = services.get_comps(db, [id]);}
             promise.then(
                 function(result){
-                    out.compound = result[0];
-                    console.log(out.compound);
+                    factory.compound = result[0];
                     $rootScope.$broadcast("compoundLoaded")
                 },
-                function(err){
-                    console.log("get_comps fail");
-                })
+                function(err){console.log("get_comps fail");}
+            )
+        },
+        getReactions: function(db, rxn_ids) {
+            var promise = services.get_rxns(db, rxn_ids);
+            promise.then(function (result) {
+                    factory.reactions = result;
+                    $rootScope.$broadcast("rxnLoaded")
+                },
+                function (err) {console.log("get_rxns fail");}
+            );
+        },
+        //EC filtering and pagination control
+        filterList: function(reactions, numPerPage, currentPage, searchOn) {
+            if ((typeof(reactions) != 'undefined') && (reactions.length > 0)) {
+                var subList = [];
+                for (var i = reactions.length - 1; i >= 0; i--) {
+                for (var j = reactions[i].Operators.length - 1; j >= 0; j--) {
+                    if ((reactions[i].Operators[j].indexOf(searchOn) > -1)&&(subList[subList.length-1] != reactions[i])) {
+                        subList.push(reactions[i]);
+                    }
+                }
+            }
+                var begin = ((currentPage - 1) * numPerPage);
+                var end = begin + numPerPage;
+                return subList.slice(begin, end);
+            }
+        },
+        //Popups with image & name
+        getCompoundName: function(db){
+            return function($event, id) {
+                if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
+                    var Promise = services.get_comps(db, [id]);
+                    Promise.then(
+                        function (result) {
+                            var cTitle;
+                            if (result[0].Names) {cTitle = result[0].Names[0]}
+                            else if (result[0].MINE_id) {cTitle = result[0].MINE_id}
+                            if (cTitle) {
+                                $($event.target).popover({
+                                    title: cTitle,
+                                    trigger: 'hover',
+                                    html: true,
+                                    content: '<img src="' + img_src + id + '.svg" width="250">'
+                                });
+                                $($event.target).popover('show');
+                            }
+                        },
+                        function (err) {console.log("getCompoundName fail");}
+                    );
+                }
+            }
         }
     };
-    return out
+    return factory
 });
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
@@ -27,7 +72,6 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     $scope.img_src = img_src;
 
     $scope.$on("compoundLoaded", function () {
-        //console.log("compLoaded");
         $scope.data = CompoundDataFactory.compound;
         $scope.$apply();
     });
@@ -43,6 +87,7 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
             $scope.data.DB_links.KEGG.join('+'));
     };
 
+    //This should probably be a directive
     $scope.dbLink = function(db, id) {
         switch (db) {
             case 'KEGG':
@@ -76,164 +121,72 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     };
 });
 
-angular.module('app').controller('productsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory,$sce){
+angular.module('app').controller('productOfCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
     $scope.searchOn = "";
     $scope.img_src = img_src;
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
+    var reactions;
     if (!CompoundDataFactory.compound) {
         CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
     }
     else {
-        get_products()
-    }
-    function get_products() {
-        var promise = services.get_rxns(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
-        promise.then(function (result) {
-                $scope.products = result;
-                $scope.items = result.length;
-                $scope.totalItems = $scope.products.length;
-                $scope.$apply();
-            },
-            function (err) {
-                console.log("productsCtl fail");
-                $scope.products = [];
-                $scope.$apply();
-            }
-        );
+        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
     }
 
     $scope.$on("compoundLoaded", function () {
-        console.log("compLoaded");
-        get_products();
+        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
     });
 
-    $scope.getCompoundName= function($event, id){
-        if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
-            var gPromise = services.get_comps(DbChoice.dbid, [id]);
-            gPromise.then(
-                function (result) {
-                    var cTitle;
-                    if (result[0].Names) {
-                        cTitle = result[0].Names[0]
-                    }
-                    else if (result[0].MINE_id) {
-                        cTitle = result[0].MINE_id
-                    }
-                    if (cTitle) {
-                        $($event.target).popover({title: cTitle,
-                            trigger: 'hover',
-                            html: true,
-                            content: '<img src="' + img_src + id + '.svg" width="250">'
-                        });
-                        $($event.target).popover('show');
-                    }
-                },
-                function (err) {
-                    console.log("acompoundCtl fail");
-                    $scope.data = [];
-                    $scope.$apply();
-                }
-            );
-        }
-    };
+    $scope.$on("rxnLoaded", function () {
+        reactions = CompoundDataFactory.reactions;
+        $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, 1, "");
+        $scope.totalItems = reactions.length;
+        $scope.$apply();
+    });
 
-    $scope.$watch('currentPage + products + items + searchOn', function() {
-        if((typeof($scope.products) != 'undefined') &&($scope.products.length > 0)){
-        var subList = [];
-            for (var i = $scope.products.length - 1; i >= 0; i--) {
-                if ($scope.products[i].Operators[0].indexOf($scope.searchOn) > -1){
-                    subList.push($scope.products[i]);
-                }
-            }
-            $scope.totalItems = subList.length;
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-            var end = begin + $scope.numPerPage;
-            $scope.filteredData = subList.slice(begin, end);        }
+    $scope.getCompoundName = CompoundDataFactory.getCompoundName(DbChoice.dbid);
+
+    $scope.$watch('currentPage +searchOn', function() {
+        if (reactions) {
+            $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, $scope.currentPage, $scope.searchOn);
+            $scope.totalItems = reactions.length;
+        }
     });
 });
 
 
-angular.module('app').controller('reactantsCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
+angular.module('app').controller('reactantInCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
     $scope.searchOn = "";
     $scope.img_src = img_src;
+    var reactions;
     if (!CompoundDataFactory.compound){
         CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
     }
-    else{
-        get_reactants()
-    }
-
-    function get_reactants() {
-        var promise = services.get_rxns(DbChoice.dbid, CompoundDataFactory.compound.Reactant_in);
-        promise.then(function (result) {
-                $scope.reactants = result;
-                $scope.items = result.length;
-                $scope.totalItems = $scope.reactants.length;
-                $scope.$apply();
-            },
-            function (err) {
-                console.log("reactantsCtl fail");
-                $scope.reactants = [];
-                $scope.$apply();
-            }
-        );
+    else {
+        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Reactant_in);
     }
 
     $scope.$on("compoundLoaded", function () {
-        console.log("compLoaded");
-        get_reactants();
+        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Reactant_in);
+    });
+    $scope.$on("rxnLoaded", function () {
+        reactions = CompoundDataFactory.reactions;
+        $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, 1, "");
+        $scope.totalItems = reactions.length;
+        $scope.$apply();
     });
 
-    $scope.getCompoundName= function($event, id){
-        if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
-            var gPromise = services.get_comps(DbChoice.dbid, [id]);
-            gPromise.then(
-                function (result) {
-                    var cTitle;
-                    if (result[0].Names) {
-                        cTitle = result[0].Names[0]
-                    }
-                    else if (result[0].MINE_id) {
-                        cTitle = result[0].MINE_id
-                    }
-                    if (cTitle) {
-                        $($event.target).popover({title: cTitle,
-                            trigger: 'hover',
-                            html: true,
-                            content: '<img src="' + img_src + id + '.svg" width="250">'
-                        });
-                        $($event.target).popover('show');
-                    }
-                },
-                function (err) {
-                    console.log("acompoundCtl fail");
-                    $scope.data = [];
-                    $scope.$apply();
-                }
-            );
-        }
-    };
+    $scope.getCompoundName = CompoundDataFactory.getCompoundName(DbChoice.dbid);
 
-    $scope.$watch('currentPage + reactants + items+searchOn', function() {
-        if((typeof($scope.reactants) != 'undefined') &&($scope.reactants.length > 0)){
-            var subList = [];
-            for (var i = $scope.reactants.length - 1; i >= 0; i--) {
-                if ($scope.reactants[i].Operators[0].indexOf($scope.searchOn) > -1){
-                    subList.push($scope.reactants[i]);
-                }
-            }
-            $scope.totalItems = subList.length;
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-            var end = begin + $scope.numPerPage;
-            $scope.filteredData = subList.slice(begin, end);
+    $scope.$watch('currentPage +searchOn', function() {
+        if (reactions) {
+            $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, $scope.currentPage, $scope.searchOn);
+            $scope.totalItems = reactions.length;
         }
     });
 });

@@ -20,7 +20,7 @@
                         Negative
                     </label>
                 </div><br>
-                <label>Adducts <span tooltip="Select a range of adducts with Shift+Click or select multipule individual
+                <label>Adducts <span tooltip="Select a range of adducts with Shift+Click or select multiple individual
                                               adducts with Control(Command)+Click" tooltip-placement="right"
                                      class="glyphicon glyphicon-question-sign"></span></label>
 
@@ -53,7 +53,7 @@
                     <label>Halogenated compounds <input type="checkbox" ng-model="halogens" ng-checked="0">
                     </label>
                 </div>
-                <a class="btn btn-block btn-default" style="margin: 0 auto;" ng-disabled='!adducts.length' ui-sref="metabolomicsCompounds">
+                <a class="btn btn-block btn-default" style="margin: 0 auto;" ng-disabled='!adducts.length' ng-click="metSearch()">
                 <span class="glyphicon glyphicon-search"></span> Search</a>
             </div>
         </div>

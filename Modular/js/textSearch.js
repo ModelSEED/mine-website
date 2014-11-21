@@ -1,8 +1,7 @@
-angular.module('app').controller('quickSearchCtl',  function ($scope,$state,DbChoice,currentState) {
+angular.module('app').controller('quickSearchCtl',  function ($scope,$state,DbChoice) {
     $scope.doQuickSearch = function(ev) {
         if (!ev || ev.which==13){
             DbChoice.quickSearch = $scope.name;
-            currentState = 'quick';
             DbChoice.where = 'quick';
             $state.go("compounds",{search:$scope.name+','+DbChoice.dbid.db});
         }
@@ -42,7 +41,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
                     $scope.items = result.length+ " item found";
                 }
                 $scope.data = result;
-                $scope.totalItems = $scope.data.length;
+                $scope.items = $scope.data.length;
                 $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage)
                 $scope.$apply();
             },

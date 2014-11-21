@@ -1,6 +1,43 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
-angular.module('app').factory('currentState', function(){
-    return 'home';
+angular.module('app').factory('sharedFactory', function(){
+    var factory = {
+        downloadFile: function (contents,filename) {
+            var link = document.createElement('a');
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        convertToCSV: function(objArray, exclude) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var out = '';
+            for (var key in array[0]) {
+                if (!(key in exclude)){
+                    if (out != '') out += ',';
+                    out += '"'+key+'"';
+                }
+            }
+            out += '\r\n';
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (key in array[i]) {
+                    if (!(key in exclude)){
+                        if (line != '') line += ',';
+                        line += '"'+array[i][key]+'"';
+                    }
+                }
+                out += line + '\r\n';
+            }
+            return out;
+        },
+        paginateList: function(list, currentPage, numPerPage){
+            var begin = ((currentPage - 1) * numPerPage);
+            var end = begin + numPerPage;
+            return list.slice(begin, end);
+        }
+    };
+    return factory
 });
 
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
@@ -124,12 +161,3 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 });
 img_src = "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/";
 services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-
-function downloadFile(contents,filename) {
-    var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}

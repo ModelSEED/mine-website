@@ -64,7 +64,7 @@ angular.module('app').controller('structuresresCtl', function($scope,DbChoice,st
                      $scope.items = result.length+ " item found";
                 }
                 $scope.data = result;
-                $scope.totalItems = $scope.data.length;
+                $scope.items = $scope.data.length;
                 $scope.$apply();
             },
             function(err){

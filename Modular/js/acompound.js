@@ -23,7 +23,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
             );
         },
         //EC filtering and pagination control
-        filterList: function(reactions, numPerPage, currentPage, searchOn) {
+        filterList: function(reactions, searchOn) {
             if ((typeof(reactions) != 'undefined') && (reactions.length > 0)) {
                 var subList = [];
                 for (var i = reactions.length - 1; i >= 0; i--) {
@@ -33,9 +33,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                     }
                 }
             }
-                var begin = ((currentPage - 1) * numPerPage);
-                var end = begin + numPerPage;
-                return subList.slice(begin, end);
+                return subList
             }
         },
         //Popups with image & name
@@ -121,7 +119,7 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     };
 });
 
-angular.module('app').controller('productOfCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
+angular.module('app').controller('productOfCtl', function($scope,$stateParams,sharedFactory,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
@@ -141,8 +139,8 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,Db
 
     $scope.$on("rxnLoaded", function () {
         reactions = CompoundDataFactory.reactions;
-        $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, 1, "");
-        $scope.totalItems = reactions.length;
+        $scope.filteredData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
+        $scope.items = reactions.length;
         $scope.$apply();
     });
 
@@ -150,14 +148,15 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,Db
 
     $scope.$watch('currentPage +searchOn', function() {
         if (reactions) {
-            $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, $scope.currentPage, $scope.searchOn);
-            $scope.totalItems = reactions.length;
+            var filteredRxns = CompoundDataFactory.filterList(reactions, $scope.searchOn);
+            $scope.filteredData = sharedFactory.paginateList(filteredRxns, $scope.currentPage, $scope.numPerPage);
+            $scope.items = filteredRxns.length;
         }
     });
 });
 
 
-angular.module('app').controller('reactantInCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
+angular.module('app').controller('reactantInCtl', function($scope,$stateParams,sharedFactory,DbChoice,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
@@ -176,17 +175,18 @@ angular.module('app').controller('reactantInCtl', function($scope,$stateParams,D
     });
     $scope.$on("rxnLoaded", function () {
         reactions = CompoundDataFactory.reactions;
-        $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, 1, "");
-        $scope.totalItems = reactions.length;
+        $scope.filteredData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
+        $scope.items = reactions.length;
         $scope.$apply();
     });
 
     $scope.getCompoundName = CompoundDataFactory.getCompoundName(DbChoice.dbid);
 
-    $scope.$watch('currentPage +searchOn', function() {
+    $scope.$watch('currentPage + searchOn', function() {
         if (reactions) {
-            $scope.filteredData = CompoundDataFactory.filterList(reactions, $scope.numPerPage, $scope.currentPage, $scope.searchOn);
-            $scope.totalItems = reactions.length;
+            var filteredRxns = CompoundDataFactory.filterList(reactions, $scope.searchOn);
+            $scope.filteredData = sharedFactory.paginateList(filteredRxns, $scope.currentPage, $scope.numPerPage);
+            $scope.items = reactions.length;
         }
     });
 });

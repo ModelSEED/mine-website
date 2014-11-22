@@ -29,18 +29,32 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             $cookieStore.put("charge: "+ $scope.charge, $scope.adducts);
         },
         mzSearch: function(db){
+            //clone the parameters before passing them so we don't end up change in the factory object
             var params = jQuery.extend({}, factory.params);
             params.db = db;
             if (factory.filterLogP) {params.logP = factory.logP}
             if (factory.filterKovats) {params.kovats = factory.kovats}
             console.log(params);
-            var promise = services.mz_search(factory.trace, "form", params);
+            var promise = services.ms_adduct_search(factory.trace, "form", params);
             promise.then(function(result){
-                    factory.peaks = result;
+                    factory.hits = result;
                     $rootScope.$broadcast("metabolitesLoaded")
                 },
                 function(err){console.log("mzSearchFailure:"+err)}
             );
+        },
+        filterHits: function(list, mz, adduct, formula, compound, mine) {
+            var filteredList = [];
+            var patt = new RegExp(formula);
+            for (var i = 0; i < list.length  ; i++) {
+                if((list[i].peak_name.toString().indexOf(mz) > -1) &&
+                    (list[i].adduct.toString().indexOf(adduct) > -1) &&
+                    (patt.test(list[i].Formula.toString())) &&
+                    (list[i].MINE_id.toString().indexOf(mine) > -1) &&
+                    (!compound || (typeof(list[i].Names) != 'undefined') && (list[i].Names[0].indexOf(compound) > -1)))
+                {filteredList.push(list[i])}
+            }
+            return filteredList
         }
     };
     return factory
@@ -94,26 +108,26 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
-    $scope.filteredData = [];
     $scope.items = 0;
-    $scope.searchMINE = "";
     $scope.searchMZ = "";
     $scope.searchAdduct = "";
     $scope.searchFormula = "";
     $scope.searchCompound = "";
-    $scope.begin=0;
-    $scope.end=0;
+    $scope.searchMINE = "";
     $scope.sortColumn = 'steps_from_source';
     $scope.sortInvert = true;
-    $scope.img_src = img_src;
+    $scope.img_src = sharedFactory.img_src;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     DbChoice.where = "metabolomics";
+    var filteredData = [];
     metabolomicsDataFactory.mzSearch(DbChoice.dbid);
     $scope.$on("metabolitesLoaded", function () {
-        $scope.peaks = metabolomicsDataFactory.peaks;
-        $scope.items = countData("","","","","");
-        $scope.totalItems = $scope.items;
+        filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
+            $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);
+        filteredData = sharedFactory.sortList(filteredData,$scope.sortColumn,$scope.sortInvert);
+        $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage);
+        $scope.items = filteredData.length;
+        $scope.totalItems = metabolomicsDataFactory.hits.length;
         $scope.$apply();
     });
 
@@ -131,90 +145,21 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');
     };
 
-    var countData = function(id,mz,adduct,compound,formula){
-        var c = 0;
-        for (var i = 0; i < $scope.peaks.length   ; i++) {
-            for (var j = 0; j < $scope.peaks[i].adducts.length; j++) {
-                for(var k = 0; k<$scope.peaks[i].adducts[j].isomers.length ;k++ ){
-                    var fname = "";
-                    if(typeof($scope.peaks[i].adducts[j].isomers[k].Names) != 'undefined'){
-                        fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
-                    }
-                    if(($scope.peaks[i].name.toString().indexOf($scope.searchMZ) > -1)
-                        &&
-                        ($scope.peaks[i].adducts[j].adduct.toString().indexOf(adduct) > -1)
-                        &&
-                        ($scope.peaks[i].adducts[j].formula.toString().indexOf(formula) > -1)
-                        &&
-                        (fname.toString().indexOf(compound) > -1)
-                        &&
-                        ($scope.peaks[i].adducts[j].isomers[k].MINE_id.toString().indexOf(id) > -1)
-                    ){
-                       c++; 
-                    }
-                }
-            }
-        }
-        return c;
-    };
-
-
-    $scope.$watch('currentPage + peaks + items + searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound + sortColumn + sortInvert', function() {
-        if((typeof($scope.peaks) != 'undefined') &&($scope.peaks.length > 0)){
-            $scope.items = countData($scope.searchMINE,$scope.searchMZ,$scope.searchAdduct,$scope.searchCompound,$scope.searchFormula);
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-            var end = begin + $scope.numPerPage;
-            if (end > $scope.items) {
-                end = $scope.items
-            }
-            filteredData = [];
-            for (var i = 0; i < $scope.peaks.length  ; i++) {
-                for (var j = 0; j < $scope.peaks[i].adducts.length; j++) {
-                    for(var k = 0; k<$scope.peaks[i].adducts[j].isomers.length ;k++ ){
-                        var fname = "";
-                        if(typeof($scope.peaks[i].adducts[j].isomers[k].Names) != 'undefined'){
-                           fname = $scope.peaks[i].adducts[j].isomers[k].Names[0];
-                        }
-                        var patt = new RegExp($scope.searchFormula);
-                        if(
-                            ($scope.peaks[i].name.toString().indexOf($scope.searchMZ) > -1)
-                            &&
-                            ($scope.peaks[i].adducts[j].adduct.toString().indexOf($scope.searchAdduct) > -1)
-                            &&
-                            (patt.test($scope.peaks[i].adducts[j].formula.toString()))
-                            &&
-                            (fname.toString().indexOf($scope.searchCompound) > -1)
-                            &&
-                            ($scope.peaks[i].adducts[j].isomers[k].MINE_id.toString().indexOf($scope.searchMINE) > -1)
-                            ){
-                            filteredData.push({MZ:$scope.peaks[i].name,
-                                    id:$scope.peaks[i].adducts[j].isomers[k]._id,
-                                    adduct:$scope.peaks[i].adducts[j].adduct,
-                                    formula:$scope.peaks[i].adducts[j].formula,
-                                    MINE_id:$scope.peaks[i].adducts[j].isomers[k].MINE_id, name:fname,
-                                    smiles:$scope.peaks[i].adducts[j].isomers[k].SMILES,
-                                    inchikey:$scope.peaks[i].adducts[j].isomers[k].Inchikey,
-                                    native_hit:$scope.peaks[i].adducts[j].isomers[k].native_hit,
-                                    steps_from_source:$scope.peaks[i].adducts[j].isomers[k].steps_from_source,
-                                    logP:$scope.peaks[i].adducts[j].isomers[k].logP,
-                                    minKovatsRI:$scope.peaks[i].adducts[j].isomers[k].minKovatsRI,
-                                    maxKovatsRI:$scope.peaks[i].adducts[j].isomers[k].maxKovatsRI,
-                                    npLikeness:$scope.peaks[i].adducts[j].isomers[k].NP_likeness})
-                        }
-                    }
-                }
-            }
-            filteredData.sort(function(a,b){
-                if ($scope.sortInvert){
-                    return a[$scope.sortColumn]-b[$scope.sortColumn]
-                }
-                else{
-                    return b[$scope.sortColumn]-a[$scope.sortColumn]
-                }
-            });
-            $scope.displayData = filteredData.slice(begin, end)
-
+    $scope.$watch('searchMINE + searchMZ + searchAdduct + searchFormula + searchCompound', function() {
+        if (metabolomicsDataFactory.hits) {
+            filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
+                $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);
+            filteredData = sharedFactory.sortList(filteredData, $scope.sortColumn, $scope.sortInvert);
+            $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage)
         }
     });
-});
 
+    $scope.$watch('sortColumn + sortInvert', function(){
+        filteredData = sharedFactory.sortList(filteredData,$scope.sortColumn,$scope.sortInvert);
+        $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage)
+    });
+
+    $scope.$watch('currentPage', function(){
+        $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage)
+    });
+});

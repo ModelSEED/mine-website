@@ -1,6 +1,7 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
+        img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         downloadFile: function (contents,filename) {
             var link = document.createElement('a');
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
@@ -35,6 +36,13 @@ angular.module('app').factory('sharedFactory', function(){
             var begin = ((currentPage - 1) * numPerPage);
             var end = begin + numPerPage;
             return list.slice(begin, end);
+        },
+        sortList: function(list, attribute, ascending){
+            list.sort(function(a,b){
+                if (ascending){return a[attribute]-b[attribute]}
+                else{return b[attribute]-a[attribute]}
+            });
+            return list
         }
     };
     return factory

@@ -1,10 +1,10 @@
 <div class="col-sm-4">
-    <br><h4>{{begin}} - {{end}} of {{items}} Total Hits: {{totalItems}}</h4>
+    <br><h4>{{items}} of {{totalItems}} total hits</h4>
 </div>
 <div class="col-sm-2">
     <br>
     <h3 ng-show="!items">Searching...</h3>
-    <button id="met-download" ng-show="items" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
+    <button id="met-download" ng-show="totalItems" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
 </div>
 <div class="col-sm-6">
     <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"
@@ -36,21 +36,21 @@
     </tr>
     </thead>
         <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
-          <td style="vertical-align:middle">{{f.MZ}}</td>
+          <td style="vertical-align:middle">{{f.peak_name}}</td>
           <td style="vertical-align:middle">{{f.adduct}}</td>
-          <td style="vertical-align:middle">{{f.formula}}</td>
+          <td style="vertical-align:middle">{{f.Formula}}</td>
           <td style="text-align: center">
           <ui style="list-style: none;">
             <li>
-              <img id="met-img" class="logo" ng-src="{{img_src+f.id}}.svg" width="100" alt="No image avalable">
+              <img id="met-img" class="logo" ng-src="{{img_src+f._id}}.svg" width="100" alt="No image avalable">
             </li>
-            <li  >{{f.name}}</li>
+            <li  >{{f.Names[0]}}</li>
         </ui>
           </td>
           <td style="vertical-align:middle">{{f.MINE_id}}</td>
           <td style="vertical-align: middle">{{f.logP}}</td>
           <td style="vertical-align: middle">{{f.minKovatsRI}}-{{f.maxKovatsRI}}</td>
-          <td style="vertical-align: middle">{{f.npLikeness}}</td>
+          <td style="vertical-align: middle">{{f.NP_likeness}}</td>
         </tr>
 </table>
 <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"

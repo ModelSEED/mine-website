@@ -22,17 +22,17 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                 function (err) {console.log("get_rxns fail");}
             );
         },
-        //EC filtering and pagination control
+        //EC filtering
         filterList: function(reactions, searchOn) {
             if ((typeof(reactions) != 'undefined') && (reactions.length > 0)) {
                 var subList = [];
                 for (var i = reactions.length - 1; i >= 0; i--) {
-                for (var j = reactions[i].Operators.length - 1; j >= 0; j--) {
-                    if ((reactions[i].Operators[j].indexOf(searchOn) > -1)&&(subList[subList.length-1] != reactions[i])) {
-                        subList.push(reactions[i]);
+                    for (var j = reactions[i].Operators.length - 1; j >= 0; j--) {
+                        if ((reactions[i].Operators[j].indexOf(searchOn) > -1)&&(subList[subList.length-1] != reactions[i])) {
+                            subList.push(reactions[i]);
+                        }
                     }
                 }
-            }
                 return subList
             }
         },

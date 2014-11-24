@@ -1,7 +1,6 @@
 // Allows for communication between controllers note set up for test data
 angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     var factory = {
-        peaks:"",
         trace :  "164.0937301",
         model_term: "",
         filterKovats: false,
@@ -104,7 +103,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
      });
 });
 
-angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,metabolomicsDataFactory,sharedFactory,DbChoice){
+angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$state,metabolomicsDataFactory,sharedFactory,DbChoice){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
@@ -120,6 +119,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,met
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     DbChoice.where = "metabolomics";
     var filteredData = [];
+    if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
     metabolomicsDataFactory.mzSearch(DbChoice.dbid);
     $scope.$on("metabolitesLoaded", function () {
         filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,

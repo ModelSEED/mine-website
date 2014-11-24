@@ -59,7 +59,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,metabolomicsDataFactory,DbChoice){
+angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
     $scope.charge = metabolomicsDataFactory.params.charge;
@@ -71,7 +71,6 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
     $scope.kovats = metabolomicsDataFactory.kovats;
     $scope.adducts = [];
     var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-    DbChoice.where = "";
     $scope.$watch('charge', function() {
         metabolomicsDataFactory.params.charge = $scope.charge;
         var promise = services.get_adducts();
@@ -103,7 +102,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
      });
 });
 
-angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$state,metabolomicsDataFactory,sharedFactory,DbChoice){
+angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$state,metabolomicsDataFactory,sharedFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
@@ -117,10 +116,9 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     $scope.sortInvert = true;
     $scope.img_src = sharedFactory.img_src;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
-    DbChoice.where = "metabolomics";
     var filteredData = [];
     if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
-    metabolomicsDataFactory.mzSearch(DbChoice.dbid);
+    metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
     $scope.$on("metabolitesLoaded", function () {
         filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
             $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);

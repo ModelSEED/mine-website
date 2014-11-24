@@ -1,7 +1,10 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
+        dbId:'KEGGexp2',
+        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres'],
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
+        services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         downloadFile: function (contents,filename) {
             var link = document.createElement('a');
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
@@ -60,6 +63,21 @@ angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieSto
         $cookieStore.put('mine', "mine_visitor");
         $scope.startGeneralTour()
     }
+});
+
+angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedFactory) {
+    $scope.databases =  [
+        {id:0, name:'KEGG',  db :'KEGGexp2'},
+        {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
+        {id:2, name:'YMDB', db : 'YMDBexp2'}
+    ];
+    $scope.database = $scope.databases[0];
+    $scope.$watch('database', function() {
+        var state_name = $state.current.name;
+        sharedFactory.dbId = $scope.database.db;
+        if (sharedFactory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current,{},{reload:true});
+    });
+
 });
 
 // default controller on the mine quick search is in quicksearch.js

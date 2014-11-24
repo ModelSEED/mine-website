@@ -21,30 +21,4 @@ angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
     };
 });
 
-angular.module('app').controller('databaseCtl',  function ($scope,$state,DbChoice) {
-    $scope.otherDB = '';
-    $scope.databases =  [
-        {id:0, name:'KEGG',  db :'KEGGexp2'},
-        {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
-        {id:2, name:'YMDB', db : 'YMDBexp2'}
-        //{id:3, name:'Other', db : ''}
-    ];
-    console.log(DbChoice.where+' '+DbChoice.quickSearch);
-    $scope.database = $scope.databases[0];
-    $scope.$watch('database', function() {
-        DbChoice.dbid = $scope.database.db;
-        if($scope.database.id == 3) {DbChoice.dbid = $scope.otherDB;}
-        if(DbChoice.where == "quick"){console.log("quick");
-            $state.go("compounds",{search:DbChoice.quickSearch+','+DbChoice.dbid});
-        }
-        if (DbChoice.where == "metabolomics") {
-            //console.log("metabolomics"+DbChoice.dbid);
-            $state.go("metabolomicsCompounds",{search:DbChoice.dbid});
-        }
-        if (DbChoice.where == "structure") {
-            //console.log("structure"+DbChoice.dbid);
-            $state.go('structuresres', {search:DbChoice.dbid});
-        }
-    });
 
-});

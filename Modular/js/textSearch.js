@@ -1,3 +1,13 @@
+angular.module('app').controller('quickSearchCtl',  function ($scope,$state,DbChoice) {
+    $scope.doQuickSearch = function(ev) {
+        if (!ev || ev.which==13){
+            DbChoice.quickSearch = $scope.name;
+            DbChoice.where = 'quick';
+            $state.go("compounds",{search:$scope.name+','+DbChoice.dbid.db});
+        }
+    }
+});
+
 angular.module('app').controller('compoundsCtl', function($scope,$stateParams,DbChoice){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
@@ -31,7 +41,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,Db
                     $scope.items = result.length+ " item found";
                 }
                 $scope.data = result;
-                $scope.totalItems = $scope.data.length;
+                $scope.items = $scope.data.length;
                 $scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage)
                 $scope.$apply();
             },

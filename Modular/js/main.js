@@ -1,12 +1,51 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
-angular.module('app').factory('currentState', function(){
-    return 'home';
-});
-
-angular.module('app').filter('unsafe', function($sce) {
-    return function(val) {
-        return $sce.trustAsHtml(val);
+angular.module('app').factory('sharedFactory', function(){
+    var factory = {
+        img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
+        downloadFile: function (contents,filename) {
+            var link = document.createElement('a');
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        },
+        convertToCSV: function(objArray, exclude) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var out = '';
+            for (var key in array[0]) {
+                if (!(key in exclude)){
+                    if (out != '') out += ',';
+                    out += '"'+key+'"';
+                }
+            }
+            out += '\r\n';
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (key in array[i]) {
+                    if (!(key in exclude)){
+                        if (line != '') line += ',';
+                        line += '"'+array[i][key]+'"';
+                    }
+                }
+                out += line + '\r\n';
+            }
+            return out;
+        },
+        paginateList: function(list, currentPage, numPerPage){
+            var begin = ((currentPage - 1) * numPerPage);
+            var end = begin + numPerPage;
+            return list.slice(begin, end);
+        },
+        sortList: function(list, attribute, ascending){
+            list.sort(function(a,b){
+                if (ascending){return a[attribute]-b[attribute]}
+                else{return b[attribute]-a[attribute]}
+            });
+            return list
+        }
     };
+    return factory
 });
 
 angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
@@ -23,7 +62,7 @@ angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieSto
     }
 });
 
-// default contoler on the mine quick search is in quicksearch.js
+// default controller on the mine quick search is in quicksearch.js
 
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
@@ -31,24 +70,20 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     //HOME
     $stateProvider.state('home', {
         url: '/home',
-        views: {
-            '':{
-                templateUrl: 'partials/home.html',
-                contoler: "resetCtl"
-            }
-        }
+        templateUrl: 'partials/home.html',
+        controller: "resetCtl"
     });
     //FAQ
     $stateProvider.state('faq', {
         url: '/faq',
         templateUrl: 'partials/FAQ.html',
-        contoler: "resetCtl"
+        controller: "resetCtl"
     });
 
-    // COMPOUNDS QUICK SEARCH see compounds.js
+    // COMPOUNDS QUICK SEARCH see textSearch.js
     $stateProvider.state('compounds', {
         url: '/compounds:search',
-        templateUrl: 'partials/compounds.html',
+        templateUrl: 'partials/compoundslist.html',
         controller: "compoundsCtl"
     });
 
@@ -62,17 +97,17 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('acompound.overview', {
         url: '/overview',
         templateUrl: 'partials/overview.html',
-        contoler: "resetCtl"
+        controller: "resetCtl"
     });
     $stateProvider.state('acompound.reactants', {
-        url: '/reactants',
+        url: '/reactantIn',
         templateUrl: 'partials/reactions.html',
-        controller: "reactantsCtl"
+        controller: "reactantInCtl"
     });
     $stateProvider.state('acompound.products', {
-        url: '/products',
+        url: '/productOf',
         templateUrl: 'partials/reactions.html',
-        controller: "productsCtl"
+        controller: "productOfCtl"
     });
 
 
@@ -91,7 +126,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
             }
         }
     });
-
     $stateProvider.state('metabolomicsCompounds', {
       url: '/metabolomicsCompounds:search',
       views: {
@@ -110,17 +144,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     // STRUCTURES see structures.js
     $stateProvider.state('structuresres', {
         url: '/structuresres:search',
-        templateUrl: 'partials/structuresres.html',
+        templateUrl: 'partials/compoundslist.html',
         controller: "structuresresCtl"
-    });
-    $stateProvider.state('struccompounds', {
-        url: '/struccompounds:search',
-        templateUrl: 'partials/compounds.html',
-        controller: "struccompoundsCtl"
     });
     $stateProvider.state('structure', {
         url: '/structure',
-        templateUrl: 'partials/structure.html',
+        templateUrl: 'partials/structureSearch.html',
         controller: "structureCtl"
     });
 
@@ -132,7 +161,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'partials/creator.html',
         controller: "creatorCtl"
     });
-
     $stateProvider.state('operator', {
         url: '/operator',
         templateUrl: 'partials/operator.html',
@@ -141,12 +169,3 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 });
 img_src = "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/";
 services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
-
-function downloadFile(contents,filename) {
-    var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}

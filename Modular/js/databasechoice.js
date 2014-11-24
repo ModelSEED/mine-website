@@ -1,5 +1,9 @@
 angular.module('app').factory('DbChoice', function(){
-    return {dbid:'KEGGexp',where:"home"};
+    return {
+        dbid:'KEGGexp',
+        where:"home",
+        quickSearch:""
+    };
 });
 
 angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
@@ -17,7 +21,7 @@ angular.module('app').controller('resetCtl',  function ($scope, DbChoice) {
     };
 });
 
-angular.module('app').controller('databaseCtl',  function ($scope,$state,DbChoice,quickFactory) {
+angular.module('app').controller('databaseCtl',  function ($scope,$state,DbChoice) {
     $scope.otherDB = '';
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
@@ -25,14 +29,13 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,DbChoic
         {id:2, name:'YMDB', db : 'YMDBexp2'}
         //{id:3, name:'Other', db : ''}
     ];
-    console.log(DbChoice.where+' '+quickFactory.name);
+    console.log(DbChoice.where+' '+DbChoice.quickSearch);
     $scope.database = $scope.databases[0];
     $scope.$watch('database', function() {
-        //console.log($scope.database.db+" "+DbChoice.where+' '+quickFactory.name);
         DbChoice.dbid = $scope.database.db;
         if($scope.database.id == 3) {DbChoice.dbid = $scope.otherDB;}
         if(DbChoice.where == "quick"){console.log("quick");
-            $state.go("compounds",{search:quickFactory.name+','+DbChoice.dbid});
+            $state.go("compounds",{search:DbChoice.quickSearch+','+DbChoice.dbid});
         }
         if (DbChoice.where == "metabolomics") {
             //console.log("metabolomics"+DbChoice.dbid);

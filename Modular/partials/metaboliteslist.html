@@ -32,7 +32,7 @@
         <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchMINE"></th>
         <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert"> Sort by </button></th>
         <th><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert">Sort by</button></th>
-        <th><button class="btn btn-block btn-primary" ng-click="sortColumn='npLikeness'; sortInvert=!sortInvert">Sort by</button></th>
+        <th><button class="btn btn-block btn-primary" ng-click="sortColumn='NP_likeness'; sortInvert=!sortInvert">Sort by</button></th>
     </tr>
     </thead>
         <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">

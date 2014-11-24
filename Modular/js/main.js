@@ -22,10 +22,10 @@ angular.module('app').factory('sharedFactory', function(){
             out += '\r\n';
             for (var i = 0; i < array.length; i++) {
                 var line = '';
-                for (key in array[i]) {
+                for (key in array[0]) {
                     if (!(key in exclude)){
                         if (line != '') line += ',';
-                        line += '"'+array[i][key]+'"';
+                        if (key in array[i]) line += '"' + array[i][key] + '"';
                     }
                 }
                 out += line + '\r\n';

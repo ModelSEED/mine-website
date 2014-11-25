@@ -1,10 +1,10 @@
-angular.module('app').factory('CompoundDataFactory', function($rootScope){
+angular.module('app').factory('CompoundDataFactory', function($rootScope, $timeout, sharedFactory){
     var factory = {
         getCompound: function (db, id){
             var promise;
             //Controls for _id and MINE ids
-            if (parseInt(id)) {promise = services.get_comps(db, [parseInt(id)]);}
-            else{promise = services.get_comps(db, [id]);}
+            if (parseInt(id)) {promise = sharedFactory.services.get_comps(db, [parseInt(id)]);}
+            else{promise = sharedFactory.services.get_comps(db, [id]);}
             promise.then(
                 function(result){
                     factory.compound = result[0];
@@ -14,7 +14,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
             )
         },
         getReactions: function(db, rxn_ids) {
-            var promise = services.get_rxns(db, rxn_ids);
+            var promise = sharedFactory.services.get_rxns(db, rxn_ids);
             promise.then(function (result) {
                     factory.reactions = result;
                     $rootScope.$broadcast("rxnLoaded")
@@ -40,7 +40,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
         getCompoundName: function(db){
             return function($event, id) {
                 if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
-                    var Promise = services.get_comps(db, [id]);
+                    var Promise = sharedFactory.services.get_comps(db, [id]);
                     Promise.then(
                         function (result) {
                             var cTitle;
@@ -51,9 +51,8 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                                     title: cTitle,
                                     trigger: 'hover',
                                     html: true,
-                                    content: '<img src="' + img_src + id + '.svg" width="250">'
+                                    content: '<img src="' + sharedFactory.img_src + id + '.svg" width="250">'
                                 });
-                                $($event.target).popover('show');
                             }
                         },
                         function (err) {console.log("getCompoundName fail");}
@@ -65,9 +64,9 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('acompoundCtl', function($scope,$stateParams,DbChoice,CompoundDataFactory){
-    CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
-    $scope.img_src = img_src;
+angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
+    CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
+    $scope.img_src = sharedFactory.img_src;
 
     $scope.$on("compoundLoaded", function () {
         $scope.data = CompoundDataFactory.compound;
@@ -119,22 +118,21 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,Db
     };
 });
 
-angular.module('app').controller('productOfCtl', function($scope,$stateParams,sharedFactory,DbChoice,CompoundDataFactory){
+angular.module('app').controller('productOfCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.searchOn = "";
-    $scope.img_src = img_src;
+    $scope.img_src = sharedFactory.img_src;
     var reactions;
     if (!CompoundDataFactory.compound) {
-        CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+        CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }
     else {
-        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
+        CompoundDataFactory.getReactions(sharedFactory.dbId, CompoundDataFactory.compound.Product_of);
     }
 
     $scope.$on("compoundLoaded", function () {
-        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Product_of);
+        CompoundDataFactory.getReactions(sharedFactory.dbId, CompoundDataFactory.compound.Product_of);
     });
 
     $scope.$on("rxnLoaded", function () {
@@ -144,7 +142,7 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,sh
         $scope.$apply();
     });
 
-    $scope.getCompoundName = CompoundDataFactory.getCompoundName(DbChoice.dbid);
+    $scope.getCompoundName = CompoundDataFactory.getCompoundName(sharedFactory.dbId);
 
     $scope.$watch('currentPage +searchOn', function() {
         if (reactions) {
@@ -156,22 +154,21 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,sh
 });
 
 
-angular.module('app').controller('reactantInCtl', function($scope,$stateParams,sharedFactory,DbChoice,CompoundDataFactory){
+angular.module('app').controller('reactantInCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.searchOn = "";
-    $scope.img_src = img_src;
+    $scope.img_src = sharedFactory.img_src;
     var reactions;
     if (!CompoundDataFactory.compound){
-        CompoundDataFactory.getCompound(DbChoice.dbid, $stateParams.id);
+        CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }
     else {
-        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Reactant_in);
+        CompoundDataFactory.getReactions(sharedFactory.dbId, CompoundDataFactory.compound.Reactant_in);
     }
 
     $scope.$on("compoundLoaded", function () {
-        CompoundDataFactory.getReactions(DbChoice.dbid, CompoundDataFactory.compound.Reactant_in);
+        CompoundDataFactory.getReactions(sharedFactory.dbId, CompoundDataFactory.compound.Reactant_in);
     });
     $scope.$on("rxnLoaded", function () {
         reactions = CompoundDataFactory.reactions;
@@ -180,7 +177,7 @@ angular.module('app').controller('reactantInCtl', function($scope,$stateParams,s
         $scope.$apply();
     });
 
-    $scope.getCompoundName = CompoundDataFactory.getCompoundName(DbChoice.dbid);
+    $scope.getCompoundName = CompoundDataFactory.getCompoundName(sharedFactory.dbId);
 
     $scope.$watch('currentPage + searchOn', function() {
         if (reactions) {

@@ -1,5 +1,5 @@
 // Allows for communication between controlers
-angular.module('app').factory('structuresresFactory', function(){
+angular.module('app').factory('structureSearchFactory', function(){
     return{
         mol:'',
         stype:'',
@@ -8,17 +8,14 @@ angular.module('app').factory('structuresresFactory', function(){
     };
 });
 
-
-angular.module('app').controller('structureCtl',  function($scope,$state,DbChoice,structuresresFactory) {
+angular.module('app').controller('structureCtl',  function($scope,$state,structureSearchFactory) {
     $scope.stype="exact";
     $scope.maxres=100;
     $scope.sthresh=0.7;
-    DbChoice.where = "";
     var marvinSketcherInstance;
-    console.log("at structureCtl"+DbChoice.dbid);
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
         marvinSketcherInstance = sketcherInstance;
-        marvinSketcherInstance.importStructure("mol", structuresresFactory.mol)
+        marvinSketcherInstance.importStructure("mol", structureSearchFactory.mol)
     }, function(error) {
         alert("Loading of the sketcher failed"+error);
     });
@@ -26,61 +23,51 @@ angular.module('app').controller('structureCtl',  function($scope,$state,DbChoic
     $scope.find = function(){
         var exportPromise = marvinSketcherInstance.exportStructure('mol', null);
         exportPromise.then(function (source) {
+            structureSearchFactory.mol = source;
+            structureSearchFactory.stype = $scope.stype;
+            structureSearchFactory.maxres = parseInt($scope.maxres);
+            structureSearchFactory.sthresh = parseFloat($scope.sthresh);
             $state.go('structuresres');
-            structuresresFactory.mol = source;
-            structuresresFactory.stype = $scope.stype;
-            structuresresFactory.maxres = parseInt($scope.maxres);
-            structuresresFactory.sthresh = parseFloat($scope.sthresh);
         }, function (error) {
             alert(error);
         });
     }
 });
 
-angular.module('app').controller('structuresresCtl', function($scope,DbChoice,structuresresFactory){
+angular.module('app').controller('structuresresCtl', function($scope,$state,sharedFactory,structureSearchFactory){
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
-    $scope.data=[];
-    $scope.img_src = img_src;
-    DbChoice.where = 'structure';
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
+    $scope.items=-1;
+    $scope.img_src = sharedFactory.img_src;
+    var data = [];
+    var services = sharedFactory.services;
     var promise;
-    if (structuresresFactory.stype == "exact"){
-        promise = services.structure_search(DbChoice.dbid,"mol",structuresresFactory.mol);
+    if (!structureSearchFactory.mol) {
+        $state.go('structure')
     }
-    if (structuresresFactory.stype == "substructure"){
-        promise = services.substructure_search(DbChoice.dbid,structuresresFactory.mol,structuresresFactory.maxres);
+    else if (structureSearchFactory.stype == "exact"){
+        promise = services.structure_search(sharedFactory.dbId,"mol",structureSearchFactory.mol);
     }
-    if (structuresresFactory.stype == "similarity"){
-        promise = services.similarity_search(DbChoice.dbid,structuresresFactory.mol,structuresresFactory.sthresh,'FP4',structuresresFactory.maxres);
+    else if (structureSearchFactory.stype == "substructure"){
+        promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres);
+    }
+    else if (structureSearchFactory.stype == "similarity"){
+        promise = services.similarity_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.sthresh,'FP4',structureSearchFactory.maxres);
     }
     promise.then(
-            function(result){
-                if(result.length >1){
-                    $scope.items = result.length+ " items found";
-                }else{
-                     $scope.items = result.length+ " item found";
-                }
-                $scope.data = result;
-                $scope.items = $scope.data.length;
-                $scope.$apply();
-            },
-            function(err){
-                $scope.items = "0 items found";
-                $scope.data = [];
-                $scope.$apply();
-            }
+        function(result){
+            data = result;
+            $scope.items = data.length;
+            $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage);
+            $scope.$apply();
+        },
+        function(err){
+            console.log("structure search failure")
+        }
     );
 
-
-    $scope.$watch('currentPage + items', function() {
-        if($scope.data.length > 0){
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-            var end = begin + $scope.numPerPage;
-            $scope.filteredData = $scope.data.slice(begin, end);
-        }
+    $scope.$watch('currentPage', function() {
+        $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage)
     });
-
 });

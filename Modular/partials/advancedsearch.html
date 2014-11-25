@@ -1,0 +1,49 @@
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2>Advanced Search</h2></div>
+        <div class="panel-body">
+            <table class="table">
+                <tbody>
+                <tr ng-repeat="x in and track by $index">
+                    <td>AND</td>
+                    <td>{{x[0]}}: {{x[1]}}</td>
+                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(and, $index)">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+                <tr ng-repeat="x in or track by $index">
+                    <td>OR</td>
+                    <td>{{x[0]}}: {{x[1]}}</td>
+                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(or, $index)">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+                <tr ng-repeat="x in not track by $index">
+                    <td>NOT</td>
+                    <td>{{x[0]}}: {{x[1]}}</td>
+                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(not, $index)">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class="form-inline" role="form">
+        <select class="form-control" ng-model="selected" ng-options="f.name for f in fields"></select>
+        <input class="form-control" type='text' class="form col-sm-6" ng-model='value' placeholder="">
+        <div class="btn-group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" ng-click="addItem(and, selected.name,value)">And</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" ng-click="addItem(or, selected.name,value)">Or</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" ng-click="addItem(not, selected.name,value)">Not</button>
+            </div>
+        </div>
+        <a class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or+not)' ng-click="search(and,or,not)">
+            <span class="glyphicon glyphicon-search"></span> Search</a>
+    </form>
+</div>

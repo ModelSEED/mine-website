@@ -1,5 +1,5 @@
 // Allows for communication between controllers note set up for test data
-angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
+angular.module('app').factory('metabolomicsDataFactory', function($rootScope, sharedServices){
     var factory = {
         trace :  "164.0937301",
         model_term: "",
@@ -34,7 +34,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             if (factory.filterLogP) {params.logP = factory.logP}
             if (factory.filterKovats) {params.kovats = factory.kovats}
             console.log(params);
-            var promise = services.ms_adduct_search(factory.trace, "form", params);
+            var promise = sharedServices.services.ms_adduct_search(factory.trace, "form", params);
             promise.then(function(result){
                     factory.hits = result;
                     $rootScope.$broadcast("metabolitesLoaded")

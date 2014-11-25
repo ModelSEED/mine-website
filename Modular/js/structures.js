@@ -38,7 +38,7 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
+    $scope.items=-1;
     $scope.img_src = sharedFactory.img_src;
     var data = [];
     var services = sharedFactory.services;

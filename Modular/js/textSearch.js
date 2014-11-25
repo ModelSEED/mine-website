@@ -8,7 +8,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
     $scope.currentPage = 1;
     $scope.numPerPage = 25;
     $scope.maxSize = 5;
-    $scope.items=0;
+    $scope.items=-1;
     var data=[];
     var services = sharedFactory.services;
 
@@ -26,6 +26,8 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
                 $scope.$apply();
             },
             function(err){
+                $scope.items=0;
+                $scope.$apply();
                 console.log("Quick Search Failure")
             }
     );

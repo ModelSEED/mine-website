@@ -51,9 +51,15 @@ angular.module('app').factory('sharedFactory', function(){
     return factory
 });
 
-angular.module('app').controller('cookieCtl',function($scope,$cookies,$cookieStore) {
+angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
     $scope.startGeneralTour = function () {
         var tour = new Tour(generalTour());
+        tour.init();
+        tour.start();
+    };
+
+    $scope.startMetabolomicsTour = function () {
+        var tour = new Tour(metabolomicsTour());
         tour.init();
         tour.start();
     };
@@ -89,13 +95,13 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
         url: '/home',
         templateUrl: 'partials/home.html',
-        controller: "resetCtl"
+        controller: "cookieCtl"
     });
     //FAQ
     $stateProvider.state('faq', {
         url: '/faq',
         templateUrl: 'partials/FAQ.html',
-        controller: "resetCtl"
+        controller: "cookieCtl"
     });
 
     // COMPOUNDS QUICK SEARCH see textSearch.js
@@ -115,7 +121,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('acompound.overview', {
         url: '/overview',
         templateUrl: 'partials/overview.html',
-        controller: "resetCtl"
+        controller: "acompoundCtl"
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactantIn',
@@ -172,7 +178,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-
     //Operator Creator see creator.js
     $stateProvider.state('creator', {
         url: '/creator',
@@ -185,5 +190,3 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "operatorCtl"
     });
 });
-img_src = "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/";
-services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');

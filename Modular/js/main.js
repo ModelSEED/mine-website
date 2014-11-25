@@ -110,6 +110,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'partials/compoundslist.html',
         controller: "compoundsCtl"
     });
+    $stateProvider.state('advancedsearch', {
+        url: '/advancedsearch',
+        templateUrl: 'partials/advancedsearch.html',
+        controller: "advancedSearchCtl"
+    });
 
 
     // AN INDIVIDUAL COMPOUND see acompound.js

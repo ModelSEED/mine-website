@@ -5,7 +5,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
         getCompound: function (db, id){
             var promise;
             //Controls for _id and MINE ids
-            if (parseInt(id)) {promise = sharedFactory.services.get_comps(db, [parseInt(id)]);}
+            if (parseInt(id)) {promise = factory.services.get_comps(db, [parseInt(id)]);}
             else{promise = factory.services.get_comps(db, [id]);}
             promise.then(
                 function(result){

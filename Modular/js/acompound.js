@@ -1,10 +1,10 @@
-angular.module('app').factory('CompoundDataFactory', function($rootScope){
+angular.module('app').factory('CompoundDataFactory', function($rootScope, $timeout, sharedFactory){
     var factory = {
         getCompound: function (db, id){
             var promise;
             //Controls for _id and MINE ids
-            if (parseInt(id)) {promise = services.get_comps(db, [parseInt(id)]);}
-            else{promise = services.get_comps(db, [id]);}
+            if (parseInt(id)) {promise = sharedFactory.services.get_comps(db, [parseInt(id)]);}
+            else{promise = sharedFactory.services.get_comps(db, [id]);}
             promise.then(
                 function(result){
                     factory.compound = result[0];
@@ -14,7 +14,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
             )
         },
         getReactions: function(db, rxn_ids) {
-            var promise = services.get_rxns(db, rxn_ids);
+            var promise = sharedFactory.services.get_rxns(db, rxn_ids);
             promise.then(function (result) {
                     factory.reactions = result;
                     $rootScope.$broadcast("rxnLoaded")
@@ -40,7 +40,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
         getCompoundName: function(db){
             return function($event, id) {
                 if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
-                    var Promise = services.get_comps(db, [id]);
+                    var Promise = sharedFactory.services.get_comps(db, [id]);
                     Promise.then(
                         function (result) {
                             var cTitle;
@@ -51,9 +51,8 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                                     title: cTitle,
                                     trigger: 'hover',
                                     html: true,
-                                    content: '<img src="' + img_src + id + '.svg" width="250">'
+                                    content: '<img src="' + sharedFactory.img_src + id + '.svg" width="250">'
                                 });
-                                $($event.target).popover('show');
                             }
                         },
                         function (err) {console.log("getCompoundName fail");}

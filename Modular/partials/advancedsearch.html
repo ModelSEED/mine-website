@@ -5,7 +5,7 @@
             <div ng-hide="and+or" class="well">
                 Use the advanced search to write complex database queries. Select a field, enter a value text, and press
                 the "And" or "Or" indicate if matching the term is required or optional. Additionally, you may select
-                the "Use RegEx" to evaluate the value text as a Regular Expression or is NOT to invert your search but
+                the "Use RegEx" to evaluate the value text as a Regular Expression or "is NOT" to invert your search but
                 negating regular expressions is not permitted.
             </div>
             <table class="table">
@@ -50,7 +50,7 @@
             <input class="form-control" type='text' class="form col-sm-6" ng-model='value' placeholder="">
             <div class="form-control">
                 <label>Use RegEx </label>
-                <input type="checkbox" ng-model="RegEx" ng-disabled='not' ng-checked="RegEx">
+                <input type="checkbox" ng-model="RegEx" ng-disabled='not'>
             </div>
             <a class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or)' ng-click="search(and,or,not)">
             <span class="glyphicon glyphicon-search"></span> Search</a>

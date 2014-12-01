@@ -91,6 +91,14 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
         else return nameArray.slice(0,5).join('\n') + "\n...";
     };
 
+    $scope.downloadResults = function(){
+        var jsonObject = JSON.stringify(data);
+        var exclude = {"$$hashKey":"", 'id':"", 'score':""};
+        var csv = sharedFactory.convertToCSV(jsonObject, exclude);
+        var d = new Date();
+        sharedFactory.downloadFile(csv, d.toISOString()+'.csv');
+    };
+
     $scope.$watch('currentPage', function() {
         if (data) {
             $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage)

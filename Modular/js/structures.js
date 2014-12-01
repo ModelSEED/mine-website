@@ -53,7 +53,8 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
         promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres);
     }
     else if (structureSearchFactory.stype == "similarity"){
-        promise = services.similarity_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.sthresh,'FP4',structureSearchFactory.maxres);
+        promise = services.similarity_search(sharedFactory.dbId,structureSearchFactory.mol,
+            structureSearchFactory.sthresh,'FP4',structureSearchFactory.maxres);
     }
     promise.then(
         function(result){
@@ -66,6 +67,14 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
             console.log("structure search failure")
         }
     );
+
+    $scope.downloadResults = function(){
+        var jsonObject = JSON.stringify(data);
+        var exclude = {"$$hashKey":"", 'id':""};
+        var csv = sharedFactory.convertToCSV(jsonObject, exclude);
+        var d = new Date();
+        sharedFactory.downloadFile(csv, d.toISOString()+'.csv');
+    };
 
     $scope.$watch('currentPage', function() {
         $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage)

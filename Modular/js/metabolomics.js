@@ -71,10 +71,9 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
     $scope.filterKovats = metabolomicsDataFactory.filterKovats;
     $scope.kovats = metabolomicsDataFactory.kovats;
     $scope.adducts = [];
-    var services = new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database');
     $scope.$watch('charge', function() {
         metabolomicsDataFactory.params.charge = $scope.charge;
-        var promise = services.get_adducts();
+        var promise = metabolomicsDataFactory.services.get_adducts();
         promise.then(function(result){
                 if ($scope.charge) {$scope.adduct_list = result[0];}
                 else {$scope.adduct_list = result[1]}

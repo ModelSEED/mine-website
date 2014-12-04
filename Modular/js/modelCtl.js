@@ -1,4 +1,4 @@
-
+// This controls the selection of KEGG metabolic reconstructions. Currently only used for metabolomics search
 angular.module('app').controller('modelsCtl', function($scope, $state, sharedFactory, metabolomicsDataFactory){
     $scope.model_term = metabolomicsDataFactory.model_term;
     $scope.modelList = [];

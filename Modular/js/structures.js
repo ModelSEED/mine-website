@@ -1,4 +1,4 @@
-// Allows for communication between controlers
+// Allows for communication between controllers. This factory should be improved
 angular.module('app').factory('structureSearchFactory', function(){
     return{
         mol:'',
@@ -13,6 +13,7 @@ angular.module('app').controller('structureCtl',  function($scope,$state,structu
     $scope.maxres=100;
     $scope.sthresh=0.7;
     var marvinSketcherInstance;
+    // connect to Marvin canvas and load the molfile in memory
     MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
         marvinSketcherInstance = sketcherInstance;
         marvinSketcherInstance.importStructure("mol", structureSearchFactory.mol)
@@ -21,6 +22,7 @@ angular.module('app').controller('structureCtl',  function($scope,$state,structu
     });
 
     $scope.find = function(){
+        // store parameters & search, some of this should probably be passed as state parameters
         var exportPromise = marvinSketcherInstance.exportStructure('mol', null);
         exportPromise.then(function (source) {
             structureSearchFactory.mol = source;
@@ -36,11 +38,12 @@ angular.module('app').controller('structureCtl',  function($scope,$state,structu
 
 angular.module('app').controller('structuresresCtl', function($scope,$state,sharedFactory,structureSearchFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 25;
+    $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.items=-1;
     $scope.img_src = sharedFactory.img_src;
     var data = [];
+    // the following logic should be moved to factory in future
     var services = sharedFactory.services;
     var promise;
     if (!structureSearchFactory.mol) {

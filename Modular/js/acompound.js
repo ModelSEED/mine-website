@@ -57,7 +57,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                                 });
                             }
                         },
-                        function (err) {console.log("getCompoundName fail");}
+                        function (err) {console.log(err);}
                     );
                 }
             }
@@ -75,6 +75,7 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sh
         $scope.$apply();
     });
 
+    // This launches a large image of the compound. Package is breaks w/ double clicking. Should be replaced w/ modals
     $scope.launch_lightbox = function () {
         $("#cpd-img").lightbox_me({
             overlayCSS: {background: 'black', opacity:.6}
@@ -122,11 +123,11 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sh
 
 angular.module('app').controller('productOfCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 25;
+    $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
     var reactions;
-    if (!CompoundDataFactory.compound) {
+    if (!CompoundDataFactory.compound) { // if we hit this page directly we need to get the compound data first
         CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }
     else {
@@ -158,11 +159,11 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,sh
 
 angular.module('app').controller('reactantInCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 25;
+    $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
     var reactions;
-    if (!CompoundDataFactory.compound){
+    if (!CompoundDataFactory.compound){ // if we hit this page directly we need to get the compound data first
         CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }
     else {

@@ -75,13 +75,6 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sh
         $scope.$apply();
     });
 
-    // This launches a large image of the compound. Package is breaks w/ double clicking. Should be replaced w/ modals
-    $scope.launch_lightbox = function () {
-        $("#cpd-img").lightbox_me({
-            overlayCSS: {background: 'black', opacity:.6}
-        })
-    };
-
     $scope.mapLink = function(keggMap){
         return('http://www.genome.jp/kegg-bin/show_pathway?map' + keggMap.slice(0,5) + '+' +
             $scope.data.DB_links.KEGG.join('+'));

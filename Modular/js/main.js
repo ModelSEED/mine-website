@@ -2,10 +2,12 @@ angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-r
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
         dbId:'KEGGexp2',
-        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres'],
+        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres'], //if the db changes in one of these states, reload the page
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
+        numPerPage: 25, // default number of results to show per page
         downloadFile: function (contents,filename) {
+            // Warning: This function may not work with IE!
             var link = document.createElement('a');
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contents));
             link.setAttribute('download', filename);
@@ -14,6 +16,8 @@ angular.module('app').factory('sharedFactory', function(){
             document.body.removeChild(link);
         },
         convertToCSV: function(objArray, exclude) {
+            // This gets the keys from the first object in the array which may cause problems if the objects have
+            // variable attributes. If the attribute is not in the first object, it won't ever be included
             var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
             var out = '';
             for (var key in array[0]) {
@@ -79,14 +83,13 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
     ];
     $scope.database = $scope.databases[0];
     $scope.$watch('database', function() {
+        // This tracks which database is selected and reloads the page if it's content depends on the database
         var state_name = $state.current.name;
         sharedFactory.dbId = $scope.database.db;
         if (sharedFactory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current,{},{reload:true});
     });
 
 });
-
-// default controller on the mine quick search is in quicksearch.js
 
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 

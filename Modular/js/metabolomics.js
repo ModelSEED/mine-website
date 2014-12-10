@@ -16,7 +16,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             adducts: [],
             models: []
         },
-        storeFormData: function($scope, $cookieStore) {
+        storeFormData: function($scope, $cookieStore) { // updates factory and cookies on search
             factory.trace =$scope.trace;
             factory.params.tolerance = $scope.tolerance + + 0.000000000000001;
             factory.params.halogens = $scope.halogens;
@@ -40,10 +40,11 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
                     factory.hits = result;
                     $rootScope.$broadcast("metabolitesLoaded")
                 },
-                function(err){console.log("mzSearchFailure:"+err)}
+                function(err){console.log(err)}
             );
         },
         filterHits: function(list, mz, adduct, formula, compound, mine) {
+            // filtering but we have to handle names carefully (sometimes not present) and use RegEx with formula
             var filteredList = [];
             var patt = new RegExp(formula);
             for (var i = 0; i < list.length  ; i++) {
@@ -63,7 +64,6 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
 angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
-    $scope.charge = metabolomicsDataFactory.params.charge;
     $scope.halogens = metabolomicsDataFactory.params.halogens;
     $scope.ppm = metabolomicsDataFactory.params.ppm;
     $scope.filterLogP = metabolomicsDataFactory.filterLogP;
@@ -71,40 +71,37 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
     $scope.filterKovats = metabolomicsDataFactory.filterKovats;
     $scope.kovats = metabolomicsDataFactory.kovats;
     $scope.adducts = [];
-    $scope.$watch('charge', function() {
-        metabolomicsDataFactory.params.charge = $scope.charge;
-        var promise = metabolomicsDataFactory.services.get_adducts();
-        promise.then(function(result){
-                if ($scope.charge) {$scope.adduct_list = result[0];}
-                else {$scope.adduct_list = result[1]}
-                var adducts = $cookieStore.get("charge: "+ $scope.charge);
-                console.log(adducts);
-                if( typeof(adducts) == 'object') {
-                    $scope.adducts = adducts
-                }
-                else {$scope.adducts =[];}
-                $scope.$apply();
-            },
-            function(err){
-                console.log("metabolomicsCtl fail");
-            }
-        );
+    var adductList;
+
+    metabolomicsDataFactory.services.get_adducts().then(
+        function(result){
+            adductList = result;
+            $scope.charge = metabolomicsDataFactory.params.charge; // triggers following watch statement
+            $scope.$apply();
+        },
+        function(err) {console.log(err)}
+    );
+
+    $scope.$watch('charge', function() { // if the charge changes, update the adduct list while checking the cookies
+        if (adductList) {
+            metabolomicsDataFactory.params.charge = $scope.charge;
+            if ($scope.charge) {$scope.adduct_list = adductList[0];}
+            else {$scope.adduct_list = adductList[1]}
+            var adducts = $cookieStore.get("charge: "+ $scope.charge);
+            if (typeof(adducts) == 'object') $scope.adducts = adducts;
+            else $scope.adducts = [];
+        }
     });
+
     $scope.metSearch = function() {
         metabolomicsDataFactory.storeFormData($scope, $cookieStore);
         $state.go("metabolomicsCompounds")
     };
-
-    $scope.$watch('adducts', function() {
-        if ($scope.adducts.length > 0) {
-           $scope.enable = false;
-        }
-     });
 });
 
 angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$state,metabolomicsDataFactory,sharedFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 25;
+    $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.items = 0;
     $scope.searchMZ = "";
@@ -117,8 +114,11 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     $scope.img_src = sharedFactory.img_src;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
     var filteredData = [];
+
+    // if we get here w/o parameters (ie direct link), return to the search screen
     if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
-    metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
+    else metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
+
     $scope.$on("metabolitesLoaded", function () {
         filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
             $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);

@@ -1,3 +1,4 @@
+// This file is not currently loaded by index.html
 angular.module('app',[]);
 angular.module('app').factory('DataFactory', function(){
     return {choice:{value:'This',  db :'KEGGexp'}};

@@ -63,7 +63,7 @@ angular.module('app').controller('advancedSearchCtl', function($scope,$state){
 
 angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sharedFactory){
     $scope.currentPage = 1;
-    $scope.numPerPage = 25;
+    $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.items=-1;
     var data=[];
@@ -82,11 +82,13 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
             function(err){
                 $scope.items=0;
                 $scope.$apply();
-                console.log("Quick Search Failure")
+                console.log("quick_search or database_query Failure");
+                console.log(err)
             }
     );
 
     $scope.formatNames = function(nameArray) {
+        // trim name array to 5 and present names on separate lines
         if (nameArray.length < 6) return nameArray.join('\n');
         else return nameArray.slice(0,5).join('\n') + "\n...";
     };
@@ -100,9 +102,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
     };
 
     $scope.$watch('currentPage', function() {
-        if (data) {
-            $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage)
-        }
+        if (data) $scope.filteredData = sharedFactory.paginateList(data, $scope.currentPage, $scope.numPerPage)
     });
 
 });

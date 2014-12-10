@@ -1,3 +1,4 @@
+// This file contains steps for all website tours EXCEPT the operator creator tool (which uses a different tool)
 var generalTour = function(){
     var host = window.location.href.split('#')[0];
     return {

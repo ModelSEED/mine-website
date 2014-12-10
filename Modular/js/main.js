@@ -91,8 +91,6 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
 
 });
 
-// default controller on the mine quick search is in quicksearch.js
-
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');

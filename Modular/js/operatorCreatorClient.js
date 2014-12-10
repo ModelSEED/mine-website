@@ -60,6 +60,16 @@ function operatorCreator(url, auth, auth_cb) {
         deprecationWarning();
         return json_call_ajax("operatorCreator.map_operator", [operator, database, email], 2, _callback, _error_callback);
     };
+
+    this.operator_image = function (operator, _callback, _errorCallback) {
+    return json_call_ajax("operatorCreator.operator_image",
+        [operator], 1, _callback, _errorCallback);
+};
+
+    this.operator_image_async = function (operator, _callback, _error_callback) {
+        deprecationWarning();
+        return json_call_ajax("operatorCreator.operator_image", [operator], 1, _callback, _error_callback);
+    };
  
 
     /*

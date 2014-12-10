@@ -367,6 +367,7 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
         var reader = new FileReader();
         reader.readAsText(selectedFile);
         reader.onload=function(){
+            $scope.op_name= selectedFile.name;
             $scope.operator= reader.result;
             $scope.$apply();
         }
@@ -415,6 +416,19 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
             else {
                 alert("Please enter a different database.");
             }
+        }
+    };
+
+    $scope.getImage = function() {
+        if (operatorFactory.validateOperator()) {
+            var promise = services.operator_image($scope.operator);
+            promise.then(
+                function(svg){
+                    $('#img-div').append(svg);
+                    $('#modal').modal('toggle')
+                },
+                function (err) {console.log(err)}
+            )
         }
     };
 

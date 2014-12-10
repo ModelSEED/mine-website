@@ -1,0 +1,6 @@
+body .modal-xl {
+    /* new custom width */
+    width: 1050px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    /*margin-left: -470px;*/
+}

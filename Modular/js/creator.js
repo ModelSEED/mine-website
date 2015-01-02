@@ -20,7 +20,7 @@ angular.module('app').factory('operatorFactory', function(){
     };
 });
 
-angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory, $cookies, $cookieStore) {
+angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory) {
     $scope.operatorName= operatorFactory.spec.operatorName;
     $scope.reactants= operatorFactory.spec.reactants;
     $scope.products= operatorFactory.spec.products;
@@ -348,7 +348,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     };
 });
 
-angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory) {
+angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory, sharedFactory) {
     $scope.op_name = operatorFactory.spec.operatorName;
     $scope.operator = operatorFactory.operator;
     $scope.keggID = "";
@@ -437,6 +437,6 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
     };
 
     $scope.downloadFile = function(contents,filename) {
-        downloadFile(contents,filename)
+        sharedFactory.downloadFile(contents,filename)
     };
 });

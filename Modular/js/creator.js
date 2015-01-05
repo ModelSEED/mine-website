@@ -393,7 +393,7 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
 
     $scope.mapOperator = function(db) {
         if (operatorFactory.validateOperator()) {
-            if (db == "KEGGdb") {
+            if ((db == "KEGGdb")||(db == "NoMap")) {
                 var ok = confirm("Mapping an operator takes 5-10 minutes. Proceed?");
                 if (ok) {
                     var promise = services.map_operator(operatorFactory.operator, db, "");

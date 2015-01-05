@@ -37,10 +37,10 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
                      {'id': 19, 'name': 'H4MPT'}, {'id': 20, 'name': 'HBr'}, {'id': 21, 'name': 'HCl'},
                      {'id': 22, 'name': 'HF'}, {'id': 23, 'name': 'Histidine'}, {'id': 24, 'name': 'Indole'},
                      {'id': 25, 'name': 'IPP'}, {'id': 26, 'name': 'NAD+'}, {'id': 27, 'name': 'NADH'},
-                     {'id': 28, 'name': 'NH3'}, {'id': 29, 'name': 'O2'}, {'id': 30, 'name': 'PAPS'},
-                     {'id': 31, 'name': 'Phenol'}, {'id': 32, 'name': 'Phospho-Histidine'}, {'id': 33, 'name': 'Pi'},
+                     {'id': 28, 'name': 'NH3'}, {'id': 29, 'name': 'Nitrate'}, {'id': 30, 'name': 'O2'}, {'id': 31, 'name': 'PAPS'},
+                     {'id': 32, 'name': 'Phenol'}, {'id': 33, 'name': 'Phospho-Histidine'}, {'id': 34, 'name': 'Pi'},
                      {'id': 34, 'name': 'PPi'}, {'id': 35, 'name': 'S-Adenosylhomocysteine'},
-                     {'id': 36, 'name': 'S-Adenosylmethionine'}, {'id': 37, 'name': 'Sulfite'},
+                     {'id': 35, 'name': 'S-Adenosylmethionine'}, {'id': 36, 'name': 'Sulfite'},
                      {'id': 37, 'name': 'Water'}];
     $scope.compoundChoice = $scope.cofactors[0];
     $scope.indices = '';
@@ -407,7 +407,8 @@ angular.module('app').controller('operatorCtl',  function($scope,$state,operator
                             alert("Mapping complete!");
                         },
                         function(err){
-                            alert(err);
+                            alert("Mapping Error");
+                            console.log(err);
                             $('#map-btn').prop('disabled', false).text("Map Operator");
                         }
                     );

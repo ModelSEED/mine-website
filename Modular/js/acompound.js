@@ -179,7 +179,7 @@ angular.module('app').controller('reactantInCtl', function($scope,$stateParams,s
         if (reactions) {
             var filteredRxns = CompoundDataFactory.filterList(reactions, $scope.searchOn);
             $scope.filteredData = sharedFactory.paginateList(filteredRxns, $scope.currentPage, $scope.numPerPage);
-            $scope.items = reactions.length;
+            $scope.items = filteredRxns.length;
         }
     });
 });

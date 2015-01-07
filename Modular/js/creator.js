@@ -20,7 +20,7 @@ angular.module('app').factory('operatorFactory', function(){
     };
 });
 
-angular.module('app').controller('creatorCtl',  function($scope,$state,operatorFactory) {
+angular.module('app').controller('opCreatorCtl',  function($scope,$state,operatorFactory) {
     $scope.operatorName= operatorFactory.spec.operatorName;
     $scope.reactants= operatorFactory.spec.reactants;
     $scope.products= operatorFactory.spec.products;
@@ -141,7 +141,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
             promise.then(
                 function(result){
                     operatorFactory.operator = result;
-                    $state.go('operator');
+                    $state.go('optest');
                 },
                 function(err){
                     alert("ERROR!");
@@ -348,7 +348,7 @@ angular.module('app').controller('creatorCtl',  function($scope,$state,operatorF
     };
 });
 
-angular.module('app').controller('operatorCtl',  function($scope,$state,operatorFactory, sharedFactory) {
+angular.module('app').controller('opTestCtl',  function($scope,$state,operatorFactory, sharedFactory) {
     $scope.op_name = operatorFactory.spec.operatorName;
     $scope.operator = operatorFactory.operator;
     $scope.keggID = "";

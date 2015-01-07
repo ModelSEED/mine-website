@@ -2,7 +2,7 @@ angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-r
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
         dbId:'KEGGexp2',
-        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres'], //if the db changes in one of these states, reload the page
+        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator'], //if the db changes in one of these states, reload the page
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         numPerPage: 25, // default number of results to show per page
@@ -142,6 +142,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "productOfCtl"
     });
 
+    $stateProvider.state('operator', {
+        url: '/operator:id',
+        templateUrl: 'partials/operator.html',
+        controller: "operatorCtl"
+    });
+
 
     //METABLOMICS see metabolomics.js
     $stateProvider.state('metabolomics', {
@@ -190,11 +196,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('creator', {
         url: '/creator',
         templateUrl: 'partials/creator.html',
-        controller: "creatorCtl"
+        controller: "opCreatorCtl"
     });
-    $stateProvider.state('operator', {
-        url: '/operator',
-        templateUrl: 'partials/operator.html',
-        controller: "operatorCtl"
+    $stateProvider.state('optest', {
+        url: '/test',
+        templateUrl: 'partials/optest.html',
+        controller: "opTestCtl"
     });
 });

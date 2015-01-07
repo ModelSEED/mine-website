@@ -142,6 +142,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: "productOfCtl"
     });
 
+    $stateProvider.state('operator', {
+        url: '/operator:id',
+        templateUrl: 'partials/acompound.html',
+        controller: "operatorCtl"
+    });
+
 
     //METABLOMICS see metabolomics.js
     $stateProvider.state('metabolomics', {
@@ -190,11 +196,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('creator', {
         url: '/creator',
         templateUrl: 'partials/creator.html',
-        controller: "creatorCtl"
+        controller: "opCreatorCtl"
     });
     $stateProvider.state('operator', {
-        url: '/operator',
-        templateUrl: 'partials/operator.html',
-        controller: "operatorCtl"
+        url: '/test',
+        templateUrl: 'partials/optest.html',
+        controller: "opTestCtl"
     });
 });

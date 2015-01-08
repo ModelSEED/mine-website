@@ -9,7 +9,9 @@
 		<tr ng-repeat="reaction in filteredData">
 			<td style="vertical-align:middle">
                 <div ng-repeat="op in reaction.Operators" style="font-size: 16px">
-                    {{op}}
+					<a  ui-sref="operator({id:op})">
+                    	{{op}}
+					</a>
                 </div>
             </td>
 			<td id="rxn-img" ng-repeat="comp in reaction.Reactants">

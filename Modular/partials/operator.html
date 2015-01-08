@@ -10,6 +10,17 @@
 			<td>Reactions Predicted</td>
 			<td>{{data.Reactions_predicted}}</td>
 		</tr>
+		<tr>
+			<td>Reactants</td>
+			<td ng-repeat="r in data.Reactants">{{r}}</td>
+		</tr>
+		<tr>
+			<td>Products</td>
+			<td ng-repeat="p in data.Products">{{p}}</td>
+		</tr>
+		<tr>
+			<td>Comments</td>
+			<td>{{data.Comments}}</td>
+		</tr>
     </tbody>
 </table>
-<div ui-view></div>

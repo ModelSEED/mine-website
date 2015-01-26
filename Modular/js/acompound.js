@@ -26,7 +26,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
         },
         //EC filtering
         filterList: function(reactions, searchOn) {
-            if ((typeof(reactions) != 'undefined') && (reactions.length > 0)) {
+            if (searchOn && (typeof(reactions) != 'undefined') && (reactions.length > 0)) {
                 var subList = [];
                 for (var i = reactions.length - 1; i >= 0; i--) {
                     for (var j = reactions[i].Operators.length - 1; j >= 0; j--) {
@@ -37,6 +37,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                 }
                 return subList
             }
+            else{return reactions}
         },
         //Popups with image & name
         getCompoundName: function(db){

@@ -71,7 +71,7 @@ angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
     var visited = $cookieStore.get('mine');
     if( typeof(visited) == 'undefined') {
         $cookieStore.put('mine', "mine_visitor");
-        $scope.startGeneralTour()
+        //$scope.startGeneralTour()
     }
 });
 

@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h2>Advanced Search</h2></div>
         <div class="panel-body">
-            <div ng-hide="and+or" class="well">
+            <div id='help-text' ng-hide="and+or" class="well">
                 Use the advanced search to write complex database queries. Select a field, enter a value text, and press
                 the "And" or "Or" indicate if matching the term is required or optional. Additionally, you may select
                 the "Use RegEx" to evaluate the value text as a Regular Expression or "is NOT" to invert your search but
@@ -20,7 +20,7 @@
                 <tr ng-repeat="x in or track by $index">
                     <td>OR <span ng-show="x[3]">NOT</span></td>
                     <td>{{x[0]}} = {{x[1]}} <span style="color: #a9302a" ng-show="x[2]">RegEx</span></td>
-                    <td class="text-right"><button class="btn  btn-sm btn-danger" ng-click="removeRow(or, $index)">
+                    <td class="text-right"><button id='del' class="btn  btn-sm btn-danger" ng-click="removeRow(or, $index)">
                         <span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
@@ -43,7 +43,7 @@
                     is
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" ng-value="true" ng-model="not">
+                    <input id="not-radio" type="radio" ng-value="true" ng-model="not">
                     is NOT
                 </label>
             </div>
@@ -52,7 +52,7 @@
                 <label>Use RegEx </label>
                 <input type="checkbox" ng-model="RegEx" ng-disabled='not'>
             </div>
-            <a class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or)' ng-click="search(and,or,not)">
+            <a id="search-btn" class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or)' ng-click="search(and,or,not)">
             <span class="glyphicon glyphicon-search"></span> Search</a>
         </form>
     </div>

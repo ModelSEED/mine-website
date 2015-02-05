@@ -425,7 +425,7 @@ angular.module('app').controller('opTestCtl',  function($scope,$state,operatorFa
             var promise = services.operator_image($scope.operator);
             promise.then(
                 function(svg){
-                    $('#img-div').append(svg);
+                    $('#img-div').html(svg);
                     $('#modal').modal('toggle')
                 },
                 function (err) {console.log(err)}

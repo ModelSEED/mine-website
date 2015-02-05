@@ -39,7 +39,6 @@ describe('advanced search', function() {
     var helpText = element(by.id('help-text'));
     var searchBtn = element(by.id('search-btn'));
     var regex = element(by.model('RegEx'));
-    var field = element(by.model('selected'));
     var val = element(by.model('value'));
     var or = element.all(by.repeater('x in or track by $index'));
 

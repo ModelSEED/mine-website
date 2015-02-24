@@ -1,7 +1,7 @@
 /**
  * Created by JGJeffryes on 2/17/15.
  */
-var sleep = function() {browser.driver.sleep(1000)};
+var sleep = function() {browser.driver.sleep(1500)};
 var adducts = element(by.model('adducts')).all(by.tagName('option'));
 var searchBtn = element(by.partialButtonText('Search'));
 describe('metabolomics form', function() {
@@ -21,6 +21,7 @@ describe('metabolomics form', function() {
 
     it('should have working model selection', function() {
         element(by.model('model_term')).sendKeys('yeast');
+        sleep();
         expect(models.count()).toEqual(8);
         expect(models.first().getText()).toEqual('Ascomycetes');
         models.get(1).click();
@@ -45,7 +46,6 @@ describe('metabolomics results', function(){
         element(by.id('pos-radio')).click();
         adducts.get(2).click();
         searchBtn.click();
-        sleep();
         sleep();
     });
     var rows = element.all(by.repeater('f in displayData'));

@@ -12,7 +12,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                     factory.compound = result[0];
                     $rootScope.$broadcast("compoundLoaded")
                 },
-                function(err){console.log("get_comps fail");}
+                function(err){console.error("get_comps fail");}
             )
         },
         getReactions: function(db, rxn_ids) {
@@ -21,7 +21,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                     factory.reactions = result;
                     $rootScope.$broadcast("rxnLoaded")
                 },
-                function (err) {console.log("get_rxns fail");}
+                function (err) {console.error("get_rxns fail");}
             );
         },
         //EC filtering
@@ -54,7 +54,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                                     title: cTitle,
                                     trigger: 'hover',
                                     html: true,
-                                    content: '<img src="' + factory.img_src + id + '.svg" width="250">'
+                                    content: '<img id="img-popover" src="' + factory.img_src + id + '.svg" width="250">'
                                 });
                             }
                         },

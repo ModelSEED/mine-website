@@ -103,7 +103,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     $scope.currentPage = 1;
     $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
-    $scope.items = 0;
+    $scope.items = -1;
     $scope.searchMZ = "";
     $scope.searchAdduct = "";
     $scope.searchFormula = "";
@@ -148,6 +148,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
             filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
                 $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);
             filteredData = sharedFactory.sortList(filteredData, $scope.sortColumn, $scope.sortInvert);
+            $scope.items = filteredData.length;
             $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage)
         }
     });

@@ -3,8 +3,8 @@
 </div>
 <div class="col-sm-2">
     <br>
-    <h3 ng-show="!totalItems">Searching...</h3>
-    <button id="met-download" ng-show="totalItems" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
+    <h3 ng-show="!(items+1)">Searching...</h3>
+    <button id="met-download" ng-show="items" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
 </div>
 <div class="col-sm-6">
     <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"
@@ -31,9 +31,9 @@
             <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchFormula"></th>
             <th><input type="text" class="form-control" placeholder="Search" ng-model="searchCompound"></th>
             <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchMINE"></th>
-            <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert"> Sort by </button></th>
+            <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert">Sort by</button></th>
             <th><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert">Sort by</button></th>
-            <th><button class="btn btn-block btn-primary" ng-click="sortColumn='NP_likeness'; sortInvert=!sortInvert">Sort by</button></th>
+            <th><button id="sort-NP" class="btn btn-block btn-primary" ng-click="sortColumn='NP_likeness'; sortInvert=!sortInvert">Sort by</button></th>
         </tr>
         </thead>
             <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">

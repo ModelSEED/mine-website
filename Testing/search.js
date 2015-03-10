@@ -24,11 +24,16 @@ describe('quick search', function() {
         expect(element(by.binding('compound.MINE_id')).getText()).toEqual('12815')
     });
 
+    it('should update if the database is changed', function(){
+
+    });
+
     it('should have working links', function(){
         items.first().click();
         sleep();
         expect(element(by.binding('data.Names[0]')).getText()).toEqual('ATP')
     });
+
 });
 
 describe('advanced search', function() {
@@ -72,5 +77,9 @@ describe('advanced search', function() {
         searchBtn.click();
         sleep();
         expect(element.all(by.id("comp-row")).count()).toBe(1)
+    });
+
+    it('should update if the database is changed', function(){
+
     });
 });

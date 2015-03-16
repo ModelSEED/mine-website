@@ -6,7 +6,7 @@ var adducts = element(by.model('adducts')).all(by.tagName('option'));
 var searchBtn = element(by.partialButtonText('Search'));
 describe('metabolomics form', function() {
     beforeAll(function () {
-        browser.get('http://localhost:8888/#/metabolomics');
+        browser.get('http://minedatabase.mcs.anl.gov/#/metabolomics');
         sleep();
     });
     var models = element.all(by.repeater('s in modelList'));

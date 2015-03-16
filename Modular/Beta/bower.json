@@ -1,0 +1,26 @@
+{
+  "name": "AngBoot",
+  "version": "1.0",
+  "description": "Collection of all my angular tricks",
+  "keywords": [
+    "angular",
+    "ui-router"
+  ],
+  "authors": [
+    "Ric Colasanti"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.10",
+    "angular-bootstrap": "~0.10.0",
+    "angular": "~1.2.16",
+    "bootstrap": "~3.1.1"
+  }
+}

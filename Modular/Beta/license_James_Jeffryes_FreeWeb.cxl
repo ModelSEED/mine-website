@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--PLEASE DO NOT MODIFY THIS FILE AND BE AWARE THAT THE FILE CONTAINS CONFIDENTIAL INFORMATION.-->
+<ChemAxon>
+<License>
+<Field Name="Software" Value="Marvin Applets"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFDcT4XgWmVL/LNMWtGp2TgFyOaaOAhR+BgqPQUDPdABC00/dH+iZiu2QIw=="/>
+</License>
+<License>
+<Field Name="Software" Value="JChem Base"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Restriction Name="Search/Min" Value="Unlimited"/>
+<Signature Value="MC0CFFT2xaXEsaaXrxZFyhXLNac685QOAhUAhSdTuYmVswvTyfMs/di8dxkaSCM="/>
+</License>
+<License>
+<Field Name="Software" Value="JChem Cartridge"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC4CFQCPoHTXTpLmPHIMygU/wj93fqgAVAIVAI9eoTX83tH3c0jkhjN4VmVCt5+7"/>
+</License>
+<License>
+<Field Name="Software" Value="Standardizer"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="B/S/P/E" Value="Standard"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC0CFQCVi40ZsL89TdHkmu+NqxndDdp4BQIUdzSjgKGHOgIx0GAaN/AzNCYvxEs="/>
+</License>
+<License>
+<Field Name="Software" Value="Protonation Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFA53u2ypmBwP/Bww8skvKgcfeBwiAhQxRPPdNQPHX8Yk8k3HJp12k55QzA=="/>
+</License>
+<License>
+<Field Name="Software" Value="Partitioning Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC0CFAYr+yyKyQzc/QIy59WHHtc6VSwtAhUAlRasarBcMT2HI19Cbpajo29bEW8="/>
+</License>
+<License>
+<Field Name="Software" Value="Charge Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFH0esObIk05n1HUW0UvqVmH4NRSvAhQ81XnR0MBpRKfFN17vsxuTxOUxGw=="/>
+</License>
+<License>
+<Field Name="Software" Value="Isomers Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFEFz+Gs7mf8eHqNHoUszqcAtGvexAhR0bu8Wp7ku1ZE6J9PMbW7GOey1Nw=="/>
+</License>
+<License>
+<Field Name="Software" Value="Conformation Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC0CFQCJfMY1i3pQSA4i2wZefbbGXREhOQIUVvCOmrR0XcvZ//ofRzEwxFbqzv4="/>
+</License>
+<License>
+<Field Name="Software" Value="Geometry Plugin Group"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFGkQ/BAbtmtfMHgpMHSnvxITdv83AhQcIKVz0B+iA2z0hajYlL4lzciaDA=="/>
+</License>
+<License>
+<Field Name="Software" Value="Huckel Analysis Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFDts7uPkF/dgsFsUFp21rNOkf76lAhQP7zMv/KYxC/90ReZMSAMDVUZuJw=="/>
+</License>
+<License>
+<Field Name="Software" Value="Refractivity Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFDdFo5TllJpcJFCBUNKTelk6Az4dAhQNP9V3UuoIugYjnCXJWHIbWZoAQw=="/>
+</License>
+<License>
+<Field Name="Software" Value="HBDA Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFFqPYV3to3V5tb+/JFhwx9C08ePHAhQMBuaGUpFapac4ccrI5wtEQjunEg=="/>
+</License>
+<License>
+<Field Name="Software" Value="Markush Enumeration Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFGIEcQnWqhEuZeq16xeh/H3N0b3uAhRllk5uXC/KS6lwJsr3BAbYc3xbEg=="/>
+</License>
+<License>
+<Field Name="Software" Value="Structure to Name Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFFc3w8H2TPeqxtcyEfhNoUjKAh+hAhRuygqgYKnft8buy6lm7I8UZ/Bf7w=="/>
+</License>
+<License>
+<Field Name="Software" Value="Calculations Pack"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFAr4wHZWdVgn6teEGf7HEy8WTyqHAhQ81QS4T1iBu8tmyoiNl2juB0pyaw=="/>
+</License>
+<License>
+<Field Name="Software" Value="Web Services Server"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFGJuXKOfpzoMaBF3eH7XWykrK9MyAhRMMRrgpCibrjbNq+2oQ8tJN5qCbw=="/>
+</License>
+<License>
+<Field Name="Software" Value="Structural Frameworks Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFG0EAIUuRw8SgGqdPwRSq51svCQWAhQ1dWUfBH1nVvcul0FQ7rSkSGfOqQ=="/>
+</License>
+<License>
+<Field Name="Software" Value="Structure Checker"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFFGs1CgPtbyFvf7+FXkyRWm7Tt8EAhQ79XjASBU9bpeGrG+pTzFmSZhlwA=="/>
+</License>
+<License>
+<Field Name="Software" Value="Predictor Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC0CFQCB6mjqOhExyAp8yzYe6rxDYi/v7QIUNu3Ks6h1Xgm3YNEqRd+5jW0QUoE="/>
+</License>
+<License>
+<Field Name="Software" Value="Solubility Plugin"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="Northwestern University"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2016-06-17"/>
+<Field Name="Support Expiration Date" Value="2016-06-17"/>
+<Field Name="Comment" Value="The website will have no advertisements or any other commercial aspect. Funding for this project comes from a US Department of Energy grant. The site will be freely accessible and there is no login required. A demo of the structure search functionality that will employ Marvin JS is here: http://205.208.105.217/SandBox/Demo/#/structure"/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MCwCFFbPCd8xaMdEXOI7/kcaZwRWLxMDAhRtX9p4qVe0mzQxKVVLJ0lp8vRnrw=="/>
+</License>
+</ChemAxon>

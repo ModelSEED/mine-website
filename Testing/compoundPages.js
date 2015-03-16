@@ -4,7 +4,7 @@
 var sleep = function() {browser.driver.sleep(1000)};
 describe('compound page', function() {
     beforeAll(function () {
-        browser.get('http://localhost:8888/#/acompound46308/overview');
+        browser.get('http://minedatabase.mcs.anl.gov/#/acompound46308/overview');
         sleep()
     });
     var items = element.all(by.repeater('reaction in filteredData'));

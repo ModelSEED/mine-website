@@ -1,7 +1,7 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
-        dbId:'KEGGexp2',
+        dbId:'ChemDamage',
         //if the db changes in one of these states, reload the page
         db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
             'acompound.products', 'acompound.overview'],

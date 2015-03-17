@@ -2,7 +2,9 @@ angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-r
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
         dbId:'KEGGexp2',
-        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator'], //if the db changes in one of these states, reload the page
+        //if the db changes in one of these states, reload the page
+        db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
+            'acompound.products', 'acompound.overview'],
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         numPerPage: 25, // default number of results to show per page
@@ -80,7 +82,7 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
-        {id:2, name:'Chemical Damage KEGG', db : 'ChemicalDamage'}
+        {id:2, name:'Chemical Damage KEGG', db : 'ChemDamage'}
     ];
     $scope.database = $scope.databases[0];
     $scope.$watch('database', function() {

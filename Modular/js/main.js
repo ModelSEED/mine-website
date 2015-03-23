@@ -1,4 +1,4 @@
-angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'angulartics', 'angulartics.google.analytics']);
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
         dbId:'KEGGexp2',

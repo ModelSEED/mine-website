@@ -77,17 +77,22 @@ angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
     }
 });
 
-angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedFactory) {
+angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedFactory,$cookieStore) {
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'}
     ];
-    $scope.database = $scope.databases[0];
+    var database_id = $cookieStore.get('mine_db');
+    if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}
+    else {$scope.database = $scope.databases[database_id]}
+    sharedFactory.dbId = $scope.database.db;
+
     $scope.$watch('database', function() {
         // This tracks which database is selected and reloads the page if it's content depends on the database
         var state_name = $state.current.name;
         sharedFactory.dbId = $scope.database.db;
+        $cookieStore.put('mine_db', $scope.database.id);
         if (sharedFactory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current,{},{reload:true});
     });
 

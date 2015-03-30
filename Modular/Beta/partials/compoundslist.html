@@ -5,7 +5,8 @@
 </div>
 <div class="col-lg-2">
     <br>
-    <button id="met-download" ng-show="items" class="btn btn-primary pull-right" ng-click="downloadResults()">Download Results</button>
+    <button id="met-download" ng-show="items" class="btn btn-primary pull-right" ng-click="downloadResults()"
+            analytics-on="click" analytics-event="SearchDownload">Download Results</button>
 </div>
 <div class="col-lg-6">
     <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"

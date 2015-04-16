@@ -83,7 +83,8 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
         {id:3, name:'Chemical Damage KEGG', db : 'ChemDamage'},
-        {id:4, name:'Chemical Damage SEED', db : 'ChemDamageSEED'}
+        {id:4, name:'Chemical Damage SEED', db : 'CDSEED2'},
+        {id:5, name:'KEGG Only', db : 'KEGG'}
     ];
     var database_id = $cookieStore.get('mine_db');
     if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}
@@ -198,6 +199,13 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/structure',
         templateUrl: 'partials/structureSearch.html',
         controller: "structureCtl"
+    });
+
+    //Top 30 damage prone metabolites reaction list
+    $stateProvider.state('top30', {
+        url: '/top30',
+        templateUrl: 'partials/top30.html',
+        controller: "top30Ctl"
     });
 
 

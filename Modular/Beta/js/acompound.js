@@ -77,7 +77,7 @@ angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sh
     });
 
     $scope.mapLink = function(keggMap){
-        return('http://www.genome.jp/kegg-bin/show_pathway?map' + keggMap.slice(0,5) + '+' +
+        return('http://www.genome.jp/kegg-bin/show_pathway?' + keggMap.slice(0,8) + '+' +
             $scope.data.DB_links.KEGG.join('+'));
     };
 
@@ -140,6 +140,12 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,sh
     });
 
     $scope.getCompoundName = CompoundDataFactory.getCompoundName(sharedFactory.dbId);
+
+    $scope.staticPage = function(){
+        var rxnhtml = $('#rxn-tbl').html();
+        //console.log(rxnhtml);
+        sharedFactory.downloadFile(rxnhtml,'reactions.html')
+    };
 
     $scope.$watch('currentPage +searchOn', function() {
         if (reactions) {

@@ -4,3 +4,11 @@ body .modal-xl {
     /* must be half of the width, minus scrollbar on the left (30px) */
     /*margin-left: -470px;*/
 }
+
+body .reactant {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 5px
+}
+
+@media (min-width:1280px){.container{width:1280px}}

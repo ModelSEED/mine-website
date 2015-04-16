@@ -98,6 +98,15 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
 
 });
 
+angular.module('app').directive('reactionDiagram', function(){
+    return {
+        restrict: 'E',
+        scope: true,
+        replace: true,
+        templateUrl: 'partials/reaction-diagram.html'
+    }
+});
+
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');
@@ -140,12 +149,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactantIn',
-        templateUrl: 'partials/reactions.html',
+        templateUrl: 'partials/reaction-list.html',
         controller: "reactantInCtl"
     });
     $stateProvider.state('acompound.products', {
         url: '/productOf',
-        templateUrl: 'partials/reactions.html',
+        templateUrl: 'partials/reaction-list.html',
         controller: "productOfCtl"
     });
 

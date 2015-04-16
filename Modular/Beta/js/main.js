@@ -101,6 +101,15 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
 
 });
 
+angular.module('app').directive('reactionDiagram', function(){
+    return {
+        restrict: 'E',
+        scope: true,
+        replace: true,
+        templateUrl: 'partials/reaction-diagram.html'
+    }
+});
+
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');

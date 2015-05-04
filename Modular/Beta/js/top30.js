@@ -56,7 +56,7 @@ angular.module('app').factory('top30Factory', function($rootScope){
 angular.module('app').controller('top30Ctl', function($scope,$stateParams,sharedFactory,top30Factory){
 
     $scope.currentPage = 1;
-    $scope.numPerPage = sharedFactory.numPerPage;
+    $scope.numPerPage = 200;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";

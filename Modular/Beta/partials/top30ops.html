@@ -35,8 +35,9 @@
             </td>
 			<!-- References -->
 			<td style="vertical-align:middle">
-				<div ng-repeat="reaction in op.basis">
-				</div>
+				<a ng-repeat="reaction in op.basis" ng-href="http://minedatabase.mcs.anl.gov/#/top30/#{{reaction}}">
+					{{reaction}}
+				</a>
             </td>
 		</tr>
 	</tbody>

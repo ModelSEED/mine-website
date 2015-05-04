@@ -25,7 +25,7 @@
 	<tbody>
 		<tr ng-repeat="reaction in filteredData">
 			<!-- Compound -->
-			<td style="vertical-align:middle">
+			<td id="{{reaction._id}}" style="vertical-align:middle">
 				{{reaction.Compound}}
             </td>
 			<!-- Rxn Type -->
@@ -34,23 +34,7 @@
             </td>
 			<!-- Rxn Schematic -->
 			<td style="width: 60%">
-				<div id="rxn-img" ng-repeat="comp in reaction.Reactants" style="display: inline-flex;align-items: center">
-					<div style="font-size:16px" ng-if="comp[0]-1">
-						{{comp[0]}}
-					</div>
-					 <a  ui-sref="acompound.overview({id:comp[1]})">
-						<img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.svg" width="80">
-					</a>
-				</div>
-				<span style="font-size:40px"> &#8594</span>
-			    <div ng-repeat="comp in reaction.Products" style="display: inline-flex; align-items: center">
-                    <div style="font-size:16px" ng-if= "comp[0]-1">
-                        {{comp[0]}}
-                    </div>
-				    <a  ui-sref="acompound.overview({id:comp[1]})">
-					    <img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.svg" width="80">
-				    </a>
-			    </div>
+				<reaction-diagram>
 			</td>
 			<!-- References -->
 			<td style="vertical-align:middle">

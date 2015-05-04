@@ -90,7 +90,7 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
-        {id:4, name:'Chemical Damage', db : 'CDMINESEED'}
+        {id:3, name:'Chemical Damage SEED', db : 'CDMINESEED'}
     ];
     var database_id = $cookieStore.get('mine_db');
     if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}

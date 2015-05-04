@@ -48,8 +48,16 @@ angular.module('app').factory('sharedFactory', function(){
         },
         sortList: function(list, attribute, ascending){
             list.sort(function(a,b){
-                if (ascending){return a[attribute]-b[attribute]}
-                else{return b[attribute]-a[attribute]}
+                if (ascending){
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return a[attribute]-b[attribute]
+                }
+                else{
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return b[attribute]-a[attribute]
+                }
             });
             return list
         }
@@ -83,7 +91,7 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
         {id:3, name:'Chemical Damage KEGG', db : 'ChemDamage'},
-        {id:4, name:'Chemical Damage SEED', db : 'CDSEED2'},
+        {id:4, name:'Chemical Damage SEED', db : 'CDMINESEED'},
         {id:5, name:'KEGG Only', db : 'KEGG'}
     ];
     var database_id = $cookieStore.get('mine_db');

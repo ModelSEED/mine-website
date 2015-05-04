@@ -48,8 +48,16 @@ angular.module('app').factory('sharedFactory', function(){
         },
         sortList: function(list, attribute, ascending){
             list.sort(function(a,b){
-                if (ascending){return a[attribute]-b[attribute]}
-                else{return b[attribute]-a[attribute]}
+                if (ascending){
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return a[attribute]-b[attribute]
+                }
+                else{
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return b[attribute]-a[attribute]
+                }
             });
             return list
         }

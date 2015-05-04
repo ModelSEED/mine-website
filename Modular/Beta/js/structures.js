@@ -25,11 +25,14 @@ angular.module('app').controller('structureCtl',  function($scope,$state,structu
         // store parameters & search, some of this should probably be passed as state parameters
         var exportPromise = marvinSketcherInstance.exportStructure('mol', null);
         exportPromise.then(function (source) {
-            structureSearchFactory.mol = source;
-            structureSearchFactory.stype = $scope.stype;
-            structureSearchFactory.maxres = parseInt($scope.maxres);
-            structureSearchFactory.sthresh = parseFloat($scope.sthresh);
-            $state.go('structuresres');
+            if (source.length > 75) {
+                structureSearchFactory.mol = source;
+                structureSearchFactory.stype = $scope.stype;
+                structureSearchFactory.maxres = parseInt($scope.maxres);
+                structureSearchFactory.sthresh = parseFloat($scope.sthresh);
+                $state.go('structuresres');
+            }
+            else {alert('Search Structure is blank')}
         }, function (error) {
             alert(error);
         });
@@ -67,6 +70,9 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
             $scope.$apply();
         },
         function(err){
+            $scope.items = 0;
+            $scope.filteredData = [];
+            $scope.$apply();
             console.log("structure search failure")
         }
     );

@@ -33,7 +33,7 @@ angular.module('app').controller('opCreatorCtl',  function($scope,$state,operato
                      {'id': 8, 'name': 'AMP'}, {'id': 9, 'name': 'ATP'},
                      {'id': 10, 'name': 'Bicarbonate'}, {'id': 11, 'name': 'CO2'}, {'id': 12, 'name': 'CoA'},
                      {'id': 13, 'name': 'DMAPP'}, {'id': 14, 'name': 'E'}, {'id': 15, 'name': 'Formaldehyde'},
-                     {'id': 16, 'name': 'glutamate'}, {'id': 17, 'name': 'H+'}, {'id': 18, 'name': 'H2O2'},
+                     {'id': 16, 'name': 'Glutamate'}, {'id': 17, 'name': 'H+'}, {'id': 18, 'name': 'H2O2'},
                      {'id': 19, 'name': 'H4MPT'}, {'id': 20, 'name': 'HBr'}, {'id': 21, 'name': 'HCl'},
                      {'id': 22, 'name': 'HF'}, {'id': 23, 'name': 'Histidine'}, {'id': 24, 'name': 'Indole'},
                      {'id': 25, 'name': 'IPP'}, {'id': 26, 'name': 'NAD+'}, {'id': 27, 'name': 'NADH'},
@@ -123,11 +123,11 @@ angular.module('app').controller('opCreatorCtl',  function($scope,$state,operato
         if (!$scope.operatorName){
             alert("Please specify an operator name")
         }
-        else if (!$scope.products){
-            alert("Please specify an operator products")
+        else if (!$scope.products.length){
+            alert("Please specify operator products")
         }
-        else if (!$scope.reactants){
-            alert("Please specify an operator reactants")
+        else if (!$scope.reactants.length){
+            alert("Please specify operator reactants")
         }
         else{
             operatorFactory.spec = {

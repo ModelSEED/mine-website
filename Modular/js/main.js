@@ -48,8 +48,16 @@ angular.module('app').factory('sharedFactory', function(){
         },
         sortList: function(list, attribute, ascending){
             list.sort(function(a,b){
-                if (ascending){return a[attribute]-b[attribute]}
-                else{return b[attribute]-a[attribute]}
+                if (ascending){
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return a[attribute]-b[attribute]
+                }
+                else{
+                    if (a[attribute]==null) return 1;
+                    if (b[attribute]==null) return 0;
+                    return b[attribute]-a[attribute]
+                }
             });
             return list
         }
@@ -98,6 +106,15 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
 
 });
 
+angular.module('app').directive('reactionDiagram', function(){
+    return {
+        restrict: 'E',
+        scope: true,
+        replace: true,
+        templateUrl: 'partials/reaction-diagram.html'
+    }
+});
+
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');
@@ -140,12 +157,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactantIn',
-        templateUrl: 'partials/reactions.html',
+        templateUrl: 'partials/reaction-list.html',
         controller: "reactantInCtl"
     });
     $stateProvider.state('acompound.products', {
         url: '/productOf',
-        templateUrl: 'partials/reactions.html',
+        templateUrl: 'partials/reaction-list.html',
         controller: "productOfCtl"
     });
 

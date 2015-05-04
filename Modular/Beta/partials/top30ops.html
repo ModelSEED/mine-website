@@ -1,0 +1,47 @@
+<div class="jumbotron">
+  <h1>Chemical Damage Reactions Rules</h1>
+  <p>Here we explain things </p>
+</div>
+<div class="col-lg-3">
+    <br><input class=form-control type="text" ng-model="searchName" placeholder="Filter by Name">
+</div>
+<button ng-click="staticPage()">Download</button>
+<pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"
+            items-per-page="numPerPage"  style="{cursor: pointer; vertical-align: top}"></pagination>
+<br>
+<div id=rxn-tbl>
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Schematic</th>
+			<th>Reactions Predicted</th>
+			<th>Basis</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="op in operatorList">
+			<!-- Name -->
+			<td style="vertical-align:middle">
+				<a  ui-sref="operator({id:op})">{{op._id}}</a>
+            </td>
+			<!-- Schematic -->
+			<td style="width: 60%">
+				<img ng-src="{{img_src+op._id}}.svg" width="500">
+			</td>
+			<!-- # of reactions -->
+			<td style="vertical-align:middle">
+				{{op.reactions_predicted}}
+            </td>
+			<!-- References -->
+			<td style="vertical-align:middle">
+				<a ng-repeat="reaction in op.basis" ng-href="http://minedatabase.mcs.anl.gov/#/top30/#{{reaction}}">
+					{{reaction}}
+				</a>
+            </td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"
+			items-per-page="numPerPage"  style="cursor: pointer;"></pagination>

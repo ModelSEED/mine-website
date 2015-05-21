@@ -18,7 +18,7 @@
 		<tr>
 			<th>Compound</th>
 			<th>Reaction Type</th>
-			<th></th>
+			<th>Reaction Diagram</th>
 			<th>References</th>
 		</tr>
 	</thead>
@@ -38,12 +38,12 @@
 			</td>
 			<!-- References -->
 			<td style="vertical-align:middle">
-				<div ng-repeat="pmid in reaction.PubMedRefs">
-					<a ng-href="http://www.ncbi.nlm.nih.gov/pubmed/{{pmid}}"></a><br>
-				</div>
-				<div ng-repeat="ref in reaction.TextRefs">
-					{{ref}}<br>
-				</div>
+				<ul ng-repeat="ref in reaction.References track by $index">
+					<li>
+						<a ng-if="parseInt(ref)" ng-href="http://www.ncbi.nlm.nih.gov/pubmed/{{ref}}">{{ref}}</a>
+						<span ng-if="!parseInt(ref)">{{ref}}</span>
+					</li>
+				</ul>
             </td>
 		</tr>
 	</tbody>

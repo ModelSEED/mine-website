@@ -174,7 +174,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    //METABLOMICS see metabolomics.js
+    //METABOLOMICS see metabolomics.js
     $stateProvider.state('metabolomics', {
         
         url: '/metabolomics',

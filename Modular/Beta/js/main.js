@@ -90,7 +90,7 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
         {id:2, name:'YMDB', db : 'YMDBexp2'},
-        {id:3, name:'Chemical Damage SEED', db : 'CDMINESEED'}
+        {id:3, name:'Chemical Damage SEED', db : 'CDMINE'}
     ];
     var database_id = $cookieStore.get('mine_db');
     if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}
@@ -221,6 +221,16 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/top30',
         templateUrl: 'partials/top30.html',
         controller: "top30Ctl"
+    });
+    $stateProvider.state('top30.s1', {
+        url: '/S1',
+        templateUrl: 'partials/S1.html',
+        controller: "top30Ctl"
+    });
+    $stateProvider.state('top30.s2', {
+        url: '/S2',
+        templateUrl: 'partials/S2.html',
+        controller: "s2Ctl"
     });
 
 

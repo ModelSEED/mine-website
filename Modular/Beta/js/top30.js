@@ -54,10 +54,9 @@ angular.module('app').factory('top30Factory', function($rootScope){
 });
 
 angular.module('app').controller('top30Ctl', function($scope,$stateParams,sharedFactory,top30Factory){
-
     $scope.currentPage = 1;
     $scope.numPerPage = 50;
-    $scope.maxSize = 5;
+    $scope.maxSize = 6;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";
     sharedFactory.dbId = 'CDMINESEED'; //Set to the Chemical Damage Database
@@ -66,12 +65,12 @@ angular.module('app').controller('top30Ctl', function($scope,$stateParams,shared
     $scope.searchComp = "";
 
     top30Factory.getReactions(top30db, damageReactionIDs);
-    console.log(damageReactionIDs);
 
     $scope.$on("rxnLoaded", function () {
         reactions = top30Factory.reactions;
-        $scope.filteredData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
+        $scope.paginatedData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
         $scope.items = reactions.length;
+        console.log($scope.paginatedData);
         $scope.$apply();
     });
 
@@ -85,13 +84,49 @@ angular.module('app').controller('top30Ctl', function($scope,$stateParams,shared
 
     $scope.$watch('currentPage + searchType + searchComp', function() {
         if (reactions) {
-            var filteredRxns = top30Factory.filterList(reactions, "Type", $scope.searchType);
-            filteredRxns = top30Factory.filterList(filteredRxns, "Compound", $scope.searchComp);
-            $scope.filteredData = sharedFactory.paginateList(filteredRxns, $scope.currentPage, $scope.numPerPage);
-            $scope.items = filteredRxns.length;
+            var filtered = top30Factory.filterList(reactions, "Type", $scope.searchType);
+            filtered = top30Factory.filterList(filtered, "Compound", $scope.searchComp);
+            $scope.paginatedData = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
+            $scope.items = filtered.length;
         }
     });
 });
+
+angular.module('app').controller('s2Ctl', function($scope,$stateParams,sharedFactory,top30Factory){
+
+    $scope.currentPage = 1;
+    $scope.numPerPage = 25;
+    $scope.maxSize = 5;
+    $scope.img_src = sharedFactory.img_src;
+    sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    var reactions;
+    $scope.searchName = "";
+
+    var promise = top30Factory.services.get_ops(sharedFactory.dbId, operatorList);
+        promise.then(function (result) {
+                var operators = result;
+                $scope.paginatedData = sharedFactory.paginateList(operators, $scope.currentPage, $scope.numPerPage);
+                $scope.items = operators.length;
+                $scope.$apply();
+            },
+            function (err) {console.error("get_ops fail");}
+        );
+
+    $scope.staticPage = function(){
+        var rxnhtml = $('#rxn-tbl').html();
+        sharedFactory.downloadFile(rxnhtml,'reactions.html')
+    };
+
+    $scope.$watch('currentPage + searchName', function() {
+        if (reactions) {
+            var filtered = top30Factory.filterList(reactions, "_id", $scope.searchName);
+            $scope.paginatedData = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
+            $scope.items = filtered.length;
+        }
+    });
+});
+
+var operatorList = [];
 
 var damageReactionIDs = [
     "Rc22714d9fff22308065bcfc04f10c1c16c0be761",

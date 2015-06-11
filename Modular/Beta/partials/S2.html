@@ -1,7 +1,4 @@
-<div class="jumbotron">
-  <h1>Chemical Damage Reactions Rules</h1>
-  <p>Here we explain things </p>
-</div>
+<h2>Chemical Damage Reactions Rules</h2>
 <div class="col-lg-3">
     <br><input class=form-control type="text" ng-model="searchName" placeholder="Filter by Name">
 </div>
@@ -20,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="op in operatorList">
+		<tr ng-repeat="op in paginatedData">
 			<!-- Name -->
 			<td style="vertical-align:middle">
 				<a  ui-sref="operator({id:op})">{{op._id}}</a>

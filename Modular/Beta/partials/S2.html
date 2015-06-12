@@ -2,7 +2,7 @@
 <div class="col-lg-3">
     <br><input class=form-control type="text" ng-model="searchName" placeholder="Filter by Name">
 </div>
-<button ng-click="staticPage()">Download</button>
+<!--<button ng-click="staticPage()">Download</button>-->
 <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"
             items-per-page="numPerPage"  style="{cursor: pointer; vertical-align: top}"></pagination>
 <br>
@@ -17,24 +17,28 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="op in paginatedData">
+		<tr ng-repeat="op in paginated track by $index">
 			<!-- Name -->
 			<td style="vertical-align:middle">
-				<a  ui-sref="operator({id:op})">{{op._id}}</a>
+				<a  ui-sref="operator({id:op._id})">{{op._id}}</a>
             </td>
 			<!-- Schematic -->
 			<td style="width: 60%">
-				<img ng-src="{{img_src+op._id}}.svg" width="500">
+				<img ng-src="{{img_src}}op_images/{{+op._id}}.svg" width="500">
 			</td>
 			<!-- # of reactions -->
 			<td style="vertical-align:middle">
-				{{op.reactions_predicted}}
+				{{op.Reactions_predicted}}
             </td>
-			<!-- References -->
+			<!-- Basis -->
 			<td style="vertical-align:middle">
-				<a ng-repeat="reaction in op.basis" ng-href="http://minedatabase.mcs.anl.gov/#/top30/#{{reaction}}">
-					{{reaction}}
-				</a>
+				<div ng-repeat="reaction in op.Basis">
+					<a ui-sref="top30.s1({id:reaction})">
+						<button type="button" class="btn btn-default btn-lg">
+							<span class="glyphicon glyphicon-new-window"></span>
+						</button>
+					</a>
+				</div>
             </td>
 		</tr>
 	</tbody>

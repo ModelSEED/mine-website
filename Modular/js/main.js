@@ -106,7 +106,10 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
     });
 
 });
-
+if (navigator.userAgent.indexOf('MSIE') > 0 || navigator.appVersion.indexOf('Trident/') > 0) {
+   alert("This web application does not officially support Internet Explorer and some elements may not render or " +
+       "function correctly in this environment. For best performance, utilize the Chrome browser.")
+}
 angular.module('app').directive('reactionDiagram', function(){
     return {
         restrict: 'E',

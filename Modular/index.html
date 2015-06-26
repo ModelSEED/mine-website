@@ -45,6 +45,12 @@
                     <select id="db-select" class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
                 </div>
                 <div ui-view = "sidebar"></div>
+                <!--[if IE]>
+                    <h4 style="color: #b41b16;">
+                    This web application does not officially support Internet Explorer and some elements may not render
+                    or function correctly in this environment. For best performance, utilize the Chrome browser.
+                    </h4>
+                <![endif]-->
             </div>
             <!-- col 2 -->
             <div class="col-sm-10">

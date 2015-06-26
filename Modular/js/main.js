@@ -65,11 +65,6 @@ angular.module('app').factory('sharedFactory', function(){
     return factory
 });
 
-if ($.browser.msie) {
-    alert("This web application does not officially support Internet Explorer and some elements may not render or " +
-        "function correctly in this environment. For best performance, utilize the Chrome browser.")
- }
-
 angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
     $scope.startGeneralTour = function () {
         var tour = new Tour(generalTour());
@@ -91,6 +86,11 @@ angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
 });
 
 angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedFactory,$cookieStore) {
+    if ($.browser.msie) {
+        alert("This web application does not officially support Internet Explorer and some elements may not render or " +
+            "function correctly in this environment. For best performance, utilize the Chrome browser.")
+    }
+
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},

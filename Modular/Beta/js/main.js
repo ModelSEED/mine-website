@@ -46,6 +46,18 @@ angular.module('app').factory('sharedFactory', function(){
             var end = begin + numPerPage;
             return list.slice(begin, end);
         },
+        filterList: function(reactions, field, searchOn) {
+            if (searchOn && (typeof(reactions) != 'undefined') && (reactions.length > 0)) {
+                var subList = [];
+                for (var i = reactions.length - 1; i >= 0; i--) {
+                    if ((reactions[i][field].toLowerCase().indexOf(searchOn.toLowerCase()) > -1)&&(subList[subList.length-1] != reactions[i])) {
+                        subList.push(reactions[i]);
+                    }
+                }
+                return subList
+            }
+            else{return reactions}
+        },
         sortList: function(list, attribute, ascending){
             list.sort(function(a,b){
                 if (ascending){

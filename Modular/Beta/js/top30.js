@@ -27,7 +27,7 @@ angular.module('app').factory('top30Factory', function($rootScope){
                                     title: cTitle,
                                     trigger: 'hover',
                                     html: true,
-                                    content: '<img id="img-popover" src="' + factory.img_src + id + '.svg" width="250">'
+                                    content: '<img id="img-popover" src="' + factory.img_src + id + '.png" width="350">'
                                 });
                             }
                         },

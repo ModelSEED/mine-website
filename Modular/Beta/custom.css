@@ -12,4 +12,8 @@ body .reactant {
     padding: 0 5px
 }
 
+body .popover{
+    max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}
+
 @media (min-width:1280px){.container{width:1280px}}

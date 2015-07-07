@@ -32,7 +32,24 @@
             </td>
 			<!-- Rxn Schematic -->
 			<td style="width: 60%; vertical-align: middle;">
-				<reaction-diagram>
+				<div class ="reactant"></div>
+                <div class ="reactant" id="rxn-img" ng-repeat="comp in reaction.Reactants">
+					<span style="font-size:16px" ng-if="comp[0]-1">
+						{{comp[0]}}
+					</span>
+					<div>
+					<img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.png" width="100">
+					</div>
+				</div>
+				<span style="font-size:40px"> &#8594</span>
+				<div class ="reactant" ng-repeat="comp in reaction.Products">
+					<div style="font-size:16px" ng-if= "comp[0]-1">
+						{{comp[0]}}
+					</div>
+					<div>
+					<img ng-mouseover="getCompoundName($event, comp[1])" ng-src="{{img_src+comp[1]}}.png" width="100">
+					</div>
+				</div>
 			</td>
 			<!-- References -->
 			<td style="width: 20%;vertical-align:middle">

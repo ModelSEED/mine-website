@@ -12,19 +12,6 @@ angular.module('app').factory('top30Factory', function($rootScope){
                 function (err) {console.error("get_rxns fail");}
             );
         },
-        //Type filtering
-        filterList: function(reactions, field, searchOn) {
-            if (searchOn && (typeof(reactions) != 'undefined') && (reactions.length > 0)) {
-                var subList = [];
-                for (var i = reactions.length - 1; i >= 0; i--) {
-                    if ((reactions[i][field].indexOf(searchOn) > -1)&&(subList[subList.length-1] != reactions[i])) {
-                        subList.push(reactions[i]);
-                    }
-                }
-                return subList
-            }
-            else{return reactions}
-        },
         //Popups with image & name
         getCompoundName: function(db){
             return function($event, id) {
@@ -40,7 +27,7 @@ angular.module('app').factory('top30Factory', function($rootScope){
                                     title: cTitle,
                                     trigger: 'hover',
                                     html: true,
-                                    content: '<img id="img-popover" src="' + factory.img_src + id + '.svg" width="250">'
+                                    content: '<img id="img-popover" src="' + factory.img_src + id + '.png" width="350">'
                                 });
                             }
                         },
@@ -53,7 +40,7 @@ angular.module('app').factory('top30Factory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('top30Ctl', function($scope,$stateParams,sharedFactory,top30Factory){
+angular.module('app').controller('top30Ctl', function($scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
     $scope.currentPage = 1;
     $scope.numPerPage = 50;
     $scope.maxSize = 6;
@@ -64,35 +51,34 @@ angular.module('app').controller('top30Ctl', function($scope,$stateParams,shared
     $scope.searchType = "";
     $scope.searchComp = "";
 
-    if ($stateParams.id) {damageReactionIDs = $stateParams.id.split(',')}
-    top30Factory.getReactions(top30db, damageReactionIDs);
+    //if specific reactions specified, get only those
+    if ($stateParams.id) {top30Factory.getReactions(top30db, $stateParams.id.split(','))}
+    else {top30Factory.getReactions(top30db, damageReactionIDs)}
 
     $scope.$on("rxnLoaded", function () {
         reactions = top30Factory.reactions;
-        $scope.paginatedData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
         $scope.items = reactions.length;
+        //if there is a cookie for which page the user was last on, use it unless it's beyond the end of the list
+        if($cookieStore.get("S1_Page")<($scope.items/$scope.numPerPage)) {$scope.currentPage = $cookieStore.get("S1_Page")}
+        $scope.paginatedData = sharedFactory.paginateList(reactions, $scope.currentPage, $scope.numPerPage);
         $scope.$apply();
     });
 
     $scope.getCompoundName = top30Factory.getCompoundName(top30db);
     $scope.parseInt = parseInt;
 
-    $scope.staticPage = function(){
-        var rxnhtml = $('#rxn-tbl').html();
-        sharedFactory.downloadFile(rxnhtml,'reactions.html')
-    };
-
     $scope.$watch('currentPage + searchType + searchComp', function() {
         if (reactions) {
-            var filtered = top30Factory.filterList(reactions, "Type", $scope.searchType);
-            filtered = top30Factory.filterList(filtered, "Compound", $scope.searchComp);
+            var filtered = sharedFactory.filterList(reactions, "Type", $scope.searchType);
+            filtered = sharedFactory.filterList(filtered, "Compound", $scope.searchComp);
             $scope.paginatedData = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
             $scope.items = filtered.length;
+            $cookieStore.put("S1_Page", $scope.currentPage)
         }
     });
 });
 
-angular.module('app').controller('s2Ctl', function($scope,$stateParams,sharedFactory,top30Factory){
+angular.module('app').controller('s2Ctl', function($scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 20;
@@ -105,6 +91,7 @@ angular.module('app').controller('s2Ctl', function($scope,$stateParams,sharedFac
     var promise = top30Factory.services.get_ops(sharedFactory.dbId, operatorList);
     promise.then(function (result) {
             operators = result;
+            if($cookieStore.get("S2_Page")) {$scope.currentPage = $cookieStore.get("S2_Page")}
             $scope.paginated = sharedFactory.paginateList(operators, $scope.currentPage, $scope.numPerPage);
             $scope.items = operators.length;
             $scope.$apply();
@@ -119,9 +106,10 @@ angular.module('app').controller('s2Ctl', function($scope,$stateParams,sharedFac
 
     $scope.$watch('currentPage + searchName', function() {
         if (operators) {
-            var filtered = top30Factory.filterList(operators, "_id", $scope.searchName);
+            var filtered = sharedFactory.filterList(operators, "_id", $scope.searchName);
             $scope.paginated = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
             $scope.items = filtered.length;
+            $cookieStore.put("S2_Page", $scope.currentPage)
         }
     });
 });

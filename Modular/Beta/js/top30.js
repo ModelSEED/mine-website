@@ -40,13 +40,14 @@ angular.module('app').factory('top30Factory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('top30Ctl', function($scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
+angular.module('app').controller('top30Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
     $scope.currentPage = 1;
     $scope.numPerPage = 50;
     $scope.maxSize = 6;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";
-    sharedFactory.dbId = 'CDMINESEED'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE");
+    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
     var reactions;
     $scope.searchType = "";
     $scope.searchComp = "";
@@ -78,13 +79,14 @@ angular.module('app').controller('top30Ctl', function($scope,$stateParams,$cooki
     });
 });
 
-angular.module('app').controller('s2Ctl', function($scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
+angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
 
     $scope.currentPage = 1;
     $scope.numPerPage = 20;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
-    sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE");
+    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
     var operators;
     $scope.searchName = "";
 
@@ -269,9 +271,22 @@ var damageReactionIDs = [
     "R8d95b60e3852580e6a911b5e937a17fe293de56f",
     "R7a61225382510404658145c98036f11b4b2b4824",
     "R7d82eeb924a25088f540a8d834a2730a78a4fd0e",
-    "R64fc49eee557c3053c734a2167f62443bc129a39",
     "Rf1d18225264a215095d9bf76d855099056446e8e",
+    "R64fc49eee557c3053c734a2167f62443bc129a39",
     "R5cbb04138424846ddf99efa74e00ca76fcb832df",
+    "Re07db863820b4a766bee454a0345728687386baa",
+    "R856299f1a8c6d1d420b2dc037c257a5e23ec05d6",
+    "Rf4181dc0483c4c2438af04d25924556b63cae86c",
+    "Rcc99acfb943b1df4f638a03e3ff1e498e94515b2",
+    "R856299f1a8c6d1d420b2dc037c257a5e23ec05d6",
+    "R7828fdcb0b113c2b3ea6d0122424097b986e845e",
+    "R23ab6281a1e7bcb8760e0c3637d1afb1e1245614",
+    "R8d9c8664defbdfc1927bb1a2c7f52932a1d42c17",
+    "Rf153d62885fe1f3fbe0ff14173e95e7729ff982d",
+    "R05316653faa4b493e386c15b7600cfc7254cfd9b",
+    "R856299f1a8c6d1d420b2dc037c257a5e23ec05d6",
+    "R86b8cffffb94244242dadea5c817920d8d56b8fe",
+    "Rc1e25480b7bd9a38f4d65792c6216f13b56fa8f8",
     "R10f6c266375144b6f6dc7b2eb34b630eebb9f69f",
     "Rdb5e71bf100d7682c2d354eb30338b9ee3c42cc3",
     "R30d79c241d948a10b05afd343e95071ad23817a1",
@@ -356,16 +371,13 @@ var damageReactionIDs = [
     "R222e456bf66c6ead4bb85afb72e3f67cb7ca99cf",
     "Rf725123673010d4f6b7f1586ed6c4452c0bc5b3e",
     "R690f673ce6cd9ee169c993c32b871cd5d32f0562",
-    "R0ca695cc2cc1a2082d05ce1ee719742ee938c799",
     "Rffc7ccefae1f1212f4f54d90cb707b217fcd2879",
     "Re1ac337db75f6ee5b40097b2da814d60fa0b9cbb",
-    "Rfef835e7b29e0123b3f5eee659db67038e97752a",
     "R1d192c4aabe0ffe2cc75e459734bfe472a68157b",
     "Reee00fb49dc5be1311837854563d1df3e75d7436",
     "R856425a19b7a3b3bec3f2f07508a126b546cfb0d",
     "R9536a122387a1263f0a968948dc5e968addd6ef5",
     "R4fc6487b0989e79f343c89ea35a1eb9712570c36",
-    "R5f356caa98ecb22c8baf81b1ebdbf0aa24e74c4a",
     "R1ab115e86514401b3fe647f4512a50fd9097d85a",
     "Re8e811c1bf7445ba8ec2a55612bcc756ccac9035",
     "R32fe238d10a7f3bf1a0dd5f9b12cf29d1e1e3772",
@@ -397,6 +409,8 @@ var damageReactionIDs = [
     "R7baed24ed5a690b9e5731ddc9568d6068da9a80e",
     "Rbe9a4c0cc74c67df328788ae967936dde19be35e",
     "Rf2676a84610a0770e23a55926c0054ca24fc5126",
+    "Rf15985756f573b190d2544c9f106b3f8927d96e6",
+    "R28c233224c964d0fe5d82460fc6abd68a8090dd9",
     "R162c8d0750eed7a21eb88645c51b6d616112db35",
     "R2fdd09bb9788f38a1eed608a7d6acf8691b778b3",
     "R05346f7eda34dc5d78a8bc25dfe7fd5bdef8b109",

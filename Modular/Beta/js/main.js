@@ -112,6 +112,8 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
     else {$scope.database = $scope.databases[database_id]}
     sharedFactory.dbId = $scope.database.db;
 
+    $scope.$on("CDMINE", function () {$scope.database = $scope.databases[3]});
+
     $scope.$watch('database', function() {
         // This tracks which database is selected and reloads the page if it's content depends on the database
         var state_name = $state.current.name;

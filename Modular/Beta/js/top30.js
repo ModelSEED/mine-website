@@ -40,17 +40,17 @@ angular.module('app').factory('top30Factory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('top30Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
+angular.module('app').controller('s1Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
     $scope.currentPage = 1;
     $scope.numPerPage = 50;
     $scope.maxSize = 6;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";
-    $rootScope.$broadcast("CDMINE");
-    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
     var reactions;
     $scope.searchType = "";
     $scope.searchComp = "";
+    console.log($stateParams.id);
 
     //if specific reactions specified, get only those
     if ($stateParams.id) {top30Factory.getReactions(top30db, $stateParams.id.split(','))}
@@ -85,8 +85,7 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
     $scope.numPerPage = 20;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
-    $rootScope.$broadcast("CDMINE");
-    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
     var operators;
     $scope.searchName = "";
 
@@ -126,7 +125,6 @@ var operatorList = [
 	"Amine_Malonaldehyde_Condensation_2",
 	"Amine_Pyridoxal_Condensation",
 	"Amino_Aldehyde_2",
-	//"Amino_Carbamylation",
 	"Amino_Glycoaldehyde",
 	"Amino_Glyoxal",
 	"Amino_Glyoxal_Cyclization_1",
@@ -141,10 +139,10 @@ var operatorList = [
 	"Chorismate_Rearrangement",
 	"CoA_Thiol_Adducts",
 	"CoA_Thiol_Adducts_2",
-	//"Cyclohexadiene_Dehydration_1",
+    "Cyclohexadiene_Dehydration",
 	"Cyclohexadiene_Dehydration_2",
 	"Cysteamine_Vinyl",
-	"Cystine_Vinyl",
+	"Cysteine_Vinyl",
 	"Deamination_1",
 	"Deamination_2",
 	"Deamination_3",
@@ -154,7 +152,6 @@ var operatorList = [
 	"Decarboxylation_3",
 	"Desthio_Thiazole",
 	"Dihydroxyacetone_1",
-	//"Dihydroxyacetone_Elimination",
 	"Disulfide_Formation",
 	"Enol_Ether_Elimination",
 	"Folates_Oxidation",
@@ -169,13 +166,11 @@ var operatorList = [
 	"Hydroxypyruvate_Oxidation",
 	"Imine_Reduction",
 	"Imine_Hydrolysis",
-	//"Isocyanate_Decomposition",
 	"Isocyanate_Formation",
 	"Ketimine_Hydrolysis",
 	"Lactam_Formation_1",
 	"Lactam_Formation_2",
 	"Lactam_Formation_3",
-	//"Maillard_Reaction",
 	"Malonaldehyde_Condensation_1",
 	"Malonaldehyde_Oxidation",
 	"Methyl_Ketone_Attack",
@@ -196,7 +191,7 @@ var operatorList = [
 	"Peroxidation_Decarboxylation",
 	"Peroxide_Cleavage",
 	"Peroxide_Epoxidation",
-	"Phosphoribose_Cyclization",
+	"Phosphoribose_Cyclization_Phosphate_Elimination",
 	"Pyridine_Cyclization",
 	"Pyridine_Oxidation",
 	"Pyridine_Oxidation_2",
@@ -208,14 +203,13 @@ var operatorList = [
 	"Pyrroline_2",
 	"Pyrroline_3",
 	"Ribose_Hydrolysis",
-	"Ribose_Rearrangement",
+	"Ribose_Ring_Opening",
 	"Ribulose_Hydrolysis",
-	"Secondary_Amine_Cleavage",
+	"Secondary_Amine_Hydrolysis",
 	"Sulfonium_Cleavage",
 	"Thiaminase",
 	"Thiazole_Alkalinization_1",
 	"Thiazole_Alkalinization_2",
-	//"Thiazole_Cleavage",
 	"Thiazole_Oxidation",
 	"Thiazolidine_Formation_1",
 	"Thiazolidine_Formation_2",
@@ -224,7 +218,6 @@ var operatorList = [
 	"Thiol_Fumarate",
 	"Thiol_Glycoaldehyde",
 	"Thiol_Glyoxal",
-	//"Thiol_Vinyl_Cyclizing.dat",
 	"Thiol_oxidation"
 ];
 
@@ -269,11 +262,6 @@ var damageReactionIDs = [
     "R9d6f21696d0494e5e5e5a13527a4191bd49f738d",
     "Rc7774fdaf9f396a2316162677b4cd8d5983487e3",
     "R8d95b60e3852580e6a911b5e937a17fe293de56f",
-    "R7a61225382510404658145c98036f11b4b2b4824",
-    "R7d82eeb924a25088f540a8d834a2730a78a4fd0e",
-    "Rf1d18225264a215095d9bf76d855099056446e8e",
-    "R64fc49eee557c3053c734a2167f62443bc129a39",
-    "R5cbb04138424846ddf99efa74e00ca76fcb832df",
     "Re07db863820b4a766bee454a0345728687386baa",
     "R856299f1a8c6d1d420b2dc037c257a5e23ec05d6",
     "Rf4181dc0483c4c2438af04d25924556b63cae86c",
@@ -287,12 +275,18 @@ var damageReactionIDs = [
     "R856299f1a8c6d1d420b2dc037c257a5e23ec05d6",
     "R86b8cffffb94244242dadea5c817920d8d56b8fe",
     "Rc1e25480b7bd9a38f4d65792c6216f13b56fa8f8",
+    "R7a61225382510404658145c98036f11b4b2b4824",
+    "R7d82eeb924a25088f540a8d834a2730a78a4fd0e",
+    "Rf1d18225264a215095d9bf76d855099056446e8e",
+    "R64fc49eee557c3053c734a2167f62443bc129a39",
+    "R5cbb04138424846ddf99efa74e00ca76fcb832df",
     "R10f6c266375144b6f6dc7b2eb34b630eebb9f69f",
     "Rdb5e71bf100d7682c2d354eb30338b9ee3c42cc3",
     "R30d79c241d948a10b05afd343e95071ad23817a1",
     "R4b89f4f9ccc1e443d8759cb0dd7549186cc7ae6c",
     "R49b2cc7e2c7e64d5fb60bb71edb94dc18c96b1a3",
     "Re0bf39fe9d3348ab66c177a46658f26c3556263e",
+    "R3400f3cff09704d954e5c4ef2b16b3502f76dd64",
     "R5c165e0974e253bcdb0e13f79ac8ffa68b439276",
     "Re5be63e936cad74b8a063afe8e1ee6a2729a4fd2",
     "Rb528151c9e2c005814d547c4f927e17463a4ad49",
@@ -334,7 +328,6 @@ var damageReactionIDs = [
     "Rbf24d5b29e0905c9bb3bfe2bd1126061bd674d6d",
     "R4c506809271758f87ffcfafbd7a01decfa1dc45c",
     "R11f8b02ad7f38fbfb492979928777ca399251002",
-    "Rbf24d5b29e0905c9bb3bfe2bd1126061bd674d6d",
     "R3f56ef2a9dcffdbf143bc6566f85b41fca53059a",
     "Rce35f4c0f7d0937de4833f20ee751137bda17c5c",
     "R00980018eac9eb66e224c895c96443e1dce1a139",
@@ -373,26 +366,26 @@ var damageReactionIDs = [
     "R690f673ce6cd9ee169c993c32b871cd5d32f0562",
     "Rffc7ccefae1f1212f4f54d90cb707b217fcd2879",
     "Re1ac337db75f6ee5b40097b2da814d60fa0b9cbb",
-    "R1d192c4aabe0ffe2cc75e459734bfe472a68157b",
-    "Reee00fb49dc5be1311837854563d1df3e75d7436",
-    "R856425a19b7a3b3bec3f2f07508a126b546cfb0d",
-    "R9536a122387a1263f0a968948dc5e968addd6ef5",
-    "R4fc6487b0989e79f343c89ea35a1eb9712570c36",
-    "R1ab115e86514401b3fe647f4512a50fd9097d85a",
     "Re8e811c1bf7445ba8ec2a55612bcc756ccac9035",
     "R32fe238d10a7f3bf1a0dd5f9b12cf29d1e1e3772",
     "R7977fa10f8fc7a1b097ca1606f37348229ee85a3",
     "R41b51a0534e22aa98bf1ad9ed29fde9c1e6f2043",
     "Raec904c5f273afa58d23a6486b22ffe59d979680",
     "Rfef835e7b29e0123b3f5eee659db67038e97752a",
-    "R67bddb7e762d7c770298713e04a6b0f39600a8bd",
-    "R1c5c0b69f0e3aaa91d56b6d79e734957c479cc9c",
-    "R2a5b9cac2e51f27d70f7797e82648de237fafc5c",
-    "R5f356caa98ecb22c8baf81b1ebdbf0aa24e74c4a",
     "R2543ec5b2a4dea3fc3ef93346189b937f39a8512",
     "R4b7a0e4a57f281ac01b73f56b55b385000c353f4",
     "R9b1d3a313ccb130ac7be1e1cc1d7ad22e2d827cf",
     "R71b859702a11b90e6525d83267198aa7eb5b3b99",
+    "R1d192c4aabe0ffe2cc75e459734bfe472a68157b",
+    "Reee00fb49dc5be1311837854563d1df3e75d7436",
+    "R856425a19b7a3b3bec3f2f07508a126b546cfb0d",
+    "R9536a122387a1263f0a968948dc5e968addd6ef5",
+    "R4fc6487b0989e79f343c89ea35a1eb9712570c36",
+    "R1ab115e86514401b3fe647f4512a50fd9097d85a",
+    "R67bddb7e762d7c770298713e04a6b0f39600a8bd",
+    "R1c5c0b69f0e3aaa91d56b6d79e734957c479cc9c",
+    "R2a5b9cac2e51f27d70f7797e82648de237fafc5c",
+    "R5f356caa98ecb22c8baf81b1ebdbf0aa24e74c4a",
     "R3922bd1520b70343367cac677d1ff584bdf062f3",
     "Re551087f96d85213ed6051a8e372317a0b06c7a6",
     "R18888e135bf3610975c7815418c9063c3180ddbe",
@@ -403,10 +396,10 @@ var damageReactionIDs = [
     "R895694b01df4c2118081edc2624cd96454538840",
     "R3f619dadb67f19e805edfda798c0b13dd6cf75dc",
     "Rd1af9578f437522784628e629c8b94aefd956374",
-    "R31820b24baa1929816c5b46262bc9a973419cbff",
-    "Rcad5f34d202c912d3fd656b48a92043382d84237",
     "R285a1fb6021e1275585e65461ff279d83c9ec1fa",
     "R7baed24ed5a690b9e5731ddc9568d6068da9a80e",
+    "R31820b24baa1929816c5b46262bc9a973419cbff",
+    "Rcad5f34d202c912d3fd656b48a92043382d84237",
     "Rbe9a4c0cc74c67df328788ae967936dde19be35e",
     "Rf2676a84610a0770e23a55926c0054ca24fc5126",
     "Rf15985756f573b190d2544c9f106b3f8927d96e6",
@@ -465,7 +458,6 @@ var damageReactionIDs = [
     "R147f12945364c2250ae36d907d2cf7fffc448b67",
     "R1434f9ab2e402ed5aec909e85dff01c59e24198b",
     "R285f8849a8218e3f21ac575f9ee1471ad2e3dfdf",
-    "R3400f3cff09704d954e5c4ef2b16b3502f76dd64",
     "R21e486507eba4c2248742a799c0d19188d179a6e",
     "R655fc672ae701f52c7ae83455aa80dc400b32f5e",
     "R7041cda7c87435e34e4efa4fa1830a125530b52e",

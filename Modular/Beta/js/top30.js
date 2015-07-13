@@ -40,17 +40,17 @@ angular.module('app').factory('top30Factory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('top30Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
+angular.module('app').controller('s1Ctl', function($rootScope,$scope,$stateParams,$cookieStore,sharedFactory,top30Factory){
     $scope.currentPage = 1;
     $scope.numPerPage = 50;
     $scope.maxSize = 6;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";
-    $rootScope.$broadcast("CDMINE");
-    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
     var reactions;
     $scope.searchType = "";
     $scope.searchComp = "";
+    console.log($stateParams.id);
 
     //if specific reactions specified, get only those
     if ($stateParams.id) {top30Factory.getReactions(top30db, $stateParams.id.split(','))}
@@ -85,8 +85,7 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
     $scope.numPerPage = 20;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
-    $rootScope.$broadcast("CDMINE");
-    //sharedFactory.dbId = 'CDMINE'; //Set to the Chemical Damage Database
+    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
     var operators;
     $scope.searchName = "";
 
@@ -140,6 +139,7 @@ var operatorList = [
 	"Chorismate_Rearrangement",
 	"CoA_Thiol_Adducts",
 	"CoA_Thiol_Adducts_2",
+    "Cyclohexadiene_Dehydration",
 	"Cyclohexadiene_Dehydration_2",
 	"Cysteamine_Vinyl",
 	"Cysteine_Vinyl",

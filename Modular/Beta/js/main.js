@@ -237,12 +237,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('top30', {
         url: '/top30',
         templateUrl: 'partials/top30.html',
-        controller: "top30Ctl"
+        controller: "cookieCtl"
     });
     $stateProvider.state('top30.s1', {
         url: '/S1:id',
         templateUrl: 'partials/S1.html',
-        controller: "top30Ctl"
+        controller: "s1Ctl"
     });
     $stateProvider.state('top30.s2', {
         url: '/S2',

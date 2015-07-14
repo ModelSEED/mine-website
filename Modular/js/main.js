@@ -46,6 +46,18 @@ angular.module('app').factory('sharedFactory', function(){
             var end = begin + numPerPage;
             return list.slice(begin, end);
         },
+        filterList: function(reactions, field, searchOn) {
+            if (searchOn && (typeof(reactions) != 'undefined') && (reactions.length > 0)) {
+                var subList = [];
+                for (var i = reactions.length - 1; i >= 0; i--) {
+                    if ((reactions[i][field].toLowerCase().indexOf(searchOn.toLowerCase()) > -1)&&(subList[subList.length-1] != reactions[i])) {
+                        subList.push(reactions[i]);
+                    }
+                }
+                return subList
+            }
+            else{return reactions}
+        },
         sortList: function(list, attribute, ascending){
             list.sort(function(a,b){
                 if (ascending){
@@ -64,7 +76,10 @@ angular.module('app').factory('sharedFactory', function(){
     };
     return factory
 });
-
+if (navigator.userAgent.indexOf('MSIE') > 0 || navigator.appVersion.indexOf('Trident/') > 0) {
+   alert("This web application does not officially support Internet Explorer and some elements may not render or " +
+       "function correctly in this environment. For best performance, utilize the Chrome browser.")
+}
 angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
     $scope.startGeneralTour = function () {
         var tour = new Tour(generalTour());
@@ -86,16 +101,18 @@ angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
 });
 
 angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedFactory,$cookieStore) {
-
     $scope.databases =  [
         {id:0, name:'KEGG',  db :'KEGGexp2'},
         {id:1, name:'EcoCyc', db : 'EcoCycexp2'},
-        {id:2, name:'YMDB', db : 'YMDBexp2'}
+        {id:2, name:'YMDB', db : 'YMDBexp2'},
+        {id:3, name:'Chemical Damage SEED', db : 'CDMINE'}
     ];
     var database_id = $cookieStore.get('mine_db');
     if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}
     else {$scope.database = $scope.databases[database_id]}
     sharedFactory.dbId = $scope.database.db;
+
+    $scope.$on("CDMINE", function () {$scope.database = $scope.databases[3]});
 
     $scope.$watch('database', function() {
         // This tracks which database is selected and reloads the page if it's content depends on the database
@@ -106,10 +123,7 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
     });
 
 });
-if (navigator.userAgent.indexOf('MSIE') > 0 || navigator.appVersion.indexOf('Trident/') > 0) {
-   alert("This web application does not officially support Internet Explorer and some elements may not render or " +
-       "function correctly in this environment. For best performance, utilize the Chrome browser.")
-}
+
 angular.module('app').directive('reactionDiagram', function(){
     return {
         restrict: 'E',
@@ -161,12 +175,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
     $stateProvider.state('acompound.reactants', {
         url: '/reactantIn',
-        templateUrl: 'partials/reaction-list.html',
+        templateUrl: 'partials/reactions.html',
         controller: "reactantInCtl"
     });
     $stateProvider.state('acompound.products', {
         url: '/productOf',
-        templateUrl: 'partials/reaction-list.html',
+        templateUrl: 'partials/reactions.html',
         controller: "productOfCtl"
     });
 
@@ -177,7 +191,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     });
 
 
-    //METABLOMICS see metabolomics.js
+    //METABOLOMICS see metabolomics.js
     $stateProvider.state('metabolomics', {
         
         url: '/metabolomics',
@@ -217,6 +231,23 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/structure',
         templateUrl: 'partials/structureSearch.html',
         controller: "structureCtl"
+    });
+
+    //Top 30 damage prone metabolites reaction list
+    $stateProvider.state('top30', {
+        url: '/top30',
+        templateUrl: 'partials/top30.html',
+        controller: "cookieCtl"
+    });
+    $stateProvider.state('top30.s1', {
+        url: '/S1:id',
+        templateUrl: 'partials/S1.html',
+        controller: "s1Ctl"
+    });
+    $stateProvider.state('top30.s2', {
+        url: '/S2',
+        templateUrl: 'partials/S2.html',
+        controller: "s2Ctl"
     });
 
 

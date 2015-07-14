@@ -123,11 +123,11 @@ angular.module('app').controller('opCreatorCtl',  function($scope,$state,operato
         if (!$scope.operatorName){
             alert("Please specify an operator name")
         }
-        else if (!$scope.products.length){
-            alert("Please specify operator products")
+        else if (!$scope.products){
+            alert("Please specify an operator products")
         }
-        else if (!$scope.reactants.length){
-            alert("Please specify operator reactants")
+        else if (!$scope.reactants){
+            alert("Please specify an operator reactants")
         }
         else{
             operatorFactory.spec = {

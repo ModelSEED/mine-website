@@ -11,11 +11,11 @@
     <link href="bower_components/angular-rangeslider-master/angular.rangeSlider.css" rel="stylesheet">
     <link href="custom.css" rel="stylesheet" type="text/css"/>
 </head>
-
 <body>
 
+
 <!-- NAVIGATION -->
-    <nav class="navbar navbar-default " role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <img class="logo" src="img/Gold-Miner-Icon.png" width="46" style="float:left">
@@ -36,18 +36,18 @@
             </form>
         </div>
     </nav>
-
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-lg-2">
                 <h2>Database</h2>
                 <div ng-controller="databaseCtl">
                     <select id="db-select" class="form-control" ng-model="database" ng-options="d.name for d in databases"></select>
+
                 </div>
                 <div ui-view = "sidebar"></div>
             </div>
             <!-- col 2 -->
-            <div class="col-sm-10">
+            <div class="col-lg-10">
                 <div ui-view></div>
             </div>
         </div>
@@ -93,7 +93,7 @@
 <script src="js/bootstrapTours.js"></script>
 <script src="js/modelCtl.js"></script>
 <script src="js/operator.js"></script>
-
+<script src="js/top30.js"></script>
 
 </body onload>
 </html>

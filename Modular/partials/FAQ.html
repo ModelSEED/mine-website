@@ -5,8 +5,8 @@
     <div class="well">
         <p>There are many ways you can use this website but we have developed a few tours that show the basics.</p>
         <ul>
-            <li><a style="font-size: 12pt" ng-click="startGeneralTour()">General Website Tour</a></li>
-            <li><a style="font-size: 12pt" ng-click="startMetabolomicsTour()">Metabolomics Tour</a></li>
+            <li><a style="font-size: 12pt" ng-click="startGeneralTour()" analytics-on>General Website Tour</a></li>
+            <li><a style="font-size: 12pt" ng-click="startMetabolomicsTour()" analytics-on>Metabolomics Tour</a></li>
         </ul>
     </div>
     <h4>How do you generate <i>in silico</i> metabolites?</h4>
@@ -24,8 +24,8 @@
     <h4>How can I integrate your database into my tool/pipeline?</h4>
     <div class="well">
         We offer API clients in JavaScript, Python and Perl which cover all the functionality of this website. These
-        clients are available at <a href="https://github.com/JamesJeffryes/MINE-API"> GitHub.</a> You may also
-        <a href="http://lincolnpark.chem-eng.northwestern.edu/release/"> download SDF files </a> of the generated
+        clients are available at <a href="https://github.com/JamesJeffryes/MINE-API" analytics-on> GitHub.</a> You may also
+        <a href="http://lincolnpark.chem-eng.northwestern.edu/release/" analytics-on> download SDF files </a> of the generated
         metabolites in the database. Due to licencing restrictions, we are not able to redistribute the original
         database compounds (i.e. KEGG COMPOUND) but these compounds are available from the original sources.
     </div>
@@ -40,10 +40,10 @@
     <h4>Are there any restrictions on the use of this website and APIs?</h4>
     <div class="well">
         MINEs are provided as a freely available resource. There are no licensing restrictions for non-commercial use but
-        users are requested to cite:<strong> James G. Jeffryes, Ricardo L. Colastani, Mona Elbadawi-Sidhu, Tobias Kind,
+        users are requested to cite: James G. Jeffryes, Ricardo L. Colastani, Mona Elbadawi-Sidhu, Tobias Kind,
         Thomas D. Niehaus, Linda J. Broadbelt, Andrew D. Hanson, Oliver Fiehn, Keith E. J. Tyo, Christopher S. Henry,
         “MINEs: Open access databases of computationally predicted enzyme promiscuity products for untargeted
-        metabolomics” J. Cheminformatics In Press.</strong> Commercial users must obtain a license from Pathway Solutions Inc.
+        metabolomics” <em>J. Cheminformatics</em> In Press. Commercial users must obtain a license from Pathway Solutions Inc.
         (www.pathway.jp) and explicit permission from the authors.
     </div>
 </div>

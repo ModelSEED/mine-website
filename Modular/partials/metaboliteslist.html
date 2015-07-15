@@ -5,7 +5,7 @@
     <br>
     <h3 ng-show="!(items+1)">Searching...</h3>
     <button id="met-download" ng-show="items" class="btn btn-primary pull-right" ng-click="downloadResults()"
-            analytics-on="click" analytics-event="MetabolomicsDownload">Download Results</button>
+            analytics-on="click" analytics-category="Download" analytics-event="MetabolomicsResults">Download Results</button>
 </div>
 <div class="col-sm-6">
     <pagination class="pull-right" total-items="items" page="currentPage" max-size="maxSize" class="pagination-sm"

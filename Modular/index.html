@@ -31,7 +31,8 @@
             <form class=" navbar-form navbar-right" role="form">
                 <div ng-controller="quickSearchCtl">
                     <input id="qs_text" type="text" placeholder="Quick Search" class="form-control" ng-model ="name" ng-keypress="doQuickSearch($event)">
-                    <button id="qs_btn" class="btn btn-primary "  ng-click="doQuickSearch(false)" ><span class="glyphicon glyphicon-search"></span></button>
+                    <button id="qs_btn" class="btn btn-primary "  ng-click="doQuickSearch(false)" analytics-on="click"
+                            analytics-category="Search" analytics-event="Quick"><span class="glyphicon glyphicon-search"></span></button>
                 </div>
             </form>
         </div>

@@ -52,7 +52,8 @@
                 <label>Use RegEx </label>
                 <input type="checkbox" ng-model="RegEx" ng-disabled='not'>
             </div>
-            <a id="search-btn" class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or)' ng-click="search(and,or,not)">
+            <a id="search-btn" class="btn btn-primary pull-right" style="margin: 0 auto;" ng-disabled='!(and+or)' ng-click="search(and,or,not)"
+                    analytics-on="click" analytics-category="Search" analytics-event="Advanced">
             <span class="glyphicon glyphicon-search"></span> Search</a>
         </form>
     </div>

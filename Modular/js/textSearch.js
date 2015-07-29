@@ -16,7 +16,7 @@ angular.module('app').controller('advancedSearchCtl', function($scope,$state){
         {'id': 6, 'name': 'Mass'}, {'id': 7, 'name': 'Formula'}, {'id': 8, 'name': 'Names'},
         {'id': 9, 'name': 'Pathways'}, {'id': 10, 'name': 'Enzymes'}, {'id': 11, 'name': 'Product_of'},
         {'id': 12, 'name': 'Reactant_in'}, {'id': 13, 'name': 'FP4'}, {'id': 14, 'name': 'FP2'},
-        {'id': 15, 'name': 'steps_from_source'}, {'id': 16, 'name': 'DB_links.KEGG'},
+        {'id': 15, 'name': 'Generation'}, {'id': 16, 'name': 'DB_links.KEGG'},
         {'id': 17, 'name': 'DB_links.PubChem'}, {'id': 18, 'name': 'DB_links.CAS'},
         {'id': 19, 'name': 'DB_links.ChEBI'}, {'id': 20, 'name': 'DB_links.KNApSAcK'},
         {'id': 21, 'name': 'DB_links.Model_SEED'}, {'id': 22, 'name': 'DB_links.NIKKAJI'},
@@ -70,7 +70,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
     var promise;
     var services = sharedFactory.services;
 
-    if ($stateParams.search[0] == '{') promise = services.database_query(sharedFactory.dbId, $stateParams.search);
+    if ($stateParams.search[0] == '{') promise = services.database_query(sharedFactory.dbId, $stateParams.search, "", "");
     else promise = services.quick_search(sharedFactory.dbId, $stateParams.search);
     promise.then(
             function(result){

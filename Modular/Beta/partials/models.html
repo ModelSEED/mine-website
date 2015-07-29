@@ -1,21 +1,11 @@
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+<br>
+<br>
+<br>
 <h3>KEGG Genome Reconstructions</h3>
-<div class="alert alert-info" ng-repeat="m in selectedModels">
-    <h4 style="">{{m}}</h4>
-    <!--<span class="glyphicon glyphicon-trash pull-right" style="cursor: pointer;"></span>-->
-</div>
-<input id="models_text" type="text" style="width: 145px"
-       placeholder="Search reconstructions" ng-model ="model_term">
+<label>Highlight products of native metabolites</label>
+<select multiple id="c-model-select" style="width: 150px; height: 100px;" placeholder="Pick a model..." ></select>
+
+<label>Highlight products of native reaction types</label>
+<select multiple id="r-model-select" style="width: 150px; height: 100px;" placeholder="Pick a model..." ></select>
 <span tooltip="Type an organism name (eg. yeast) to search the genomes. Click a model below to highlight compounds
                native to that organism" tooltip-placement="right" class="glyphicon glyphicon-question-sign"></span>
-<br>
-<br>
-<select ng-show="modelList" style="width: 150px; height: 100px;" multiple ng:model="modelChoice">
-     <option ng-repeat="s in modelList" value="{{s}}">{{s}}</option>
-</select>

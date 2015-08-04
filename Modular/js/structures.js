@@ -73,7 +73,8 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
             $scope.items = 0;
             $scope.filteredData = [];
             $scope.$apply();
-            console.log("structure search failure")
+            console.log("structure search failure");
+            console.log(err)
         }
     );
 

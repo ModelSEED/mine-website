@@ -3,7 +3,6 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     var factory = {
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         trace :  "164.0937301",
-        model_term: "",
         filterKovats: false,
         kovats: [0, 20000],
         filterLogP: false,
@@ -61,7 +60,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,metabolomicsDataFactory){
+angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,shareFactory, metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
     $scope.halogens = metabolomicsDataFactory.params.halogens;
@@ -94,6 +93,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
     });
 
     $scope.metSearch = function() {
+        metabolomicsDataFactory.params.models = sharedFactory.c_selected_models
         metabolomicsDataFactory.storeFormData($scope, $cookieStore);
         $state.go("metabolomicsCompounds")
     };

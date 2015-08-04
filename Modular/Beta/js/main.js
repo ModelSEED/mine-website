@@ -5,6 +5,10 @@ angular.module('app').factory('sharedFactory', function(){
         //if the db changes in one of these states, reload the page
         db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
             'acompound.products', 'acompound.overview'],
+        c_model_list: [],
+        c_selected_models: [],
+        r_model_list: [],
+        r_selected_models: [],
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         numPerPage: 25, // default number of results to show per page

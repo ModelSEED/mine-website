@@ -53,10 +53,10 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
         $state.go('structure')
     }
     else if (structureSearchFactory.stype == "exact"){
-        promise = services.structure_search(sharedFactory.dbId,"mol",structureSearchFactory.mol, "" , "");
+        promise = services.structure_search(sharedFactory.dbId,"mol",structureSearchFactory.mol, "", "");
     }
     else if (structureSearchFactory.stype == "substructure"){
-        promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres, "" ,"");
+        promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres, "", "");
     }
     else if (structureSearchFactory.stype == "similarity"){
         promise = services.similarity_search(sharedFactory.dbId,structureSearchFactory.mol,
@@ -73,7 +73,8 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
             $scope.items = 0;
             $scope.filteredData = [];
             $scope.$apply();
-            console.log("structure search failure")
+            console.log("structure search failure");
+            console.log(err)
         }
     );
 

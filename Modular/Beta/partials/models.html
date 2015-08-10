@@ -2,10 +2,11 @@
 <br>
 <br>
 <h3>KEGG Genome Reconstructions</h3>
-<label>Highlight products of native metabolites</label>
-<select multiple id="c-model-select" style="width: 150px; height: 100px;" placeholder="Pick a model..." ></select>
-
-<label>Highlight products of native reaction types</label>
-<select multiple id="r-model-select" style="width: 150px; height: 100px;" placeholder="Pick a model..." ></select>
+<div class="form-inline"></div>
+<label>Select model for Likelihood Scoring
 <span tooltip="Type an organism name (eg. yeast) to search the genomes. Click a model below to highlight compounds
-               native to that organism" tooltip-placement="right" class="glyphicon glyphicon-question-sign"></span>
+                   native to that organism" tooltip-placement="right">
+        <span class="glyphicon glyphicon-question-sign"></span>
+    </span>
+    </label>
+<select id="model-select" placeholder="Pick a model..."></select>

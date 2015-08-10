@@ -13,11 +13,11 @@ angular.module('app').controller('modelsCtl', function($scope, $state, sharedFac
       }
     };
 
-    $( '#c-model-select').selectize({
+    $( '#model-select').selectize({
         valueField: 'name',
         labelField: 'name',
-        options: sharedFactory.c_model_list,
-        items:sharedFactory.c_selected_models,
+        options: sharedFactory.model_list,
+        items:[sharedFactory.selected_model],
         /*render: {
             options: function (data, escape) {
                 return '<div>' +
@@ -37,7 +37,7 @@ angular.module('app').controller('modelsCtl', function($scope, $state, sharedFac
                         return ({name: n, id: i});
                     });
                     console.log(result);
-                    sharedFactory.c_model_list = data;
+                    sharedFactory.model_list = data;
                     callback(data);
                 },
                 function (err) {
@@ -48,43 +48,9 @@ angular.module('app').controller('modelsCtl', function($scope, $state, sharedFac
         },
         // triggered when a user selects a metabolic model
         onChange: function(value) {
-            sharedFactory.c_selected_models = value;
+            sharedFactory.selected_model = value;
             // this if the model selection could affect results, reload the page to reflect the changes
-            if (sharedFactory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current,{},{reload:true});
-        }
-    });
-
-    $( '#r-model-select').selectize({
-        valueField: 'name',
-        labelField: 'name',
-        options: sharedFactory.r_model_list,
-        items:sharedFactory.r_selected_models,
-        // triggered when a user enters a query, performs a model search and returns the results as options
-        load: function (query, callback) {
-            console.log(query);
-            this.options = {}; // blank out prior options
-            var promise = sharedFactory.services.model_search(query);
-            promise.then(
-                function (result) {
-                    // select expects a list of objects not strings, for now we convert here but this should be changed on the server side
-                    data = $.map(result, function (n, i) {
-                        return ({name: n, id: i});
-                    });
-                    console.log(result);
-                    sharedFactory.r_model_list = data;
-                    callback(data);
-                },
-                function (err) {
-                    console.log("Model Search Failure");
-                    callback()
-                }
-            );
-        },
-        // triggered when a user selects a metabolic model
-        onChange: function(value) {
-            // this if the model selection could affect results, reload the page to reflect the changes
-            sharedFactory.r_selected_models = value;
-            $state.go($state.current, {}, {reload: true});
+            if (sharedFactory.db_dependent_states.indexOf($state.current.name) > -1) $state.go($state.current,{},{reload:true});
         }
     });
 });

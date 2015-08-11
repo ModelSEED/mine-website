@@ -118,7 +118,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
     else {
         console.log(sharedFactory.selected_model)
-        if (sharedFactory.selected_model) metabolomicsDataFactory.params.models = [sharedFactory.selected_model];
+        if (sharedFactory.selected_model) metabolomicsDataFactory.params.models = [sharedFactory.selected_model.name];
         metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
     }
 

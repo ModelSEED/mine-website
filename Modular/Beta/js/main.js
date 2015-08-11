@@ -1,4 +1,5 @@
-angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'angulartics', 'angulartics.google.analytics']);
+angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'angulartics',
+    'angulartics.google.analytics', 'ui.select']);
 angular.module('app').factory('sharedFactory', function(){
     var factory = {
         dbId:'KEGGexp2',
@@ -6,7 +7,6 @@ angular.module('app').factory('sharedFactory', function(){
         db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
             'acompound.products', 'acompound.overview'],
         selected_model: "",
-        model_list: [],
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         numPerPage: 25, // default number of results to show per page
@@ -154,13 +154,29 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     // COMPOUNDS QUICK SEARCH see textSearch.js
     $stateProvider.state('compounds', {
         url: '/compounds:search',
-        templateUrl: 'partials/compoundslist.html',
-        controller: "compoundsCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/compoundslist.html',
+                controller: "compoundsCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
     });
     $stateProvider.state('advancedsearch', {
         url: '/advancedsearch',
-        templateUrl: 'partials/advancedsearch.html',
-        controller: "advancedSearchCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/advancedsearch.html',
+                controller: "advancedSearchCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
     });
 
 
@@ -226,13 +242,30 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     // STRUCTURES see structures.js
     $stateProvider.state('structuresres', {
         url: '/structuresres:search',
-        templateUrl: 'partials/compoundslist.html',
-        controller: "structuresresCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/compoundslist.html',
+                controller: "structuresresCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
+
     });
     $stateProvider.state('structure', {
         url: '/structure',
-        templateUrl: 'partials/structureSearch.html',
-        controller: "structureCtl"
+        views: {
+            '':{
+                templateUrl: 'partials/structureSearch.html',
+                controller: "structureCtl"
+                },
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
     });
 
     //Top 30 damage prone metabolites reaction list

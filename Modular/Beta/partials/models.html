@@ -2,11 +2,15 @@
 <br>
 <br>
 <h3>KEGG Genome Reconstructions</h3>
-<div class="form-inline"></div>
 <label>Select model for Likelihood Scoring
 <span tooltip="Type an organism name (eg. yeast) to search the genomes. Click a model below to highlight compounds
                    native to that organism" tooltip-placement="right">
-        <span class="glyphicon glyphicon-question-sign"></span>
+    <span class="glyphicon glyphicon-question-sign"></span>
     </span>
-    </label>
-<select id="model-select" placeholder="Pick a model..."></select>
+</label>
+<ui-select ng-model="$parent.model" theme="bootstrap" reset-search-input="false" on-select="saveModel()">
+    <ui-select-match placeholder="Pick a model...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="model in options track by $index" refresh="searchModels($select.search)" refresh-delay="0">
+        {{model.name}}
+    </ui-select-choices>
+</ui-select>

@@ -60,7 +60,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     return factory
 });
 
-angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,shareFactory, metabolomicsDataFactory){
+angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cookieStore,sharedFactory,metabolomicsDataFactory){
     $scope.trace = metabolomicsDataFactory.trace;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
     $scope.halogens = metabolomicsDataFactory.params.halogens;
@@ -93,7 +93,6 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
     });
 
     $scope.metSearch = function() {
-        metabolomicsDataFactory.params.models = sharedFactory.c_selected_models
         metabolomicsDataFactory.storeFormData($scope, $cookieStore);
         $state.go("metabolomicsCompounds")
     };
@@ -117,7 +116,11 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
 
     // if we get here w/o parameters (ie direct link), return to the search screen
     if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
-    else metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
+    else {
+        console.log(sharedFactory.selected_model)
+        if (sharedFactory.selected_model) metabolomicsDataFactory.params.models = [sharedFactory.selected_model.name];
+        metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
+    }
 
     $scope.$on("metabolitesLoaded", function () {
         filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,

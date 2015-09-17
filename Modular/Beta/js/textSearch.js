@@ -66,11 +66,12 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
     $scope.numPerPage = sharedFactory.numPerPage;
     $scope.maxSize = 5;
     $scope.items=-1;
+    $scope.selected_model = sharedFactory.selected_model;
     var data=[];
     var promise;
     var services = sharedFactory.services;
 
-    if ($stateParams.search[0] == '{') promise = services.database_query(sharedFactory.dbId, $stateParams.search, "", "");
+    if ($stateParams.search[0] == '{') promise = services.database_query(sharedFactory.dbId, $stateParams.search, sharedFactory.selected_model.name, "");
     else promise = services.quick_search(sharedFactory.dbId, $stateParams.search);
     promise.then(
             function(result){
@@ -95,7 +96,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
 
     $scope.downloadResults = function(){
         var jsonObject = JSON.stringify(data);
-        var exclude = {"$$hashKey":"", 'id':"", 'score':""};
+        var exclude = {"$$hashKey":"", 'id':"", 'score':"", 'Sources':"", 'Formula':"", 'Mass':"", '_id':""};
         var csv = sharedFactory.convertToCSV(jsonObject, exclude);
         var d = new Date();
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');

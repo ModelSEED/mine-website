@@ -45,6 +45,7 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
     $scope.maxSize = 5;
     $scope.items=-1;
     $scope.img_src = sharedFactory.img_src;
+    $scope.selected_model = sharedFactory.selected_model;
     var data = [];
     // the following logic should be moved to factory in future
     var services = sharedFactory.services;
@@ -53,14 +54,14 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
         $state.go('structure')
     }
     else if (structureSearchFactory.stype == "exact"){
-        promise = services.structure_search(sharedFactory.dbId,"mol",structureSearchFactory.mol, "", "");
+        promise = services.structure_search(sharedFactory.dbId,"mol",structureSearchFactory.mol, sharedFactory.selected_model.name, "");
     }
     else if (structureSearchFactory.stype == "substructure"){
-        promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres, "", "");
+        promise = services.substructure_search(sharedFactory.dbId,structureSearchFactory.mol,structureSearchFactory.maxres, sharedFactory.selected_model.name, "");
     }
     else if (structureSearchFactory.stype == "similarity"){
         promise = services.similarity_search(sharedFactory.dbId,structureSearchFactory.mol,
-            structureSearchFactory.sthresh,'FP4',structureSearchFactory.maxres, "", "");
+            structureSearchFactory.sthresh,'FP4',structureSearchFactory.maxres, sharedFactory.selected_model.name, "");
     }
     promise.then(
         function(result){
@@ -80,7 +81,7 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
 
     $scope.downloadResults = function(){
         var jsonObject = JSON.stringify(data);
-        var exclude = {"$$hashKey":"", 'id':""};
+        var exclude = {"$$hashKey":"", 'id':"", 'Sources':""};
         var csv = sharedFactory.convertToCSV(jsonObject, exclude);
         var d = new Date();
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');

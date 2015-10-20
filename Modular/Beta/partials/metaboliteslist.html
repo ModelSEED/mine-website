@@ -20,8 +20,8 @@
             <th>Formula</th>
             <th>Compound</th>
             <th>MINE ID</th>
-            <th>logP</th>
-            <th>Kovats RI</th>
+            <th ng-show="factory.filterLogP">logP</th>
+            <th ng-show="factory.filterKovats">Kovats RI</th>
             <th>NP Likeness<span tooltip="NP Likeness is a quantitative measure of how similar a given compound is to known
                                           natural products. The values range from -3 (very synthetic) to 3 (very natural)."
                                  class="glyphicon glyphicon-question-sign"></span></th>
@@ -32,8 +32,8 @@
             <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchFormula" analytics-on></th>
             <th><input type="text" class="form-control" placeholder="Search" ng-model="searchCompound" analytics-on></th>
             <th><input type="text" class="form-control" style='width: 90px' placeholder="Search" ng-model="searchMINE" analytics-on></th>
-            <th><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
-            <th><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
+            <th ng-show="factory.filterLogP"><button class="btn btn-block btn-primary" ng-click="sortColumn='logP'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
+            <th ng-show="factory.filterKovats"><button class="btn btn-block btn-primary" ng-click="sortColumn='minKovatsRI'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
             <th><button id="sort-NP" class="btn btn-block btn-primary" ng-click="sortColumn='NP_likeness'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
         </tr>
         </thead>
@@ -50,8 +50,8 @@
                     </ui>
                 </td>
                 <td style="vertical-align:middle">{{f.MINE_id}}</td>
-                <td style="vertical-align: middle">{{f.logP}}</td>
-                <td style="vertical-align: middle">{{f.minKovatsRI}}-{{f.maxKovatsRI}}</td>
+                <td ng-show="factory.filterLogP" style="vertical-align: middle">{{f.logP}}</td>
+                <td ng-show="factory.filterKovats" style="vertical-align: middle">{{f.minKovatsRI}}-{{f.maxKovatsRI}}</td>
                 <td style="vertical-align: middle">{{f.NP_likeness}}</td>
             </tr>
     </table>

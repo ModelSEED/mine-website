@@ -3,6 +3,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     var factory = {
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         trace :  "164.0937301",
+        traceType: 'form',
         filterKovats: false,
         kovats: [0, 20000],
         filterLogP: false,
@@ -34,7 +35,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             if (factory.filterLogP) {params.logP = factory.logP}
             if (factory.filterKovats) {params.kovats = factory.kovats}
             console.log(params);
-            var promise = factory.services.ms_adduct_search(factory.trace, "form", params);
+            var promise = factory.services.ms_adduct_search(factory.trace, factory.traceType, params);
             promise.then(function(result){
                     factory.hits = result;
                     $rootScope.$broadcast("metabolitesLoaded")
@@ -81,6 +82,22 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
         function(err) {console.log(err)}
     );
 
+    $scope.uploadFile = function(){
+        var selectedFile = document.getElementById('metFile').files[0];
+        if (selectedFile.name.search('.mgf')>-1){metabolomicsDataFactory.traceType = "mgf"}
+        else if (selectedFile.name.search('.mzxml')>-1){metabolomicsDataFactory.traceType = "mzxml"}
+        else {
+            alert('Upload only supports .mgf and .mzXML formats');
+            return
+        }
+        var reader = new FileReader();
+        reader.readAsText(selectedFile);
+        reader.onload=function(){
+            $scope.trace = reader.result;
+            $scope.$apply();
+        }
+    };
+
     $scope.$watch('charge', function() { // if the charge changes, update the adduct list while checking the cookies
         if (adductList) {
             metabolomicsDataFactory.params.charge = $scope.charge;
@@ -112,12 +129,13 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     $scope.sortInvert = true;
     $scope.img_src = sharedFactory.img_src;
     $scope.selectedModels = metabolomicsDataFactory.metaModels;
+    $scope.factory = metabolomicsDataFactory;
     var filteredData = [];
 
     // if we get here w/o parameters (ie direct link), return to the search screen
     if (!metabolomicsDataFactory.params.adducts.length) $state.go('metabolomics');
     else {
-        console.log(sharedFactory.selected_model)
+        console.log(sharedFactory.selected_model);
         if (sharedFactory.selected_model) metabolomicsDataFactory.params.models = [sharedFactory.selected_model.name];
         metabolomicsDataFactory.mzSearch(sharedFactory.dbId);
     }
@@ -130,6 +148,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
         $scope.items = filteredData.length;
         $scope.totalItems = metabolomicsDataFactory.hits.length;
         $scope.$apply();
+
     });
 
     $scope.colour = function(native,steps){

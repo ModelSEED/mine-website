@@ -24,7 +24,13 @@
             <ul class="nav navbar-nav">
                 <li><a ui-sref="home">Home</a></li>
                 <li><a ui-sref="advancedsearch" id="adv-tab">Advanced Search</a></li>
-                <li><a ui-sref="metabolomics" id="met-tab">Metabolomics</a></li>
+                <li class="dropdown">
+                  <a href="#" role="button">Metabolomics <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a ui-sref="msAdductSearch" id="met-tab">MS Adduct Search</a></li>
+                    <li><a ui-sref="ms2search">MS/MS Search</a></li>
+                  </ul>
+                </li>
                 <li><a ui-sref="structure" id="struct-tab">Structure Search</a></li>
                 <li><a ui-sref="faq">FAQs</a></li>
             </ul>

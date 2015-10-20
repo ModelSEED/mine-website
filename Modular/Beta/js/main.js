@@ -210,14 +210,28 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
 
     //METABOLOMICS see metabolomics.js
-    $stateProvider.state('metabolomics', {
+    $stateProvider.state('msAdductSearch', {
         
-        url: '/metabolomics',
+        url: '/msAdductSearch',
         views: {
             '':{
-                templateUrl: 'partials/metabolomics.html',
+                templateUrl: 'partials/ms-adduct.html',
                 controller: "metabolomicsCtl"
             },            
+            'sidebar':{
+                templateUrl: 'partials/models.html',
+                controller: "modelsCtl"
+            }
+        }
+    });
+    $stateProvider.state('ms2search', {
+
+        url: '/ms2search',
+        views: {
+            '':{
+                templateUrl: 'partials/ms2-search.html',
+                controller: "metabolomicsCtl"
+            },
             'sidebar':{
                 templateUrl: 'partials/models.html',
                 controller: "modelsCtl"

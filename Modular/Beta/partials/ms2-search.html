@@ -1,12 +1,19 @@
 <form role="form">
     <div class="panel panel-default">
-        <div class="panel-heading"><h2>Metabolomics</h2></div>
+        <div class="panel-heading"><h2>MS/MS Search</h2></div>
         <div class="panel-body">
             <div class="col-sm-5 ">
                 <div class="form-group">
-                    <label>Peak M/Z</label>
-                    <textarea id="trace" ng-model="trace" class="form-control" rows="13"></textarea>
+                    <label>Daughter Ions</label>
+                    <textarea id="trace" ng-model="trace" class="form-control" rows="10"></textarea>
+                    <div id="upload-file" class="input-group">
+                        <input type='file' class="form-control" multiple='false' id='metFile'>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" ng-click="uploadFile()">Upload</button>
+                        </span>
+                    </div>
                 </div>
+
             </div>
             <div class="col-sm-3 ">
                 <label>Charge </label><br>

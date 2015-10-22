@@ -5,10 +5,10 @@
             <div class="col-sm-5 ">
                 <div class="form-group">
                     <label>Parent Ion</label>
-                    <input id="parent_ion" type="text" class="form-control">
+                    <input id="parent_ion" type="text" ng-model="trace" class="form-control">
                     <br>
                     <label>Daughter Ions</label>
-                    <textarea id="trace" ng-model="trace" class="form-control" rows="10"></textarea>
+                    <textarea id="msmsIons" ng-model="msmsIons" class="form-control" rows="10"></textarea>
                     <div id="upload-file" class="input-group">
                         <input type='file' class="form-control" multiple='false' id='metFile'>
                         <span class="input-group-btn">

@@ -230,7 +230,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         views: {
             '':{
                 templateUrl: 'partials/ms2-search.html',
-                controller: "metabolomicsCtl"
+                controller: "ms2searchCtl"
             },
             'sidebar':{
                 templateUrl: 'partials/models.html',

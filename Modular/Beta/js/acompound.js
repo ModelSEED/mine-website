@@ -5,6 +5,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
         getCompound: function (db, id){
             var promise;
             //Controls for _id and MINE ids
+            console.log(id)
             if (parseInt(id)) {promise = factory.services.get_comps(db, [parseInt(id)]);}
             else{promise = factory.services.get_comps(db, [id]);}
             promise.then(
@@ -12,7 +13,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
                     factory.compound = result[0];
                     $rootScope.$broadcast("compoundLoaded")
                 },
-                function(err){console.error("get_comps fail");}
+                function(err){console.error("get_comps fail"); console.log(err)}
             )
         },
         getReactions: function(db, rxn_ids) {

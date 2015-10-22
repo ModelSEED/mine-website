@@ -8,15 +8,15 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
         kovats: [0, 20000],
         filterLogP: false,
         logP: [-35, 35],
-        energy: 0,
-        metric: 'jacquard',
         params: {
             tolerance: 3,
             ppm: false,
             charge: true,
             halogens: true,
             adducts: [],
-            models: []
+            models: [],
+            energy_level: 0,
+            scoring_function: 'jacquard'
         },
         storeFormData: function($scope, $cookieStore) { // updates factory and cookies on search
             factory.trace =$scope.trace;
@@ -38,8 +38,8 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             if (factory.filterKovats) {params.kovats = factory.kovats}
             console.log(params);
             var promise;
-            if (params.scoring_function){
-                promise = factory.services.ms2_search(factory.trace, factory.traceType, params);
+            if (factory.msmsIons){
+                promise = factory.services.ms2_search(factory.msmsIons, factory.traceType, params);
             }
             else {
                 promise = factory.services.ms_adduct_search(factory.trace, factory.traceType, params);
@@ -128,6 +128,8 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
 });
 
 angular.module('app').controller('ms2searchCtl', function($scope,$state,$cookieStore,sharedFactory,metabolomicsDataFactory){
+    $scope.trace = metabolomicsDataFactory.trace;
+    $scope.msmsIons = metabolomicsDataFactory.msmsIons;
     $scope.tolerance = parseInt(metabolomicsDataFactory.params.tolerance);
     $scope.halogens = metabolomicsDataFactory.params.halogens;
     $scope.ppm = metabolomicsDataFactory.params.ppm;
@@ -135,8 +137,8 @@ angular.module('app').controller('ms2searchCtl', function($scope,$state,$cookieS
     $scope.logP = metabolomicsDataFactory.logP;
     $scope.filterKovats = metabolomicsDataFactory.filterKovats;
     $scope.kovats = metabolomicsDataFactory.kovats;
-    $scope.energy = metabolomicsDataFactory.energy;
-    $scope.metric = metabolomicsDataFactory.metric;
+    $scope.energy = metabolomicsDataFactory.params.energy_level;
+    $scope.metric = metabolomicsDataFactory.params.scoring_function;
     $scope.adducts = [];
     var adductList;
 
@@ -152,7 +154,10 @@ angular.module('app').controller('ms2searchCtl', function($scope,$state,$cookieS
     $scope.uploadFile = function(id) {
         reader = metabolomicsDataFactory.uploadFile(id);
         reader.onload=function(){
-            $scope.trace = reader.result;
+            $scope.trace = "";
+            $scope.msmsIons = reader.result;
+            $("#parent_ion").attr('disabled','disabled');
+            $("#msmsIons").attr('disabled','disabled');
             $scope.$apply();
         }
     };
@@ -172,6 +177,7 @@ angular.module('app').controller('ms2searchCtl', function($scope,$state,$cookieS
         metabolomicsDataFactory.storeFormData($scope, $cookieStore);
         metabolomicsDataFactory.params.energy_level = $scope.energy;
         metabolomicsDataFactory.params.scoring_function = $scope.metric;
+        metabolomicsDataFactory.msmsIons = $scope.msmsIons;
         $state.go("metabolomicsCompounds")
     };
 });
@@ -204,7 +210,9 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
     $scope.$on("metabolitesLoaded", function () {
         filteredData = metabolomicsDataFactory.filterHits(metabolomicsDataFactory.hits, $scope.searchMZ,
             $scope.searchAdduct, $scope.searchFormula, $scope.searchCompound, $scope.searchMINE);
-        filteredData = sharedFactory.sortList(filteredData,$scope.sortColumn,$scope.sortInvert);
+        if (!metabolomicsDataFactory.msmsIons){
+            filteredData = sharedFactory.sortList(filteredData,$scope.sortColumn,$scope.sortInvert);
+        }
         $scope.displayData = sharedFactory.paginateList(filteredData, $scope.currentPage, $scope.numPerPage);
         $scope.items = filteredData.length;
         $scope.totalItems = metabolomicsDataFactory.hits.length;

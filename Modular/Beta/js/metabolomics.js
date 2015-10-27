@@ -69,8 +69,9 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             var selectedFile = document.getElementById(ele_id).files[0];
             if (selectedFile.name.search('.mgf')>-1){factory.traceType = "mgf"}
             else if (selectedFile.name.search('.mzxml')>-1){factory.traceType = "mzxml"}
+            else if (selectedFile.name.search('.msp')>-1){factory.traceType = "msp"}
             else {
-                alert('Upload only supports .mgf and .mzXML formats');
+                alert('Upload only supports .mgf, .msp, and .mzXML formats');
                 return
             }
             var reader = new FileReader();

@@ -2,7 +2,7 @@
 angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     var factory = {
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
-        trace :  "164.0937301",
+        trace :  "163.039200",
         traceType: 'form',
         filterKovats: false,
         kovats: [0, 20000],
@@ -16,7 +16,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             adducts: [],
             models: [],
             energy_level: 0,
-            scoring_function: 'jacquard'
+            scoring_function: 'dot_product'
         },
         storeFormData: function($scope, $cookieStore) { // updates factory and cookies on search
             factory.trace =$scope.trace;
@@ -39,7 +39,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             console.log(params);
             var promise;
             if (factory.msmsIons){
-                promise = factory.services.ms2_search(factory.msmsIons, factory.traceType, params);
+                promise = factory.services.ms2_search(factory.trace+"\n"+factory.msmsIons, factory.traceType, params);
             }
             else {
                 promise = factory.services.ms_adduct_search(factory.trace, factory.traceType, params);

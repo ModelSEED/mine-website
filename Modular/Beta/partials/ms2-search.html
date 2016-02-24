@@ -4,10 +4,12 @@
         <div class="panel-body">
             <div class="col-sm-5 ">
                 <div class="form-group">
-                    <label>Parent Ion</label>
+                    <label>Precursor Ion</label>
                     <input id="parent_ion" type="text" ng-model="trace" class="form-control">
                     <br>
-                    <label>Daughter Ions</label>
+                    <label>Product Ions (M/Z Intensity)</label>
+                    <span tooltip="Upload supports MGF or MSP files. Large files may take a long time to search."
+                                  class="glyphicon glyphicon-question-sign"></span>
                     <textarea id="msmsIons" ng-model="msmsIons" class="form-control" rows="10"></textarea>
                     <div id="upload-file" class="input-group">
                         <input type='file' class="form-control" multiple='false' id='metFile'>

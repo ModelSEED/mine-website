@@ -118,6 +118,7 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
 var operatorList = [
 	"Aldehyde_Attack_cyc",
 	"Aldehyde_Oxidation",
+    "Alpha_Amine_Carbamylation",
 	"AlphaBeta_HNE_1",
 	"AlphaBeta_HNE_2",
 	"Amine_MGlyoxal_Condensation",
@@ -199,7 +200,6 @@ var operatorList = [
 	"Pyridoxal_Cyclization",
 	"Pyridoxine_Oxidation",
 	"Pyrrole_Formation",
-	"Pyrroline_1",
 	"Pyrroline_2",
 	"Pyrroline_3",
 	"Ribose_Hydrolysis",

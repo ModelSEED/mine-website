@@ -1,10 +1,10 @@
-angular.module('app').controller('quickSearchCtl',  function ($scope,$state) {
+angular.module('app').controller('quickSearchCtl',  function ($scope,$state,sharedFactory) {
     $scope.doQuickSearch = function(ev) {
-        if (!ev || ev.which==13) $state.go("compounds",{search:$scope.name}); // looks for enter key if triggered by keypress
+        if (!ev || ev.which==13) $state.go("compounds",{search:$scope.name, db:sharedFactory.dbId}); // looks for enter key if triggered by keypress
     }
 });
 
-angular.module('app').controller('advancedSearchCtl', function($scope,$state){
+angular.module('app').controller('advancedSearchCtl', function($scope,$state, sharedFactory){
     $scope.and = [];
     $scope.or = [];
     $scope.value = "";
@@ -55,7 +55,7 @@ angular.module('app').controller('advancedSearchCtl', function($scope,$state){
         if (or.length) query = mongoizeArray(query, '"$or"', or);
         query += "}";
         console.log(query);
-        $state.go('compounds', {'search':query})
+        $state.go('compounds', {'search':query, db:sharedFactory.dbId})
     };
 
     $scope.$watch('not', function (){if ($scope.not) $scope.RegEx = false}); // enforce not and regex cant both be true
@@ -70,7 +70,7 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
     var data=[];
     var promise;
     var services = sharedFactory.services;
-
+    if (typeof($stateParams.db) != 'undefined') sharedFactory.setDB($stateParams.db);
     if ($stateParams.search[0] == '{') promise = services.database_query(sharedFactory.dbId, $stateParams.search, sharedFactory.selected_model.name, "");
     else promise = services.quick_search(sharedFactory.dbId, $stateParams.search);
     promise.then(

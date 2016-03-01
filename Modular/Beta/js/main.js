@@ -1,5 +1,5 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'angulartics',
-    'angulartics.google.analytics', 'ui.select']);
+    'angulartics.google.analytics', 'ui.select', 'angularMasspecPlotter']);
 angular.module('app').factory('sharedFactory', function($state, $cookieStore, $rootScope){
     var factory = {
         dbId: 'KEGGexp2',

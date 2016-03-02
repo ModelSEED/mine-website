@@ -118,9 +118,9 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
 var operatorList = [
 	"Aldehyde_Attack_cyc",
 	"Aldehyde_Oxidation",
-	"AlphaBeta_HNE_1",
-	"AlphaBeta_HNE_2",
-    "Alpha_Amine_Carbamylation",
+	"Alpha_Amine_Carbamylation",
+    "AlphaBeta_HNE_1",
+    "Amino_Carbamylation",
 	"Amine_MGlyoxal_Condensation",
 	"Amine_Malonaldehyde_Condensation",
 	"Amine_Malonaldehyde_Condensation_2",
@@ -132,6 +132,7 @@ var operatorList = [
 	"Amino_Glyoxal_Cyclization_2",
 	"Amino_Pyridoxal_1",
 	"Amino_Vinyl_Cyclization_1",
+    "Amino_Vinyl_Cyclization_2",
 	"Aminoacrylate_CysAdduct_1",
 	"Aminoacrylate_CysAdduct_3",
 	"Auto-oxidation",
@@ -146,7 +147,6 @@ var operatorList = [
 	"Cysteine_Vinyl",
 	"Deamination_1",
 	"Deamination_2",
-	"Deamination_3",
 	"Decarbamylation",
 	"Decarboxylation_1",
 	"Decarboxylation_2",
@@ -164,7 +164,8 @@ var operatorList = [
 	"Glycolate_Oxidation",
 	"Glyoxal_Elimination",
 	"Guanidine_Glyoxal_Condensation",
-	"Hydroxypyruvate_Oxidation",
+	"Hydroxyaldehyde_Cyclization",
+    "Hydroxypyruvate_Oxidation",
 	"Imine_Reduction",
 	"Imine_Hydrolysis",
 	"Isocyanate_Formation",
@@ -208,6 +209,7 @@ var operatorList = [
 	"Secondary_Amine_Hydrolysis",
 	"Sulfonium_Cleavage",
 	"Thiaminase",
+    "Thiazole_Cleavage",
 	"Thiazole_Ring_Opening_1",
 	"Thiazole_Ring_Opening_2",
 	"Thiazole_Oxidation",
@@ -218,7 +220,8 @@ var operatorList = [
 	"Thiol_Fumarate",
 	"Thiol_Glycoaldehyde",
 	"Thiol_Glyoxal",
-	"Thiol_oxidation"
+	"Thiol_oxidation",
+    "Thiol_Vinyl_Cyclizing"
 ];
 
 var damageReactionIDs = [
@@ -500,5 +503,7 @@ var damageReactionIDs = [
     "R48927814e81845bc1b216555a5741cc2e3ad81a3",
     "Rca7ad9a71cb445e401f647b117b6730d8fb51ce5",
     "R6f43b3883f3cf2ce9c9e2fd59b87c39dad14aef0",
-    "R6d0a99acf6a8cae3eb1a4681509bf0d69ad684d7"
+    "R6d0a99acf6a8cae3eb1a4681509bf0d69ad684d7",
+    "R0ec73c9f6812a2ad6ed3e76ee39af6269e9d555d",
+    "R184f1984716d9d1ede4507ece457ea58614a6b78"
 ];

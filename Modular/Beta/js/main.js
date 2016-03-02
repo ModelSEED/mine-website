@@ -1,8 +1,8 @@
 angular.module('app',['ui.router','ui.bootstrap','ngCookies', 'ngJoyRide', 'ui-rangeSlider', 'angulartics',
-    'angulartics.google.analytics', 'ui.select']);
-angular.module('app').factory('sharedFactory', function(){
+    'angulartics.google.analytics', 'ui.select', 'angularMasspecPlotter']);
+angular.module('app').factory('sharedFactory', function($state, $cookieStore, $rootScope){
     var factory = {
-        dbId:'KEGGexp2',
+        dbId: 'KEGGexp2',
         //if the db changes in one of these states, reload the page
         db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
             'acompound.products', 'acompound.overview'],
@@ -10,6 +10,16 @@ angular.module('app').factory('sharedFactory', function(){
         img_src: "http://lincolnpark.chem-eng.northwestern.edu/Smiles_dump/",
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         numPerPage: 25, // default number of results to show per page
+        setDB: function (db_id) {
+            console.log("setDB:"+db_id);
+            if (factory.dbId != db_id) {
+                var state_name = $state.current.name;
+                factory.dbId = db_id;
+                $cookieStore.put('mine_db', db_id);
+                $rootScope.$broadcast("dbUpdated");
+                if (factory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current, {}, {reload: true});
+            }
+        },
         downloadFile: function (contents,filename) {
             // Warning: This function may not work with IE!
             var link = document.createElement('a');
@@ -110,20 +120,20 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:3, name:'Chemical Damage SEED', db : 'CDMINE'}
     ];
     var database_id = $cookieStore.get('mine_db');
-    if( typeof(database_id) == 'undefined') {$scope.database = $scope.databases[0]}
-    else {$scope.database = $scope.databases[database_id]}
-    sharedFactory.dbId = $scope.database.db;
+    var updateSelection = function() {console.log("ping"); $scope.databases.forEach(
+        function (option) {if (sharedFactory.dbId == option.db) $scope.database = $scope.databases[option.id]})};
 
+    updateSelection();
+    if (typeof(database_id) != 'undefined' && sharedFactory.dbId != database_id) {
+        sharedFactory.setDB($scope.database.db)
+    }
     $scope.$on("CDMINE", function () {$scope.database = $scope.databases[3]});
 
-    $scope.$watch('database', function() {
-        // This tracks which database is selected and reloads the page if it's content depends on the database
-        var state_name = $state.current.name;
-        sharedFactory.dbId = $scope.database.db;
-        $cookieStore.put('mine_db', $scope.database.id);
-        if (sharedFactory.db_dependent_states.indexOf(state_name) > -1) $state.go($state.current,{},{reload:true});
-    });
+    $scope.$on("dbUpdated", updateSelection);
 
+    $scope.$watch('database', function() {
+        sharedFactory.setDB($scope.database.db)
+    });
 });
 
 angular.module('app').directive('reactionDiagram', function(){
@@ -153,7 +163,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     // COMPOUNDS QUICK SEARCH see textSearch.js
     $stateProvider.state('compounds', {
-        url: '/compounds:search',
+        url: '/compounds:search?db',
         views: {
             '':{
                 templateUrl: 'partials/compoundslist.html',
@@ -182,7 +192,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     // AN INDIVIDUAL COMPOUND see acompound.js
     $stateProvider.state('acompound', {
-        url: '/acompound:id',
+        url: '/acompound:id?db',
         templateUrl: 'partials/acompound.html',
         controller: "acompoundCtl"
     });

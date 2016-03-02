@@ -71,6 +71,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
     CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     $scope.img_src = sharedFactory.img_src;
+    if (typeof($stateParams.db) != 'undefined') sharedFactory.setDB($stateParams.db);
 
     $scope.$on("compoundLoaded", function () {
         $scope.data = CompoundDataFactory.compound;
@@ -122,6 +123,7 @@ angular.module('app').controller('productOfCtl', function($scope,$stateParams,sh
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
     var reactions;
+    if (typeof($stateParams.db) != 'undefined') sharedFactory.setDB($stateParams.db);
     if (!CompoundDataFactory.compound) { // if we hit this page directly we need to get the compound data first
         CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }
@@ -164,6 +166,7 @@ angular.module('app').controller('reactantInCtl', function($scope,$stateParams,s
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
     var reactions;
+    if (typeof($stateParams.db) != 'undefined') sharedFactory.setDB($stateParams.db);
     if (!CompoundDataFactory.compound){ // if we hit this page directly we need to get the compound data first
         CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     }

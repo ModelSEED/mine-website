@@ -3,7 +3,8 @@
     <button type="button btn-lg" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong> Notes on the table: </strong>
     <ol>
-        <li>Clicking on the button in the ‘Basis’ column links to the reaction in Table S1 on which the Reaction Rule is based.</li>
+        <li>This table is best viewed with a Chrome Browser.</li>
+		<li>Clicking on the button in the ‘Basis’ column links to the reaction in Table S1 on which the Reaction Rule is based.</li>
         <li>The subscripts near atoms describe the context of the atom. The letters indicate the following:
             <ul>
                 <li>W = Wildcard (any context)</li>
@@ -37,14 +38,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="op in paginated track by $index">
+		<tr ng-repeat="op in paginated track by op._id">
 			<!-- Name -->
 			<td style="vertical-align:middle">
 				<a  ui-sref="operator({id:op._id})">{{op._id}}</a>
             </td>
 			<!-- Schematic -->
 			<td style="width: 60%">
-				<img ng-src="{{img_src}}op_images/{{+op._id}}.png" width="500">
+				<img ng-src="{{img_src}}op_images/{{op._id}}.png" width="500">
 			</td>
 			<!-- # of reactions -->
 			<td style="vertical-align:middle">

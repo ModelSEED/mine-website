@@ -46,7 +46,7 @@ angular.module('app').controller('s1Ctl', function($rootScope,$scope,$stateParam
     $scope.maxSize = 6;
     $scope.img_src = sharedFactory.img_src;
     var top30db = "Expected";
-    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
+    sharedFactory.setDB("CDMINE"); //Set to the Chemical Damage Database
     var reactions;
     $scope.searchType = "";
     $scope.searchComp = "";
@@ -85,7 +85,7 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
     $scope.numPerPage = 20;
     $scope.maxSize = 5;
     $scope.img_src = sharedFactory.img_src;
-    $rootScope.$broadcast("CDMINE"); //Set to the Chemical Damage Database
+    sharedFactory.setDB("CDMINE"); //Set to the Chemical Damage Database
     var operators;
     $scope.searchName = "";
 
@@ -99,11 +99,6 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
         },
         function (err) {console.error("get_ops fail");}
     );
-
-    $scope.staticPage = function(){
-        var rxnhtml = $('#rxn-tbl').html();
-        sharedFactory.downloadFile(rxnhtml,'reactions.html')
-    };
 
     $scope.$watch('currentPage + searchName', function() {
         if (operators) {

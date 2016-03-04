@@ -119,16 +119,13 @@ angular.module('app').controller('databaseCtl',  function ($scope,$state,sharedF
         {id:2, name:'YMDB', db : 'YMDBexp2'},
         {id:3, name:'Chemical Damage SEED', db : 'CDMINE'}
     ];
-    var database_id = $cookieStore.get('mine_db');
+
     var updateSelection = function() {console.log("ping"); $scope.databases.forEach(
         function (option) {if (sharedFactory.dbId == option.db) $scope.database = $scope.databases[option.id]})};
 
+    var database_id = $cookieStore.get('mine_db');
+    if (typeof(database_id) != 'undefined') {sharedFactory.dbId = database_id}
     updateSelection();
-    if (typeof(database_id) != 'undefined' && sharedFactory.dbId != database_id) {
-        sharedFactory.setDB($scope.database.db)
-    }
-    $scope.$on("CDMINE", function () {$scope.database = $scope.databases[3]});
-
     $scope.$on("dbUpdated", updateSelection);
 
     $scope.$watch('database', function() {

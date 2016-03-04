@@ -68,6 +68,7 @@ angular.module('app').factory('CompoundDataFactory', function($rootScope){
 });
 
 angular.module('app').controller('acompoundCtl', function($scope,$stateParams,sharedFactory,CompoundDataFactory){
+    if ($stateParams.db) sharedFactory.setDB($stateParams.db);
     CompoundDataFactory.getCompound(sharedFactory.dbId, $stateParams.id);
     $scope.img_src = sharedFactory.img_src;
 

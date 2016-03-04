@@ -100,11 +100,6 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
         function (err) {console.error("get_ops fail");}
     );
 
-    $scope.staticPage = function(){
-        var rxnhtml = $('#rxn-tbl').html();
-        sharedFactory.downloadFile(rxnhtml,'reactions.html')
-    };
-
     $scope.$watch('currentPage + searchName', function() {
         if (operators) {
             var filtered = sharedFactory.filterList(operators, "_id", $scope.searchName);

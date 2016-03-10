@@ -88,15 +88,15 @@ angular.module('app').controller('compoundsCtl', function($scope,$stateParams,sh
             }
     );
 
-    $scope.formatNames = function(nameArray) {
-        // trim name array to 5 and present names on separate lines
-        if (nameArray.length < 6) return nameArray.join('\n');
-        else return nameArray.slice(0,5).join('\n') + "\n...";
+    $scope.color = function(native,score){
+        if(score == 1){return "success"}
+        if (score >= 0.75) {return "warning"}
+        return "";
     };
 
     $scope.downloadResults = function(){
         var jsonObject = JSON.stringify(data);
-        var exclude = {"$$hashKey":"", 'id':"", 'score':"", 'Sources':"", 'Formula':"", 'Mass':"", '_id':""};
+        var exclude = {"$$hashKey":"", 'id':"", 'Likelihood_score':"", 'Sources':"", 'Formula':"", 'Mass':"", '_id':""};
         var csv = sharedFactory.convertToCSV(jsonObject, exclude);
         var d = new Date();
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');

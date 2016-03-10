@@ -232,7 +232,7 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
 
     $scope.downloadResults = function(){
         var jsonObject = JSON.stringify(filteredData);
-        var exclude = {"$$hashKey":"", 'id':""};
+        var exclude = {"$$hashKey":"", 'id':"", 'Likelihood_score':"", 'Pos_CFM_spectra':"", 'Neg_CFM_spectra':""};
         var csv = sharedFactory.convertToCSV(jsonObject, exclude);
         var d = new Date();
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');

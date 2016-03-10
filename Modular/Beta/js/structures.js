@@ -79,9 +79,15 @@ angular.module('app').controller('structuresresCtl', function($scope,$state,shar
         }
     );
 
+    $scope.color = function(native,score){
+        if(score == 1){return "success"}
+        if (score >= 0.75) {return "warning"}
+        return "";
+    };
+
     $scope.downloadResults = function(){
         var jsonObject = JSON.stringify(data);
-        var exclude = {"$$hashKey":"", 'id':"", 'Sources':""};
+        var exclude = {"$$hashKey":"", 'id':"", 'Likelihood_score':"", 'Sources':""};
         var csv = sharedFactory.convertToCSV(jsonObject, exclude);
         var d = new Date();
         sharedFactory.downloadFile(csv, d.toISOString()+'.csv');

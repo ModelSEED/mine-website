@@ -3,6 +3,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
     var factory = {
         services: new mineDatabaseServices('http://bio-data-1.mcs.anl.gov/services/mine-database'),
         trace :  "163.039200",
+        msmsIons:"",
         traceType: 'form',
         filterKovats: false,
         kovats: [0, 20000],
@@ -15,7 +16,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             halogens: true,
             adducts: [],
             models: [],
-            energy_level: 0,
+            energy_level: "10",
             scoring_function: 'dot_product'
         },
         storeFormData: function($scope, $cookieStore) { // updates factory and cookies on search
@@ -38,7 +39,7 @@ angular.module('app').factory('metabolomicsDataFactory', function($rootScope){
             if (factory.filterKovats) {params.kovats = factory.kovats}
             console.log(params);
             var promise;
-            if (factory.msmsIons){
+            if (factory.msmsIons.length){
                 promise = factory.services.ms2_search(factory.trace+"\n"+factory.msmsIons, factory.traceType, params);
             }
             else {
@@ -124,6 +125,7 @@ angular.module('app').controller('metabolomicsCtl', function($scope,$state,$cook
 
     $scope.metSearch = function() {
         metabolomicsDataFactory.storeFormData($scope, $cookieStore);
+        metabolomicsDataFactory.msmsIons = "";
         $state.go("metabolomicsCompounds")
     };
 });
@@ -221,10 +223,11 @@ angular.module('app').controller('metabolomicsCompoundsCtl', function($scope,$st
 
     });
 
-    $scope.colour = function(native,steps){
+    $scope.color = function(native,score){
         // If native_hit is true, make it green
-        if(native == true){return "#428bca"}
-        return "#000000";
+        if(native == true){return "success"}
+        if (score >= 0.75) {return "warning"}
+        return "";
     };
 
     $scope.downloadResults = function(){

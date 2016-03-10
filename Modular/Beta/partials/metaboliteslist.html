@@ -39,8 +39,8 @@
             <th><button id="sort-NP" class="btn btn-block btn-primary" ng-click="sortColumn='NP_likeness'; sortInvert=!sortInvert" analytics-on>Sort by</button></th>
         </tr>
         </thead>
-        <tr ng-repeat="f in displayData" style="color:{{colour(f.native_hit,f.steps_from_source)}}; cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
-            <td ng-show="factory.msmsIons" style="vertical-align: middle">{{f.Spectral_score}}</td>
+        <tr ng-repeat="f in displayData" ng-class="color(f.native_hit,f.Likelihood_score)" style="cursor:pointer" ui-sref="acompound.overview({id:f.MINE_id})">
+            <td ng-show="factory.msmsIons.length" style="vertical-align: middle">{{f.Spectral_score}}</td>
             <td style="vertical-align:middle">{{f.peak_name}}</td>
             <td style="vertical-align:middle">{{f.adduct}}</td>
             <td style="vertical-align:middle">{{f.Formula}}</td>

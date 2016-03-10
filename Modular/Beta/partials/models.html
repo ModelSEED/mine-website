@@ -14,3 +14,11 @@
         {{model.name}}
     </ui-select-choices>
 </ui-select>
+<div ng-if="model">
+    <div  class=" alert-success" role="alert">
+        Compound is in selected model
+    </div>
+    <div class=" alert-warning" role="alert">
+        Compound is a product of a model compound
+    </div>
+</div>

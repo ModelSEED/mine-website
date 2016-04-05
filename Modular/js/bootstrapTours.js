@@ -172,10 +172,14 @@ var metabolomicsTour = function(){
                 title: "Select adducts to search on",
                 content: "You can select potential adduct types here. use CTRL+click to select individual adducts or " +
                     "SHIFT+click to select a range of compounds",
+                onShown:function(){
+                    $('#adducts option:eq(1)').prop('selected', true).trigger('change')
+                },
                 onNext: function(){
-                    window.location.assign(host+ '#/metabolomicsCompounds')
+                    $('#ms-search-button').trigger('click')
                 }
             },
+
             {
                 orphan: true,
                 title: "Tabular Metabolomics Results",
@@ -184,6 +188,7 @@ var metabolomicsTour = function(){
             },
             {
                 element: "#filters",
+                placement: "bottom",
                 title: "Filtering results",
                 content: "You can enter text here to filter the results shown."
             },
@@ -194,7 +199,7 @@ var metabolomicsTour = function(){
             },
             {
                 element: "#met-download",
-                placement: "left",
+                placement: "bottom",
                 title: "Download your search results",
                 content: "Click here to download a CSV file with your search results. This file can be opened with " +
                     "Microsoft Excel or parsed as a part of a annotation pipeline"
